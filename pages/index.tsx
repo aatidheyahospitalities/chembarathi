@@ -17,9 +17,7 @@ interface HeroData {
 }
 
 export async function getStaticProps() {
-  console.log("Fetching static props for Home page");
   const data = await getHeroSection();
-  console.log("Fetched data:", data);
   return {
     props: {
       heroData: data.items[0] || {},
@@ -28,7 +26,6 @@ export async function getStaticProps() {
 }
 
 export default function Home({ heroData }: { heroData: HeroData }) {
-  console.log("Hero Data in Home component:", heroData);
   
   const heroTitle = heroData?.fields?.heroTitle || "";
   const heroImage = heroData?.fields?.heroImage?.fields?.file?.url || "";
