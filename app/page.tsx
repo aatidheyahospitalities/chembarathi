@@ -16,16 +16,11 @@ interface HeroData {
   };
 }
 
-export async function getStaticProps() {
+// This is a Server Component - data fetching happens on the server
+export default async function HomePage() {
+  // Fetch data directly in the component (no getStaticProps needed!)
   const data = await getHeroSection();
-  return {
-    props: {
-      heroData: data.items[0] || {},
-    },
-  };
-}
-
-export default function Home({ heroData }: { heroData: HeroData }) {
+  const heroData: HeroData = data.items[0] || {};
   
   const heroTitle = heroData?.fields?.heroTitle || "";
   const heroImage = heroData?.fields?.heroImage?.fields?.file?.url || "";
