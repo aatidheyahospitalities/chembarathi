@@ -1,20 +1,7 @@
 import { getHeroSection } from "./lib/services/getHeroSection";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { Document } from "@contentful/rich-text-types";
+import { HeroData } from "./lib/type";
 
-interface HeroData {
-  fields?: {
-    heroTitle?: string;
-    heroDescription?: Document;
-    heroImage?: {
-      fields?: {
-        file?: {
-          url?: string;
-        };
-      };
-    };
-  };
-}
 
 // This is a Server Component - data fetching happens on the server
 export default async function HomePage() {
