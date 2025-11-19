@@ -2,164 +2,164 @@
 
 /* Heading Styles */
 .text-display {
-  font-family: var(--typography-font-family-primary);
-  font-size: var(--typography-font-size-heading-display);
-  font-weight: var(--typography-font-weight-regular);
-  line-height: var(--typography-line-height-display);
+  font-family: var(--typography-font-family-primary) !important;
+  font-size: var(--typography-font-size-heading-display) !important;
+  font-weight: var(--typography-font-weight-regular) !important;
+  line-height: var(--typography-line-height-display) !important;
 }
 
 .text-title {
-  font-family: var(--typography-font-family-primary);
-  font-size: var(--typography-font-size-heading-title);
-  font-weight: var(--typography-font-weight-regular);
-  line-height: var(--typography-line-height-title);
+  font-family: var(--typography-font-family-primary) !important;
+  font-size: var(--typography-font-size-heading-title) !important;
+  font-weight: var(--typography-font-weight-regular) !important;
+  line-height: var(--typography-line-height-title) !important;
 }
 
 h1,.text-heading-1 {
-  font-family: var(--typography-font-family-primary);
-  font-size: var(--typography-font-size-heading-h1);
-  font-weight: var(--typography-font-weight-regular);
-  line-height: var(--typography-line-height-h1);
+  font-family: var(--typography-font-family-primary) !important;
+  font-size: var(--typography-font-size-heading-h1) !important;
+  font-weight: var(--typography-font-weight-regular) !important;
+  line-height: var(--typography-line-height-h1) !important;
 }
 h2,.text-heading-2 {
-  font-family: var(--typography-font-family-primary);
-  font-size: var(--typography-font-size-heading-h2);
-  font-weight: var(--typography-font-weight-regular);
-  line-height: var(--typography-line-height-h2);
+  font-family: var(--typography-font-family-primary) !important;
+  font-size: var(--typography-font-size-heading-h2) !important;
+  font-weight: var(--typography-font-weight-regular) !important;
+  line-height: var(--typography-line-height-h2) !important;
 }
 
 h3,.text-heading-3 {
-  font-family: var(--typography-font-family-primary);
-  font-size: var(--typography-font-size-heading-h3);
-  font-weight: var(--typography-font-weight-regular);
-  line-height: var(--typography-line-height-h3);
+  font-family: var(--typography-font-family-primary) !important;
+  font-size: var(--typography-font-size-heading-h3) !important;
+  font-weight: var(--typography-font-weight-regular) !important;
+  line-height: var(--typography-line-height-h3) !important;
 }
 
 h4,.text-heading-4 {
-  font-family: var(--typography-font-family-primary);
-  font-size: var(--typography-font-size-heading-h4);
-  font-weight: var(--typography-font-weight-regular);
-  line-height: var(--typography-line-height-h4);
+  font-family: var(--typography-font-family-primary) !important;
+  font-size: var(--typography-font-size-heading-h4) !important;
+  font-weight: var(--typography-font-weight-regular) !important;
+  line-height: var(--typography-line-height-h4) !important;
 }
 
 h5,.text-heading-5 {
-  font-family: var(--typography-font-family-secondary);
-  font-size: var(--typography-font-size-heading-h5);
-  font-weight: var(--typography-font-weight-medium);
-  line-height: var(--typography-line-height-h5);
+  font-family: var(--typography-font-family-primary) !important;
+  font-size: var(--typography-font-size-heading-h5) !important;
+  font-weight: var(--typography-font-weight-regular) !important;
+  line-height: var(--typography-line-height-h5) !important;
 }
 
 h6,.text-heading-6 {
-  font-family: var(--typography-font-family-secondary);
-  font-size: var(--typography-font-size-heading-h6);
-  font-weight: var(--typography-font-weight-medium);
-  line-height: var(--typography-line-height-h6);
+  font-family: var(--typography-font-family-primary) !important;
+  font-size: var(--typography-font-size-heading-h6) !important;
+  font-weight: var(--typography-font-weight-regular) !important;
+  line-height: var(--typography-line-height-h6) !important;
 }
 
 /* Body Text Styles */
 .text-xxl-medium {
-  font-family: var(--typography-font-family-secondary);
-  font-size: var(--typography-font-size-body-body-xxl);
-  font-weight: var(--typography-font-weight-medium);
-  line-height: var(--typography-line-height-body-xxl);
+  font-family: var(--typography-font-family-secondary) !important;
+  font-size: var(--typography-font-size-body-body-xxl) !important;
+  font-weight: var(--typography-font-weight-medium) !important;
+  line-height: var(--typography-line-height-body-xxl) !important;
 }
 
 .text-xxl-regular {
-  font-family: var(--typography-font-family-secondary);
-  font-size: var(--typography-font-size-body-body-xxl);
-  font-weight: var(--typography-font-weight-regular);
-  line-height: var(--typography-line-height-body-xxl);
+  font-family: var(--typography-font-family-secondary) !important;
+  font-size: var(--typography-font-size-body-body-xxl) !important;
+  font-weight: var(--typography-font-weight-regular) !important;
+  line-height: var(--typography-line-height-body-xxl) !important;
 }
 
 .text-xxl-bold {
-  font-family: var(--typography-font-family-secondary);
-  font-size: var(--typography-font-size-body-body-xxl);
-  font-weight: var(--typography-font-weight-bold);
-  line-height: var(--typography-line-height-body-xxl);
+  font-family: var(--typography-font-family-secondary) !important;
+  font-size: var(--typography-font-size-body-body-xxl) !important;
+  font-weight: var(--typography-font-weight-bold) !important;
+  line-height: var(--typography-line-height-body-xxl) !important;
 }
 
 .text-xl-med {
-  font-family: var(--typography-font-family-secondary);
-  font-size: var(--typography-font-size-body-body-xl);
-  font-weight: var(--typography-font-weight-medium);
-  line-height: var(--typography-line-height-body-xl);
+  font-family: var(--typography-font-family-secondary) !important;
+  font-size: var(--typography-font-size-body-body-xl) !important;
+  font-weight: var(--typography-font-weight-medium) !important;
+  line-height: var(--typography-line-height-body-xl) !important;
 }
 
 .text-xl-regular {
-  font-family: var(--typography-font-family-secondary);
-  font-size: var(--typography-font-size-body-body-xl);
-  font-weight: var(--typography-font-weight-regular);
-  line-height: var(--typography-line-height-body-xl);
+  font-family: var(--typography-font-family-secondary) !important;
+  font-size: var(--typography-font-size-body-body-xl) !important;
+  font-weight: var(--typography-font-weight-regular) !important;
+  line-height: var(--typography-line-height-body-xl) !important;
 }
 
 .text-xl-bold {
-  font-family: var(--typography-font-family-secondary);
-  font-size: var(--typography-font-size-body-body-xl);
-  font-weight: var(--typography-font-weight-bold);
-  line-height: var(--typography-line-height-body-xl);
+  font-family: var(--typography-font-family-secondary) !important;
+  font-size: var(--typography-font-size-body-body-xl) !important;
+  font-weight: var(--typography-font-weight-bold) !important;
+  line-height: var(--typography-line-height-body-xl) !important;
 }
 
 .text-lg-regular {
-  font-family: var(--typography-font-family-secondary);
-  font-size: var(--typography-font-size-body-body-lg);
-  font-weight: var(--typography-font-weight-regular);
-  line-height: var(--typography-line-height-body-lg);
+  font-family: var(--typography-font-family-secondary) !important;
+  font-size: var(--typography-font-size-body-body-lg) !important;
+  font-weight: var(--typography-font-weight-regular) !important;
+  line-height: var(--typography-line-height-body-lg) !important;
 }
 
 .text-lg-med {
-  font-family: var(--typography-font-family-secondary);
-  font-size: var(--typography-font-size-body-body-lg);
-  font-weight: var(--typography-font-weight-medium);
-  line-height: var(--typography-line-height-body-lg);
+  font-family: var(--typography-font-family-secondary) !important;
+  font-size: var(--typography-font-size-body-body-lg) !important;
+  font-weight: var(--typography-font-weight-medium) !important;
+  line-height: var(--typography-line-height-body-lg) !important;
 }
 
 .text-lg-bold {
-  font-family: var(--typography-font-family-secondary);
-  font-size: var(--typography-font-size-body-body-lg);
-  font-weight: var(--typography-font-weight-bold);
-  line-height: var(--typography-line-height-body-lg);
+  font-family: var(--typography-font-family-secondary) !important;
+  font-size: var(--typography-font-size-body-body-lg) !important;
+  font-weight: var(--typography-font-weight-bold) !important;
+  line-height: var(--typography-line-height-body-lg) !important;
 }
 
 .text-md-regular {
-  font-family: var(--typography-font-family-secondary);
-  font-size: var(--typography-font-size-body-body-md);
-  font-weight: var(--typography-font-weight-regular);
-  line-height: var(--typography-line-height-body-md);
+  font-family: var(--typography-font-family-secondary) !important;
+  font-size: var(--typography-font-size-body-body-md) !important;
+  font-weight: var(--typography-font-weight-regular) !important;
+  line-height: var(--typography-line-height-body-md) !important;
 }
 
 .text-md-bold {
-  font-family: var(--typography-font-family-secondary);
-  font-size: var(--typography-font-size-body-body-md);
-  font-weight: var(--typography-font-weight-bold);
-  line-height: var(--typography-line-height-body-md);
+  font-family: var(--typography-font-family-secondary) !important;
+  font-size: var(--typography-font-size-body-body-md) !important;
+  font-weight: var(--typography-font-weight-bold) !important;
+  line-height: var(--typography-line-height-body-md) !important;
 }
 
 .text-md-med {
-  font-family: var(--typography-font-family-secondary);
-  font-size: var(--typography-font-size-body-body-md);
-  font-weight: var(--typography-font-weight-medium);
-  line-height: var(--typography-line-height-body-md);
+  font-family: var(--typography-font-family-secondary) !important;
+  font-size: var(--typography-font-size-body-body-md) !important;
+  font-weight: var(--typography-font-weight-medium) !important;
+  line-height: var(--typography-line-height-body-md) !important;
 }
 
 .text-sm-regular {
-  font-family: var(--typography-font-family-secondary);
-  font-size: var(--typography-font-size-body-body-sm);
-  font-weight: var(--typography-font-weight-regular);
-  line-height: var(--typography-line-height-body-sm);
+  font-family: var(--typography-font-family-secondary) !important;
+  font-size: var(--typography-font-size-body-body-sm) !important;
+  font-weight: var(--typography-font-weight-regular) !important;
+  line-height: var(--typography-line-height-body-sm) !important;
 }
 
 .text-sm-med {
-  font-family: var(--typography-font-family-secondary);
-  font-size: var(--typography-font-size-body-body-sm);
-  font-weight: var(--typography-font-weight-medium);
-  line-height: var(--typography-line-height-body-sm);
+  font-family: var(--typography-font-family-secondary) !important;
+  font-size: var(--typography-font-size-body-body-sm) !important;
+  font-weight: var(--typography-font-weight-medium) !important;
+  line-height: var(--typography-line-height-body-sm) !important;
 }
 
 .text-sm-bold {
-  font-family: var(--typography-font-family-secondary);
-  font-size: var(--typography-font-size-body-body-sm);
-  font-weight: var(--typography-font-weight-bold);
-  line-height: var(--typography-line-height-body-sm);
+  font-family: var(--typography-font-family-secondary) !important;
+  font-size: var(--typography-font-size-body-body-sm) !important;
+  font-weight: var(--typography-font-weight-bold) !important;
+  line-height: var(--typography-line-height-body-sm) !important;
 }
 
 /* Link Styles

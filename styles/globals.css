@@ -1,4 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@300..900&display=swap');
+@font-face {
+  font-family: 'Staylista';
+  src: url('../styles/Stalysta_personal use.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @import "tailwindcss";
 @import "./typography.css";
 
