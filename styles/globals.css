@@ -1,5 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@300..900&display=swap');
 @import "tailwindcss";
+@import "./typography.css";
+
+
+@config "../tailwind.config.js";
+
+/* replaces @tailwind base */
+@import "tailwindcss/preflight";
+
+/* replaces @tailwind components + @tailwind utilities */
+@source "../app";
+@source "../components";
+@source "../lib";
+
 
 /* 01 Base - Color Palette and Sizes */
 :root {

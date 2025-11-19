@@ -1,7 +1,9 @@
 module.exports = {
   content: [
-    './app/**/*.{js,ts,jsx,tsx}',
-    './styles/**/*.{css}',
+     './app/**/*.{js,ts,jsx,tsx,mdx}',
+  './components/**/*.{js,ts,jsx,tsx,mdx}',
+  './lib/**/*.{js,ts,jsx,tsx}',
+  './styles/**/*.{css}',
   ],
   theme: {
     extend: {
@@ -51,6 +53,20 @@ module.exports = {
         'body-md': 'var(--typography-line-height-body-md)',
         'body-sm': 'var(--typography-line-height-body-sm)',
         'body-xs': 'var(--typography-line-height-body-xs)',
+      },
+      padding: {
+        none: 'var(--spacing-padding-none)',
+        x: 'var(--spacing-padding-x)',
+        '2x': 'var(--spacing-padding-2x)',
+        '3x': 'var(--spacing-padding-3x)',
+        '4x': 'var(--spacing-padding-4x)',
+        '5x': 'var(--spacing-padding-5x)',
+        '6x': 'var(--spacing-padding-6x)',
+        '8x': 'var(--spacing-padding-8x)',
+        '10x': 'var(--spacing-padding-10x)',
+        '16x': 'var(--spacing-padding-16x)',
+        '20x': 'var(--spacing-padding-20x)',
+        'huge-x': 'var(--spacing-padding-huge-x)',
       },
       colors: {
         primary: {
