@@ -36,21 +36,21 @@ h3,.text-heading-3 {
 }
 
 h4,.text-heading-4 {
-  font-family: var(--typography-font-family-primary) !important;
+  font-family: var(--typography-font-family-secondary) !important;
   font-size: var(--typography-font-size-heading-h4) !important;
   font-weight: var(--typography-font-weight-regular) !important;
   line-height: var(--typography-line-height-h4) !important;
 }
 
 h5,.text-heading-5 {
-  font-family: var(--typography-font-family-primary) !important;
+  font-family: var(--typography-font-family-secondary) !important;
   font-size: var(--typography-font-size-heading-h5) !important;
   font-weight: var(--typography-font-weight-regular) !important;
   line-height: var(--typography-line-height-h5) !important;
 }
 
 h6,.text-heading-6 {
-  font-family: var(--typography-font-family-primary) !important;
+  font-family: var(--typography-font-family-secondary) !important;
   font-size: var(--typography-font-size-heading-h6) !important;
   font-weight: var(--typography-font-weight-regular) !important;
   line-height: var(--typography-line-height-h6) !important;

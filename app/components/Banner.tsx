@@ -11,15 +11,15 @@ export default async function Banner() {
 
   return (
     <div 
-      className="relative min-h-screen flex items-end justify-center bg-cover bg-center bg-no-repeat"
+      className="relative flex items-end justify-center min-h-screen bg-center bg-no-repeat bg-cover"
       style={{ backgroundImage: `url(https:${heroImage})` }}
     >
       {/* Overlay for better text readability */}
       <div className="absolute inset-0 bg-black/40"></div>
       {/* Content */}
-      <div className="relative z-10 flex py-10x px-huge-x justify-space-between text-white w-full">
-        <h1>{heroTitle}</h1>
-        <div className="text-xl md:text-2xl max-w-3xl mx-auto drop-shadow-md">
+      <div className="relative z-10 flex w-full text-white py-10x px-huge-x justify-space-between gap-(--spacing-padding-16x)">
+        <h1 className="w-[50%]">{heroTitle}</h1>
+        <div className="text-xl-regular w-[50%] text-(--typography-color-secondary-600)">
           {heroDescription && documentToReactComponents(heroDescription)}
         </div>
       </div>

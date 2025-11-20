@@ -425,5 +425,10 @@
 
 
 body {
-  font-family: var(--fonts-family-secondary);
+  background-color: #151E19 !important;
+}
+
+
+*{
+  scrollbar-width: none;
 }
