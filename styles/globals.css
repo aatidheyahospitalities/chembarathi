@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@300..900&display=swap');
 @font-face {
   font-family: 'Staylista';
   src: url('../styles/Stalysta_personal use.ttf') format('truetype');
@@ -178,7 +177,7 @@
 :root {
   /* Font Families */
     --fonts-family-primary: Staylista, system-ui, -apple-system, sans-serif;
-    --fonts-family-secondary: 'Figtree', system-ui, -apple-system, sans-serif;
+    --fonts-family-secondary: var(--font-figtree);
 
   /* Secondary Colors (Neutral) */
   --color-secondary-lightest: var(--colors-neutral-0);

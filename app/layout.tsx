@@ -1,5 +1,11 @@
 import "@/styles/globals.css";
 import type { Metadata } from "next";
+import { Figtree } from "next/font/google";
+
+const figtree = Figtree({
+  subsets: ["latin"],
+  variable: "--font-figtree",
+});
 
 export const metadata: Metadata = {
   title: "Chembarathi",
@@ -12,11 +18,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={figtree.variable}>
       <body>
         {/* Header - shared across all pages */}
         {/* <header className="border-b border-gray-200 dark:border-gray-800">
-          <nav className="container mx-auto px-4 py-4">
+          <nav className="container px-4 py-4 mx-auto">
             <h1 className="text-2xl font-bold">Chembarathi</h1>
           </nav>
         </header> */}
@@ -27,8 +33,8 @@ export default function RootLayout({
         </main>
 
         {/* Footer - shared across all pages */}
-        {/* <footer className="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 mt-16">
-          <div className="container mx-auto px-4 py-8 text-center text-gray-600 dark:text-gray-400">
+        {/* <footer className="mt-16 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900">
+          <div className="container px-4 py-8 mx-auto text-center text-gray-600 dark:text-gray-400">
             <p>&copy; 2025 Chembarathi. All rights reserved.</p>
           </div>
         </footer> */}
