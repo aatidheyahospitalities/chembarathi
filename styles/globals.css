@@ -1,0 +1,434 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@300..900&display=swap');
+@font-face {
+  font-family: 'Staylista';
+  src: url('../styles/Stalysta_personal use.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@import "tailwindcss";
+@import "./typography.css";
+
+
+@config "../tailwind.config.js";
+
+/* replaces @tailwind base */
+@import "tailwindcss/preflight";
+
+/* replaces @tailwind components + @tailwind utilities */
+@source "../app";
+@source "../components";
+@source "../lib";
+
+
+/* 01 Base - Color Palette and Sizes */
+:root {
+  /* Transparent */
+  --colors-transparent: #FFFFFF00;
+
+  /* Neutral Colors */
+  --colors-neutral-0: #FFFFFFFF;
+  --colors-neutral-50: #F8F8F8FF;
+  --colors-neutral-100: #FFFFFFFF;
+  --colors-neutral-200: #FDFDFDFF;
+  --colors-neutral-300: #F8F8F8FF;
+  --colors-neutral-400: #E6E6E6FF;
+  --colors-neutral-500: #D5D5D5FF;
+  --colors-neutral-600: #B1B1B1FF;
+  --colors-neutral-700: #5B5B5BFF;
+  --colors-neutral-800: #3D3D3DFF;
+  --colors-neutral-900: #262626FF;
+  --colors-neutral-1000: #222222FF;
+
+  /* Green Primary Colors */
+  --colors-green-primary-100: #A8B2ABFF;
+  --colors-green-primary-200: #8F9C92FF;
+  --colors-green-primary-300: #76867AFF;
+  --colors-green-primary-400: #5D7062FF;
+  --colors-green-primary-500: #243028FF;
+  --colors-green-primary-600: #1F2A23FF;
+  --colors-green-primary-700: #1A241EFF;
+  --colors-green-primary-800: #151E19FF;
+  --colors-green-primary-900: #101814FF;
+  --colors-green-primary-1000: #0B120FFF;
+
+  /* Sky Blue Colors */
+  --colors-sky-blue-100: #EDF3FBFF;
+  --colors-sky-blue-200: #BFD8FFFF;
+  --colors-sky-blue-300: #9CC4FFFF;
+  --colors-sky-blue-400: #7AAEFFFF;
+  --colors-sky-blue-500: #5993FAFF;
+  --colors-sky-blue-600: #3879F7FF;
+  --colors-sky-blue-700: #2C65D6FF;
+  --colors-sky-blue-800: #1C50B2FF;
+  --colors-sky-blue-900: #12306FFF;
+  --colors-sky-blue-1000: #0A1B47FF;
+
+  /* Orange Colors */
+  --colors-orange-0: #FFEDE0FF;
+  --colors-orange-50: #FDD3B7FF;
+  --colors-orange-100: #F9B48FFF;
+  --colors-orange-200: #F5996CFF;
+  --colors-orange-300: #F07A47FF;
+  --colors-orange-400: #E86428FF;
+  --colors-orange-500: #D85718FF;
+  --colors-orange-600: #BA480CFF;
+  --colors-orange-700: #9A3A06FF;
+  --colors-orange-800: #7A2B00FF;
+  --colors-orange-900: #5A1F00FF;
+  --colors-orange-1000: #3A1300FF;
+
+  /* Red Colors */
+  --colors-red-100: #FFD4D9FF;
+  --colors-red-200: #F28A9AFF;
+  --colors-red-300: #E24F64FF;
+  --colors-red-400: #C7223BFF;
+  --colors-red-500: #74111FFF;
+  --colors-red-600: #3A060DFF;
+
+  /* Yellow Colors */
+  --colors-yellow-100: #FEF6D3FF;
+  --colors-yellow-200: #FAE9A3FF;
+  --colors-yellow-300: #F7DF72FF;
+  --colors-yellow-400: #F5D23AFF;
+  --colors-yellow-500: #745A0DFF;
+  --colors-yellow-600: #3A2905FF;
+
+  /* Green Status Colors */
+  --colors-green-100: #D8FCE6FF;
+  --colors-green-200: #98F4C0FF;
+  --colors-green-300: #4FE891FF;
+  --colors-green-400: #02D163FF;
+  --colors-green-500: #1D9756FF;
+  --colors-green-600: #042A17FF;
+
+  /* Size Variables */
+  --size-none: 0px;
+  --size-one: 1px;
+  --size-xxs: 2px;
+  --size-base-x: 4px;
+  --size-sm: 8px;
+  --size-ten: 10px;
+  --size-md-sm: 12px;
+  --size-fourteen: 14px;
+  --size-md: 16px;
+  --size-md-lg: 20px;
+  --size-lg: 24px;
+  --size-lg2: 28px;
+  --size-xl: 32px;
+  --size-xl2: 36px;
+  --size-xxl: 40px;
+  --size-xxl2: 44px;
+  --size-xxxl: 48px;
+  --size-xxxxl: 64px;
+  --size-huge: 80px;
+  --size-giant: 96px;
+  --size-massive: 128px;
+  --size-xl-massive: 144px;
+
+  /* Text Size Variables */
+  --size-txt-10: 10px;
+  --size-txt-11: 11px;
+  --size-txt-13: 13px;
+  --size-txt-14: 14px;
+  --size-txt-15: 15px;
+
+  /* Border Radius */
+  --size-rd: 999999px;
+
+  /* Legacy Size Variables */
+  --none: 0px;
+  --base-x: 4px;
+  --2x: 8px;
+  --3x: 12px;
+  --4x: 16px;
+  --5x: 20px;
+  --6x: 24px;
+  --7x: 28px;
+  --8x: 32px;
+  --10x: 40px;
+  --12x: 48px;
+  --16x: 64px;
+  --20x: 80px;
+  --hude-x: 96px;
+  --giant-x: 128px;
+  --massive-x: 160px;
+
+  /* Spacing Variables */
+  --spacing-none: 0px;
+  --spacing-half-x: 2px;
+  --spacing-base-x: 4px;
+  --spacing-2x: 8px;
+  --spacing-3x: 12px;
+  --spacing-4x: 16px;
+  --spacing-5x: 20px;
+  --spacing-6x: 24px;
+  --spacing-7x: 28px;
+  --spacing-8x: 32px;
+  --spacing-10x: 40px;
+  --spacing-12x: 48px;
+  --spacing-16x: 64px;
+  --spacing-20x: 80px;
+  --spacing-huge-x: 96px;
+  --spacing-giant-x: 128px;
+  --spacing-massive-x: 160px;
+}
+
+/* 02 Semantic - Mode 1 */
+:root {
+  /* Font Families */
+    --fonts-family-primary: Staylista, system-ui, -apple-system, sans-serif;
+    --fonts-family-secondary: 'Figtree', system-ui, -apple-system, sans-serif;
+
+  /* Secondary Colors (Neutral) */
+  --color-secondary-lightest: var(--colors-neutral-0);
+  --color-secondary-light: var(--colors-neutral-50);
+  --color-secondary-lighter: var(--colors-neutral-100);
+  --color-secondary-soft-light: var(--colors-neutral-200);
+  --color-secondary-medium-light: var(--colors-neutral-300);
+  --color-secondary-neutral: var(--colors-neutral-400);
+  --color-secondary-medium-dark: var(--colors-neutral-500);
+  --color-secondary-dark: var(--colors-neutral-600);
+  --color-secondary-darker: var(--colors-neutral-700);
+  --color-secondary-very-dark: var(--colors-neutral-800);
+  --color-secondary-darkest: var(--colors-neutral-900);
+  --color-secondary-deepest: var(--colors-neutral-1000);
+
+  /* Primary Colors (Green) */
+  --color-primary-lightest: var(--colors-green-primary-100);
+  --color-primary-light: var(--colors-green-primary-200);
+  --color-primary-lighter: var(--colors-green-primary-300);
+  --color-primary-soft-light: var(--colors-green-primary-400);
+  --color-primary-medium-light: var(--colors-green-primary-500);
+  --color-primary-neutral: var(--colors-green-primary-600);
+  --color-primary-medium-dark: var(--colors-green-primary-700);
+  --color-primary-dark: var(--colors-green-primary-800);
+  --color-primary-darker: var(--colors-green-primary-900);
+  --color-primary-very-dark: var(--colors-green-primary-1000);
+  --color-primary-darkest: var(--colors-green-primary-900);
+  --color-primary-deepest: var(--colors-green-primary-1000);
+
+  /* Other Colors (Sky Blue) */
+  --color-others-lighter: var(--colors-sky-blue-100);
+  --color-others-soft-light: var(--colors-sky-blue-200);
+  --color-others-medium-light: var(--colors-sky-blue-300);
+  --color-others-neutral: var(--colors-sky-blue-400);
+  --color-others-medium-dark: var(--colors-sky-blue-600);
+
+  /* Button Colors (Orange) */
+  --color-button-soft-light: var(--colors-orange-200);
+  --color-button-neutral: var(--colors-orange-400);
+  --color-button-dark: var(--colors-orange-600);
+
+  /* Status - Acknowledged (Orange) */
+  --color-status-acknowledged-soft-light: var(--colors-orange-200);
+  --color-status-acknowledged-neutral: var(--colors-orange-400);
+  --color-status-acknowledged-dark: var(--colors-orange-600);
+
+  /* Status - Alert (Red) */
+  --color-status-alert-soft-light: var(--colors-red-200);
+  --color-status-alert-neutral: var(--colors-red-400);
+  --color-status-alert-dark: var(--colors-red-600);
+
+  /* Status - Success (Green) */
+  --color-status-success-soft-light: var(--colors-green-200);
+  --color-status-success-medium-light: var(--colors-green-300);
+  --color-status-success-neutral: var(--colors-green-400);
+  --color-status-success-medium-dark: var(--colors-green-500);
+  --color-status-success-dark: var(--colors-green-600);
+
+  /* Status - Warning (Yellow) */
+  --color-status-warning-soft-light: var(--colors-yellow-200);
+  --color-status-warning-medium-light: var(--colors-yellow-300);
+  --color-status-warning-neutral: var(--colors-yellow-400);
+  --color-status-warning-dark: var(--colors-yellow-600);
+}
+
+/* 03 Generic - Mode 1 */
+:root {
+  /* Opacity */
+  --opacity-0: 0px;
+  --opacity-25: 25px;
+  --opacity-50: 50px;
+  --opacity-75: 75px;
+  --opacity-100: 100px;
+
+  /* Border Stroke */
+  --border-stroke-none: var(--size-none);
+  --border-stroke-one: var(--size-one);
+  --border-stroke-sm: var(--size-xxs);
+  --border-stroke-md: var(--size-base-x);
+
+  /* Border Radius */
+  --border-radius-none: var(--size-none);
+  --border-radius-xxs: var(--size-xxs);
+  --border-radius-xs: var(--size-base-x);
+  --border-radius-sm: var(--size-sm);
+  --border-radius-md: var(--size-md);
+  --border-radius-lg: var(--size-lg);
+  --border-radius-xl: var(--size-xl);
+  --border-radius-rd: var(--size-rd);
+
+  /* Border Color */
+  --border-color-default: var(--color-primary-soft-light);
+  --border-color-muted: var(--color-primary-medium-light);
+
+  /* Surface Primary */
+  --surface-primary-100: var(--typography-color-primary-100);
+  --surface-primary-200: var(--typography-color-primary-200);
+  --surface-primary-300: var(--typography-color-primary-300);
+  --surface-primary-400: var(--typography-color-primary-400);
+  --surface-primary-500: var(--typography-color-primary-500);
+  --surface-primary-600: var(--typography-color-primary-600);
+  --surface-primary-700: var(--typography-color-primary-700);
+  --surface-primary-800: var(--typography-color-primary-800);
+  --surface-primary-850: var(--typography-color-primary-900);
+  --surface-primary-900: var(--typography-color-primary-1000);
+  --surface-primary-950: var(--typography-color-primary-darkest);
+  --surface-primary-1000: var(--typography-color-primary-deepest);
+
+  /* Surface Secondary */
+  --surface-secondary-100: var(--typography-color-secondary-100);
+  --surface-secondary-200: var(--typography-color-secondary-200);
+  --surface-secondary-300: var(--typography-color-secondary-300);
+  --surface-secondary-400: var(--typography-color-secondary-400);
+  --surface-secondary-500: var(--typography-color-secondary-500);
+  --surface-secondary-600: var(--typography-color-secondary-600);
+  --surface-secondary-700: var(--typography-color-secondary-700);
+  --surface-secondary-800: var(--typography-color-secondary-800);
+  --surface-secondary-850: var(--typography-color-secondary-850);
+  --surface-secondary-900: var(--typography-color-secondary-900);
+  --surface-secondary-950: var(--typography-color-secondary-950);
+  --surface-secondary-1000: var(--typography-color-secondary-1000);
+
+  /* Surface Status */
+  --surface-status-alert: var(--color-status-alert-neutral);
+  --surface-status-success: var(--color-status-success-medium-dark);
+  --surface-status-warning: var(--color-status-warning-neutral);
+
+  /* Spacing Padding */
+  --spacing-padding-none: var(--spacing-none);
+  --spacing-padding-x: var(--spacing-base-x);
+  --spacing-padding-2x: var(--spacing-2x);
+  --spacing-padding-3x: var(--spacing-3x);
+  --spacing-padding-4x: var(--spacing-4x);
+  --spacing-padding-5x: var(--spacing-5x);
+  --spacing-padding-6x: var(--spacing-6x);
+  --spacing-padding-8x: var(--spacing-8x);
+  --spacing-padding-10x: var(--spacing-10x);
+  --spacing-padding-16x: var(--spacing-16x);
+  --spacing-padding-20x: var(--spacing-20x);
+  --spacing-padding-huge-x: var(--spacing-huge-x);
+
+  /* Typography Colors Primary */
+  --typography-color-primary-100: var(--color-primary-lightest);
+  --typography-color-primary-200: var(--color-primary-light);
+  --typography-color-primary-300: var(--color-primary-lighter);
+  --typography-color-primary-400: var(--color-primary-soft-light);
+  --typography-color-primary-500: var(--color-primary-medium-light);
+  --typography-color-primary-600: var(--color-primary-neutral);
+  --typography-color-primary-700: var(--color-primary-medium-dark);
+  --typography-color-primary-800: var(--color-primary-dark);
+  --typography-color-primary-900: var(--color-primary-darker);
+  --typography-color-primary-1000: var(--color-primary-very-dark);
+  --typography-color-primary-darkest: var(--color-primary-darkest);
+  --typography-color-primary-deepest: var(--color-primary-deepest);
+
+  /* Typography Colors Secondary */
+  --typography-color-secondary-100: var(--color-secondary-lightest);
+  --typography-color-secondary-200: var(--color-secondary-light);
+  --typography-color-secondary-300: var(--color-secondary-lighter);
+  --typography-color-secondary-400: var(--color-secondary-soft-light);
+  --typography-color-secondary-500: var(--color-secondary-medium-light);
+  --typography-color-secondary-600: var(--color-secondary-neutral);
+  --typography-color-secondary-700: var(--color-secondary-medium-dark);
+  --typography-color-secondary-800: var(--color-secondary-dark);
+  --typography-color-secondary-850: var(--color-secondary-darker);
+  --typography-color-secondary-900: var(--color-secondary-very-dark);
+  --typography-color-secondary-950: var(--color-secondary-darkest);
+  --typography-color-secondary-1000: var(--color-secondary-deepest);
+
+  /* Typography Colors Special */
+  --typography-color-link-link: var(--color-others-medium-dark);
+  --typography-color-status-alert: var(--color-status-alert-neutral);
+  --typography-color-status-success: var(--color-status-success-neutral);
+  --typography-color-status-warning: var(--color-status-warning-neutral);
+  --typography-color-status-ackowledeged: var(--color-status-acknowledged-neutral);
+  --typography-Color: #FFFFFFFF;
+
+  /* Typography Font Family */
+  --typography-font-family-primary: var(--fonts-family-primary);
+  --typography-font-family-secondary: var(--fonts-family-secondary);
+
+  /* Typography Font Size - Headings */
+  --typography-font-size-heading-display: var(--size-xl-massive);
+  --typography-font-size-heading-title: var(--size-giant);
+  --typography-font-size-heading-h1: var(--size-huge);
+  --typography-font-size-heading-h2: var(--size-xxxxl);
+  --typography-font-size-heading-h3: var(--size-xxxl);
+  --typography-font-size-heading-h4: var(--size-xl2);
+  --typography-font-size-heading-h5: var(--size-lg2);
+  --typography-font-size-heading-h6: var(--size-lg);
+
+  /* Typography Font Size - Body */
+  --typography-font-size-body-body-xxl: var(--size-lg);
+  --typography-font-size-body-body-xl: var(--size-md-lg);
+  --typography-font-size-body-body-lg: var(--size-md);
+  --typography-font-size-body-body-md: var(--size-txt-14);
+  --typography-font-size-body-body-sm: var(--size-md-sm);
+  --typography-font-size-body-body-xs: var(--size-txt-11);
+
+  /* Typography Font Weight */
+  --typography-font-weight-thin: 100px;
+  --typography-font-weight-extralight: 200px;
+  --typography-font-weight-light: 300px;
+  --typography-font-weight-regular: 400px;
+  --typography-font-weight-medium: 500px;
+  --typography-font-weight-semibold: 600px;
+  --typography-font-weight-bold: 700px;
+  --typography-font-weight-extrabold: 800px;
+  --typography-font-weight-black: 900px;
+
+  /* Typography Line Height */
+  --typography-line-height-display: var(--size-xl-massive);
+  --typography-line-height-title: var(--size-giant);
+  --typography-line-height-h1: var(--size-xxxxl);
+  --typography-line-height-h2: var(--size-xxxl);
+  --typography-line-height-h3: var(--size-xxl2);
+  --typography-line-height-h4: var(--size-xl2);
+  --typography-line-height-h5: 36px;
+  --typography-line-height-h6: 36.400001525878906px;
+  --typography-line-height-body-xxl: 46.79999923706055px;
+  --typography-line-height-body-xl: 46.79999923706055px;
+  --typography-line-height-body-lg: var(--size-lg);
+  --typography-line-height-body-md: var(--size-md-sm);
+  --typography-line-height-body-sm: var(--size-md);
+  --typography-line-height-body-xs: var(--size-md);
+
+  /* Size Aliases */
+  --size-zero: var(--size-none);
+  --size-x: var(--size-base-x);
+  --size-2x: var(--size-sm);
+  --size-3x: var(--size-md-sm);
+  --size-4x: var(--size-md);
+  --size-5x: var(--size-md-lg);
+  --size-6x: var(--size-lg);
+  --size-7x: var(--size-xl);
+  --size-8x: var(--size-xxl);
+  --size-9x: var(--size-xxxl);
+  --size-10x: var(--size-xxxxl);
+  --size-11x: var(--size-huge);
+  --size-12x: var(--size-giant);
+  --size-13x: var(--size-massive);
+  --size-14x: var(--size-massive);
+}
+
+
+body {
+  background-color: #151E19 !important;
+}
+
+
+*{
+  scrollbar-width: none;
+}
