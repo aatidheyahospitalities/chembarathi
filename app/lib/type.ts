@@ -22,20 +22,32 @@ export interface CommonSectionType {
   description: string;
   ctaLabel: string;
   ctaUrl: string;
-  image: {
-    url: string;
+  image: { url: string };
+}
+
+
+export interface ContentSectionWithGalleryType {
+  title: string;
+  eyebrow: string;
+  description: string;
+  multipleimgCollection: {
+    items: {
+      url: string;
+    }[];
   };
 }
 
+// Page Type Interfaces
 export interface HomePageType {
   title: string;
   hero: HeroType;
   metadata: MetaDataType;
   aboutus: CommonSectionType;
   theexperiences: CommonSectionType;
+  experienceTheBeauty: ContentSectionWithGalleryType;
 }
 
-// Define the structure for the data returned by the Contentful API for page type one
+// Collection Interfaces
 
 export interface pagetypeoneCollection {
   pagetypeoneCollection: {
@@ -46,5 +58,11 @@ export interface pagetypeoneCollection {
 export interface metadataCollection {
   metadataCollection: {
     items: MetaDataType[] | [];
+  };
+}
+
+export interface contentSectionWithGalleryCollection {
+  contentSectionWithGalleryCollection: {
+    items: ContentSectionWithGalleryType[] | [];
   };
 }

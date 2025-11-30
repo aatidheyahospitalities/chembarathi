@@ -23,6 +23,16 @@ export const homeContentQuery = {
         }
         description
     }
+    experienceTheBeauty {
+        eyebrow
+        title
+        description
+        multipleimgCollection {
+          items {
+            url
+          }
+        }
+      }
     hero {
         title
         slug
