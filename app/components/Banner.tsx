@@ -1,15 +1,15 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { HeroData } from "../lib/type";
+import {  HeroType } from "../lib/type";
 
-export default async function Banner({heroData}: {heroData: HeroData}) {
-  const heroTitle = heroData?.fields.heroTitle || "";
-  const heroImage = heroData?.fields.heroImage?.fields?.file?.url || "";
-  const heroDescription = heroData?.fields.heroDescription;
+export default async function Banner({heroData}: {heroData: HeroType}) {
+  const heroTitle = heroData?.title || "";
+  const heroImage = heroData?.image.url || "";
+  const heroDescription = heroData?.description.json || null;
 
   return (
     <div 
       className="relative flex items-end justify-center min-h-screen bg-center bg-no-repeat bg-cover"
-      style={{ backgroundImage: `url(https:${heroImage})` }}
+      style={{ backgroundImage: `url(${heroImage})` }}
     >
       {/* Overlay for better text readability */}
       <div className="absolute inset-0 bg-black/40"></div>

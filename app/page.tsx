@@ -1,28 +1,28 @@
+import MarqueeSection from "./components/InfiniteScrollText";
+import { contentfulFetch } from "./API/Contentful/getContent";
+import { metadataCollection, pagetypeoneCollection } from "./lib/type";
+import { homeContentQuery, homeMetaDataQuery } from "./API/Query/query";
+
 import Banner from "./components/Banner";
 import CommonSection from "./components/CommonSection";
-
-import { getContent, getMetaData } from "./lib/services/getHomeContent";
-import { HeroData, commonSectionData } from "./lib/type";
-import MarqueeSection from "./components/InfiniteScrollText";
 
 export const revalidate = 600; // Revalidate every 10 minutes
 
 export async function generateMetadata() {
-  const metaData = await getMetaData();
+  const metaData:metadataCollection = await contentfulFetch(homeMetaDataQuery);
   return {
-    title: metaData.fields.metaDataTitle || "",
-    description: metaData.fields.metaDataDescription || "",
+    title: metaData.metadataCollection.items[0]?.title || "",
+    description: metaData.metadataCollection.items[0]?.description || "",
   };
 }
 
 
 export default async function HomePage() {
 
-  const data = await getContent();
-  const heroData: HeroData = data.items[0]?.fields.hero as HeroData || {};
-  const twoColumnSection = data.items[0]?.fields.twoColumnShowcaseSection as unknown[];
-  const AboutData: commonSectionData = (twoColumnSection?.[0] as unknown as commonSectionData) || {};
-  const ExperienceData: commonSectionData = (twoColumnSection?.[1] as unknown as commonSectionData) || {};
+  const data:pagetypeoneCollection = await contentfulFetch(homeContentQuery)
+  const heroData = data.pagetypeoneCollection.items[0].hero;
+  const AboutData = data.pagetypeoneCollection.items[0].aboutus;
+  const ExperienceData = data.pagetypeoneCollection.items[0].theexperiences;
   return (
     <div>
       <Banner heroData={heroData} />

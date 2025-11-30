@@ -1,16 +1,16 @@
-import { commonSectionData } from "../lib/type";
-import CommonLinkButton from "./CommonLinkButton";
 import Image from "next/image";
+import {  CommonSectionType } from "../lib/type";
+import CommonLinkButton from "./CommonLinkButton";
 
-export default async function commonSection({commonSectionData,type}: {commonSectionData: commonSectionData, type: 'TYPE1' | 'TYPE2' }) {
+export default async function commonSection({commonSectionData,type}: {commonSectionData: CommonSectionType, type: 'TYPE1' | 'TYPE2' }) {
 
 const typeOfSection = type || "TYPE1";
-const title = commonSectionData?.fields.title || "";
-const description = commonSectionData?.fields.description || "";
-const ctaLabel = commonSectionData?.fields.ctaLabel || "";
-// const ctaUrl = commonSectionData?.fields.ctaUrl || "";
-const eyebrow = commonSectionData?.fields.eyebrow || "";
-const image = `https:${commonSectionData?.fields.image?.fields?.file?.url || ""}`;
+const title = commonSectionData?.title || "";
+const description = commonSectionData?.description || "";
+const ctaLabel = commonSectionData?.ctaLabel || "";
+// const ctaUrl = commonSectionData?.ctaUrl || "";
+const eyebrow = commonSectionData?.eyebrow || "";
+const image = commonSectionData?.image?.url || "";
 
   return (
     <div className={`section-wrapper gap-(--spacing-padding-16x) flex flex-col ${typeOfSection === "TYPE1" ? "" : "flex-row"}`} >
