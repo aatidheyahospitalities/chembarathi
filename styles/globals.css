@@ -171,10 +171,7 @@
   --spacing-huge-x: 96px;
   --spacing-giant-x: 128px;
   --spacing-massive-x: 160px;
-}
 
-/* 02 Semantic - Mode 1 */
-:root {
   /* Font Families */
     --fonts-family-primary: Staylista, system-ui, -apple-system, sans-serif;
     --fonts-family-secondary: var(--font-figtree);
@@ -241,10 +238,9 @@
   --color-status-warning-medium-light: var(--colors-yellow-300);
   --color-status-warning-neutral: var(--colors-yellow-400);
   --color-status-warning-dark: var(--colors-yellow-600);
-}
+
 
 /* 03 Generic - Mode 1 */
-:root {
   /* Opacity */
   --opacity-0: 0px;
   --opacity-25: 25px;

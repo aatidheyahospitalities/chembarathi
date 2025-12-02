@@ -8,7 +8,6 @@ const typeOfSection = type || "TYPE1";
 const title = commonSectionData?.title || "";
 const description = commonSectionData?.description || "";
 const ctaLabel = commonSectionData?.ctaLabel || "";
-// const ctaUrl = commonSectionData?.ctaUrl || "";
 const eyebrow = commonSectionData?.eyebrow || "";
 const image = commonSectionData?.image?.url || "";
 

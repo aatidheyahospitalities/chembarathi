@@ -181,38 +181,3 @@ h6,.text-heading-6 {
     padding-inline: 16%;
   }
 }
-
-
-/* Link Styles
-a, .text-link {
-  font-family: var(--typography-font-family-secondary);
-  color: var(--typography-color-link-link);
-  text-decoration: underline;
-  font-weight: var(--typography-font-weight-medium);
-}
-
-a:hover, .text-link:hover {
-  color: var(--color-others-medium-dark);
-  text-decoration: none;
-}
-
-/* Status Text Styles */
-/* .text-success {
-  color: var(--typography-color-status-success);
-  font-weight: var(--typography-font-weight-medium);
-}
-
-.text-warning {
-  color: var(--typography-color-status-warning);
-  font-weight: var(--typography-font-weight-medium);
-}
-
-.text-alert {
-  color: var(--typography-color-status-alert);
-  font-weight: var(--typography-font-weight-medium);
-}
-
-.text-acknowledged {
-  color: var(--typography-color-status-ackowledeged);
-  font-weight: var(--typography-font-weight-medium);
-} */
