@@ -391,14 +391,14 @@
   /* Typography Line Height */
   --typography-line-height-display: var(--size-xl-massive);
   --typography-line-height-title: var(--size-giant);
-  --typography-line-height-h1: var(--size-xxxxl);
-  --typography-line-height-h2: var(--size-xxxl);
+  --typography-line-height-h1: 88px;
+  --typography-line-height-h2: 77px;
   --typography-line-height-h3: var(--size-xxl2);
   --typography-line-height-h4: var(--size-xl2);
   --typography-line-height-h5: 36px;
   --typography-line-height-h6: 36.400001525878906px;
   --typography-line-height-body-xxl: 46.79999923706055px;
-  --typography-line-height-body-xl: 46.79999923706055px;
+  --typography-line-height-body-xl: var(--size-xl);
   --typography-line-height-body-lg: var(--size-lg);
   --typography-line-height-body-md: var(--size-md-sm);
   --typography-line-height-body-sm: var(--size-md);

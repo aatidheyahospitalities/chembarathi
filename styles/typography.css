@@ -162,6 +162,11 @@ h6,.text-heading-6 {
   line-height: var(--typography-line-height-body-sm) !important;
 }
 
+.banner-wrapper {
+  padding-block: var(--spacing-padding-10x);
+  padding-inline: 12%; /* default for <1600px if needed */
+}
+
 .section-wrapper {
   padding-block: var(--spacing-padding-huge-x);
   padding-inline: 12%; /* default for <1600px if needed */
@@ -170,6 +175,9 @@ h6,.text-heading-6 {
 /* For screens wider than 1600px */
 @media (min-width: 1600px) {
   .section-wrapper {
+    padding-inline: 16%;
+  }
+  .banner-wrapper {
     padding-inline: 16%;
   }
 }

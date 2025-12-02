@@ -33,7 +33,7 @@ const image = commonSectionData?.multipleimgCollection?.items || [];
     
             return (
               <div 
-                key={index} 
+                key={index + 1} 
                 className={`relative w-full h-full ${spanClasses[index]}`}
               >
                 <Image

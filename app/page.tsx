@@ -1,4 +1,3 @@
-import MarqueeSection from "./components/InfiniteScrollText";
 import { contentfulFetch } from "./API/Contentful/getContent";
 import { metadataCollection, pagetypeoneCollection } from "./lib/type";
 import { homeContentQuery, homeMetaDataQuery } from "./API/Query/query";
@@ -6,6 +5,7 @@ import { homeContentQuery, homeMetaDataQuery } from "./API/Query/query";
 import Banner from "./components/Banner";
 import CommonSection from "./components/CommonSection";
 import CommonSectionWithGallery from "./components/CommonSectionWithGallery";
+import AnimatedTextSlider from "./components/AnimatedTextSlider";
 
 export const revalidate = 600; // Revalidate every 10 minutes
 
@@ -26,12 +26,15 @@ export default async function HomePage() {
   const ExperienceData = data.pagetypeoneCollection.items[0].theexperiences;
   const ExperienceTheBeautyData = data.pagetypeoneCollection.items[0].experienceTheBeauty;
   return (
-    <div>
+    <main>
       <Banner heroData={heroData} />
       <CommonSection commonSectionData={AboutData} type="TYPE1" />
       <CommonSection commonSectionData={ExperienceData} type="TYPE2" />
-      <MarqueeSection/>
-      <CommonSectionWithGallery commonSectionData={ExperienceTheBeautyData}  />
-    </div>
+      <AnimatedTextSlider 
+        text="Rejuvenation Retreat • Forest Therapy • "
+        speed={0.9}
+      />
+      <CommonSectionWithGallery commonSectionData={ExperienceTheBeautyData} />
+    </main>
   );
 }
