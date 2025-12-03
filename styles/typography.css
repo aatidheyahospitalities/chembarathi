@@ -170,20 +170,20 @@ h6,
 
 .banner-wrapper {
   padding-block: var(--spacing-padding-10x);
-  padding-inline: 12%; /* default for <1600px if needed */
+  padding-inline: 4%; /* default for <1600px if needed */
 }
 
 .section-wrapper {
   padding-block: var(--spacing-padding-huge-x);
-  padding-inline: 12%; /* default for <1600px if needed */
+  padding-inline: 4%; /* default for <1600px if needed */
 }
 
 /* For screens wider than 1600px */
 @media (min-width: 1600px) {
   .section-wrapper {
-    padding-inline: 16%;
+    padding-inline: 10%;
   }
   .banner-wrapper {
-    padding-inline: 16%;
+    padding-inline: 10%;
   }
 }

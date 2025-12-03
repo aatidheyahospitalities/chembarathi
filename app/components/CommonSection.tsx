@@ -41,7 +41,7 @@ export default async function commonSection({
         </div>
       </div>
       <div
-        className={` h-[702px] flex relative ${typeOfSection === 'TYPE1' ? 'w-full' : 'w-[50%]'}`}
+        className={`flex relative aspect-video ${typeOfSection === 'TYPE1' ? 'w-full' : 'w-[50%]'}`}
       >
         <Image
           src={image}
