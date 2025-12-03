@@ -6,6 +6,7 @@ import Banner from "./components/Banner";
 import CommonSection from "./components/CommonSection";
 import CommonSectionWithGallery from "./components/CommonSectionWithGallery";
 import AnimatedTextSlider from "./components/AnimatedTextSlider";
+import GalleryLoop from "./components/GalleryLoop";
 
 export const revalidate = 600; // Revalidate every 10 minutes
 
@@ -35,6 +36,7 @@ export default async function HomePage() {
         speed={0.9}
       />
       <CommonSectionWithGallery commonSectionData={ExperienceTheBeautyData} />
+      <GalleryLoop/>
     </main>
   );
 }
