@@ -23,7 +23,7 @@ const image = commonSectionData?.image?.url || "";
               <CommonLinkButton text={ctaLabel}  /> 
             </div>
         </div>
-        <div className={` h-[702px] flex relative ${typeOfSection === "TYPE1" ? "w-full" : "w-[50%]"}`}>
+        <div className={`flex relative aspect-video ${typeOfSection === "TYPE1" ? "w-full" : "w-[50%]"}`}>
           <Image src={image} alt="Common Section Image" className="object-cover" fill loading="eager"/>
         </div>
     </div>
