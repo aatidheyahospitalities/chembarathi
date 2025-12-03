@@ -3,6 +3,8 @@ import { useRef, useEffect } from 'react';
 import Image from 'next/image';
 import gsap from 'gsap';
 
+import img1 from '../lib/img/36e809e51ea4fffe2472f329ee94c5dd89f56ef8.jpg';
+
 interface GalleryLoopProps {
   readonly speed?: number;
 }
@@ -18,56 +20,56 @@ export default function GalleryLoop({ speed = 1 }: Readonly<GalleryLoopProps>) {
       id: 'sq-1',
       width: 300,
       height: 300,
-      src: '/images/gallery/image-1.jpg',
+      src: img1,
       alt: 'Gallery image 1',
     }, // 1:1 Square
     {
       id: 'pt-1',
       width: 300,
       height: 400,
-      src: '/images/gallery/image-2.jpg',
+      src: img1,
       alt: 'Gallery image 2',
     }, // 3:4 Portrait
     {
       id: 'ls-1',
       width: 300,
       height: 169,
-      src: '/images/gallery/image-3.jpg',
+      src: img1,
       alt: 'Gallery image 3',
     }, // 16:9 Landscape
     {
       id: 'ls-2',
       width: 300,
       height: 225,
-      src: '/images/gallery/image-4.jpg',
+      src: img1,
       alt: 'Gallery image 4',
     }, // 4:3 Landscape
     {
       id: 'sq-2',
       width: 300,
       height: 300,
-      src: '/images/gallery/image-5.jpg',
+      src: img1,
       alt: 'Gallery image 5',
     }, // 1:1 Square
     {
       id: 'pt-2',
       width: 300,
       height: 400,
-      src: '/images/gallery/image-6.jpg',
+      src: img1,
       alt: 'Gallery image 6',
     }, // 3:4 Portrait
     {
       id: 'ls-3',
       width: 300,
       height: 169,
-      src: '/images/gallery/image-7.jpg',
+      src: img1,
       alt: 'Gallery image 7',
     }, // 16:9 Landscape
     {
       id: 'ls-4',
       width: 300,
       height: 225,
-      src: '/images/gallery/image-8.jpg',
+      src: img1,
       alt: 'Gallery image 8',
     }, // 4:3 Landscape
   ];
@@ -133,7 +135,7 @@ export default function GalleryLoop({ speed = 1 }: Readonly<GalleryLoopProps>) {
                   src={item.src}
                   alt={item.alt}
                   fill
-                  className="object-cover border-2 border-red-500"
+                  className="object-cover "
                   sizes={`${item.width}px`}
                 />
               </div>
@@ -155,7 +157,7 @@ export default function GalleryLoop({ speed = 1 }: Readonly<GalleryLoopProps>) {
                   src={item.src}
                   alt={item.alt}
                   fill
-                  className="object-cover border-2 border-red-500"
+                  className="object-cover "
                   sizes={`${item.width}px`}
                 />
               </div>
@@ -177,7 +179,7 @@ export default function GalleryLoop({ speed = 1 }: Readonly<GalleryLoopProps>) {
                   src={item.src}
                   alt={item.alt}
                   fill
-                  className="object-cover border-2 border-red-500"
+                  className="object-cover "
                   sizes={`${item.width}px`}
                 />
               </div>
