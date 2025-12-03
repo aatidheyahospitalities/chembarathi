@@ -1,4 +1,4 @@
-import { Document } from "@contentful/rich-text-types";
+import { Document } from '@contentful/rich-text-types';
 
 export interface HeroType {
   title: string;
@@ -24,7 +24,6 @@ export interface CommonSectionType {
   ctaUrl: string;
   image: { url: string };
 }
-
 
 export interface ContentSectionWithGalleryType {
   title: string;

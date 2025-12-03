@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 export default function commonLinkButton({
   text,
@@ -16,29 +16,14 @@ export default function commonLinkButton({
         <h6 className="text-(--typography-color-secondary-100)">{text}</h6>
 
         {/* arrow */}
-        <span
-          className="
-            material-symbols-outlined text-white text-base
-            absolute -right-5 -top-1
-            transition-transform duration-300 ease-in-out
-            group-hover:translate-x-1 group-hover:-translate-y-1
-            group-active:translate-y-0
-          "
-        >
+        <span className="absolute text-base text-white transition-transform duration-300 ease-in-out material-symbols-outlined -right-5 -top-1 group-hover:translate-x-1 group-hover:-translate-y-1 group-active:translate-y-0">
           north_east
         </span>
       </div>
 
       {/* underline animation */}
-      <span className="pointer-events-none absolute left-0 -bottom-[2px] h-[2px] w-full overflow-hidden">
-        <span
-          className="
-            block h-full w-full bg-white
-            origin-left scale-x-0
-            transition-transform duration-300 ease-in-out
-            group-hover:scale-x-100
-          "
-        />
+      <span className="pointer-events-none absolute left-0 -bottom-0.5 h-0.5 w-full overflow-hidden">
+        <span className="block w-full h-full transition-transform duration-300 ease-in-out origin-left scale-x-0 bg-white group-hover:scale-x-100" />
       </span>
     </button>
   );

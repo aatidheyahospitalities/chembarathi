@@ -1,8 +1,8 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["images.ctfassets.net"], // Add the Contentful image domain here
+    domains: ['images.ctfassets.net'], // Add the Contentful image domain here
   },
   /* config options here */
 };

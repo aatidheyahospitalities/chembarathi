@@ -53,7 +53,7 @@ export const homeContentQuery = {
  }`,
   variables: {
     where: {
-      slug: "home-page",
+      slug: 'home-page',
     },
   },
 };
@@ -70,7 +70,7 @@ export const homeMetaDataQuery = {
   }`,
   variables: {
     where: {
-      slug: "homepage",
+      slug: 'homepage',
     },
   },
 };

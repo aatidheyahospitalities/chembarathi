@@ -1,11 +1,11 @@
 module.exports = {
   content: [
-     './app/**/*.{js,ts,jsx,tsx,mdx}',
-  './components/**/*.{js,ts,jsx,tsx,mdx}',
-  './lib/**/*.{js,ts,jsx,tsx}',
-  './styles/**/*.{css}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './lib/**/*.{js,ts,jsx,tsx}',
+    './styles/**/*.{css}',
   ],
-   important: true,
+  important: true,
   theme: {
     extend: {
       fontFamily: {

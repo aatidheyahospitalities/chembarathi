@@ -1,13 +1,15 @@
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import {  HeroType } from "../lib/type";
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import { HeroType } from '../lib/type';
 
-export default async function Banner({heroData}: Readonly<{heroData: HeroType}>) {
-  const heroTitle = heroData?.title || "";
-  const heroImage = heroData?.image.url || "";
+export default async function Banner({
+  heroData,
+}: Readonly<{ heroData: HeroType }>) {
+  const heroTitle = heroData?.title || '';
+  const heroImage = heroData?.image.url || '';
   const heroDescription = heroData?.description.json || null;
 
   return (
-    <div 
+    <div
       className="relative flex items-end justify-center min-h-screen bg-center bg-no-repeat bg-cover banner-wrapper"
       style={{ backgroundImage: `url(${heroImage})` }}
     >

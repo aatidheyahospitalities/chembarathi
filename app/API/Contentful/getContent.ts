@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound } from 'next/navigation';
 
 type ContentFulParams = {
   query: string;
@@ -13,9 +13,9 @@ export async function contentfulFetch<T>(params: ContentFulParams): Promise<T> {
   const res = await fetch(
     `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFULL_SPACE_ID}/environments/master`,
     {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${process.env.CONTENTFULL_ACCESS_TOKEN}`,
       },
       body: JSON.stringify({
@@ -26,7 +26,7 @@ export async function contentfulFetch<T>(params: ContentFulParams): Promise<T> {
   );
 
   if (!res.ok) {
-    console.error("Contentful GraphQL Error:", await res.text());
+    console.error('Contentful GraphQL Error:', await res.text());
     notFound();
   }
 

@@ -1,15 +1,15 @@
-import "@/styles/globals.css";
-import type { Metadata } from "next";
-import { Figtree } from "next/font/google";
+import '@/styles/globals.css';
+import type { Metadata } from 'next';
+import { Figtree } from 'next/font/google';
 
 const figtree = Figtree({
-  subsets: ["latin"],
-  variable: "--font-figtree",
+  subsets: ['latin'],
+  variable: '--font-figtree',
 });
 
 export const metadata: Metadata = {
-  title: "Chembarathi",
-  description: "Welcome to Chembarathi",
+  title: 'Chembarathi',
+  description: 'Welcome to Chembarathi',
 };
 
 export default function RootLayout({
@@ -20,7 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={figtree.variable}>
       <head>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=north_east" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=north_east"
+        />
       </head>
       <body>
         {/* Header - shared across all pages */}
@@ -31,9 +34,7 @@ export default function RootLayout({
         </header> */}
 
         {/* Main content - each page renders here */}
-        <main className="min-h-screen">
-          {children}
-        </main>
+        <main className="min-h-screen">{children}</main>
 
         {/* Footer - shared across all pages */}
         {/* <footer className="mt-16 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900">
