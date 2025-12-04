@@ -3,7 +3,7 @@ import { useRef, useEffect } from 'react';
 import Image from 'next/image';
 import gsap from 'gsap';
 
-import img1 from '../lib/img/36e809e51ea4fffe2472f329ee94c5dd89f56ef8.jpg';
+import img1 from '../lib/img/test.jpg';
 
 interface GalleryLoopProps {
   readonly speed?: number;
