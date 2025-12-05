@@ -18,6 +18,20 @@
 @source "../components";
 @source "../lib";
 
+/* Infinite Loop Animation */
+@keyframes loop {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-loop {
+  animation: loop var(--loop-duration, 20s) linear infinite;
+}
+
 /* 01 Base - Color Palette and Sizes */
 :root {
   /* Transparent */
