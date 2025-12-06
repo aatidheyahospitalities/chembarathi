@@ -5,9 +5,9 @@ import { homeContentQuery, homeMetaDataQuery } from './API/Query/query';
 import Banner from './components/Banner';
 import CommonSection from './components/CommonSection';
 import CommonSectionWithGallery from './components/CommonSectionWithGallery';
-import AnimatedTextSlider from './components/AnimatedTextSlider';
 import GalleryLoop from './components/GalleryLoop';
 import ReviewSection from './components/ReviewSection';
+import ScrollVelocityText from './components/ScrollVelocityText';
 
 export const revalidate = 600; // Revalidate every 10 minutes
 
@@ -31,9 +31,10 @@ export default async function HomePage() {
       <Banner heroData={heroData} />
       <CommonSection commonSectionData={AboutData} type="TYPE1" />
       <CommonSection commonSectionData={ExperienceData} type="TYPE2" />
-      <AnimatedTextSlider
-        text="Rejuvenation Retreat • Forest Therapy • "
-        speed={0.9}
+      <ScrollVelocityText
+        texts={['Rejuvenation Retreat • Forest Therapy •']}
+        velocity={100}
+        className="custom-scroll-text text-display text-(--typography-color-secondary-850) whitespace-nowrap m-0 leading-none pr-16 shrink-0"
       />
       <CommonSectionWithGallery commonSectionData={ExperienceTheBeautyData} />
       <GalleryLoop />
