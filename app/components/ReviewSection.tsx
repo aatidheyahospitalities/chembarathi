@@ -1,6 +1,6 @@
 import WreathRingLeft from '../lib/Icos/WreathRingLeft copy';
 import WreathRingRight from '../lib/Icos/WreathRingRight';
-import InfiniteScrollWrapper from './InfiniteScrollWrapper';
+import InfiniteLoopWrapper from './InfiniteLoopWrapper';
 import UserReviewCard from './UserReviewCard';
 
 export default function ReviewSection() {
@@ -61,9 +61,9 @@ export default function ReviewSection() {
   const CheckInRating = 4.7;
   const CommunicationRating = 4.7;
 
-  const items = customerFeedback.map((review, index) => (
-    <UserReviewCard key={index + 1} {...review} />
-  ));
+  const items = customerFeedback.map((review, index) => ({
+    node: <UserReviewCard key={index + 1} {...review} />,
+  }));
 
   return (
     <div>
@@ -88,7 +88,7 @@ export default function ReviewSection() {
         </div>
       </div>
       <div className="pb-(--spacing-padding-huge-x)">
-        <InfiniteScrollWrapper items={items} duration={30} gap={24} />
+        <InfiniteLoopWrapper items={items} alignItems="start" />
       </div>
     </div>
   );
