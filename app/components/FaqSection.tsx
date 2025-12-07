@@ -20,7 +20,7 @@ export default function FaqSection(faqData: Readonly<FaqItemType>) {
         </h2>
       </div>
 
-      <div className="w-full">
+      <div className="w-full max-w-[974px]">
         <Accordion type="single" collapsible className="w-full">
           {List.items.map((faqItem, index) => (
             <AccordionItem
