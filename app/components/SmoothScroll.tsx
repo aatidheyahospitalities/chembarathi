@@ -7,7 +7,7 @@ import { ScrollSmoother } from "gsap/ScrollSmoother";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
-export default function SmoothScroll({ children }: { children: React.ReactNode }) {
+export default function SmoothScroll({ children }: Readonly<{ children: React.ReactNode }>) {
   const wrapper = useRef<HTMLDivElement | null>(null);
   const content = useRef<HTMLDivElement | null>(null);
 

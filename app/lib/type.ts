@@ -36,6 +36,15 @@ export interface ContentSectionWithGalleryType {
   };
 }
 
+export interface FaqItemType {
+  faqItemCollection: {
+    items: {
+      answer: string;
+      question: string;
+    }[];
+  };
+}
+
 // Page Type Interfaces
 export interface HomePageType {
   title: string;
@@ -44,6 +53,7 @@ export interface HomePageType {
   aboutus: CommonSectionType;
   theexperiences: CommonSectionType;
   experienceTheBeauty: ContentSectionWithGalleryType;
+  faq: FaqItemType;
 }
 
 // Collection Interfaces

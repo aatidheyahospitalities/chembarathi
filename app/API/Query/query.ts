@@ -48,6 +48,14 @@ export const homeContentQuery = {
         description
     }
     title
+      faq {
+        faqItemCollection {
+          items {
+            answer
+            question
+          }
+        }
+      }
     }
     }
  }`,

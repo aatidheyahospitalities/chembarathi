@@ -8,6 +8,7 @@ import CommonSectionWithGallery from './components/CommonSectionWithGallery';
 import GalleryLoop from './components/GalleryLoop';
 import ReviewSection from './components/ReviewSection';
 import ScrollVelocityText from './components/ScrollVelocityText';
+import FaqSection from './components/FaqSection';
 
 export const revalidate = 600; // Revalidate every 10 minutes
 
@@ -26,6 +27,7 @@ export default async function HomePage() {
   const ExperienceData = data.pagetypeoneCollection.items[0].theexperiences;
   const ExperienceTheBeautyData =
     data.pagetypeoneCollection.items[0].experienceTheBeauty;
+  const faqData = data.pagetypeoneCollection.items[0].faq;
   return (
     <main>
       <Banner heroData={heroData} />
@@ -39,6 +41,7 @@ export default async function HomePage() {
       <CommonSectionWithGallery commonSectionData={ExperienceTheBeautyData} />
       <GalleryLoop />
       <ReviewSection />
+      <FaqSection {...faqData} />
     </main>
   );
 }
