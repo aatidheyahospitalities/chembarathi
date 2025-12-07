@@ -33,7 +33,7 @@ export default async function HomePage() {
       <CommonSection commonSectionData={ExperienceData} type="TYPE2" />
       <ScrollVelocityText
         texts={['Rejuvenation Retreat • Forest Therapy •']}
-        velocity={100}
+        velocity={30}
         className="custom-scroll-text text-display text-(--typography-color-secondary-850) whitespace-nowrap m-0 leading-none pr-16 shrink-0"
       />
       <CommonSectionWithGallery commonSectionData={ExperienceTheBeautyData} />
