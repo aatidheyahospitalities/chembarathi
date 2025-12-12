@@ -302,11 +302,9 @@ export const InfiniteLoopWrapper = React.memo<InfiniteLoopProps>(
     const cssVariables = useMemo(
       () =>
         ({
-          '--logoloop-gap': `${gap}px`,
-          '--logoloop-itemHeight': `${itemHeight}px`,
           ...(fadeOutColor && { '--logoloop-fadeColor': fadeOutColor }),
         }) as React.CSSProperties,
-      [gap, itemHeight, fadeOutColor]
+      [fadeOutColor]
     );
 
     const rootClasses = useMemo(
@@ -316,14 +314,11 @@ export const InfiniteLoopWrapper = React.memo<InfiniteLoopProps>(
           isVertical
             ? 'overflow-hidden h-full inline-block'
             : 'overflow-x-hidden',
-          '[--logoloop-gap:32px]',
-          '[--logoloop-logoHeight:28px]',
-          '[--logoloop-fadeColorAuto:#ffffff]',
           'dark:[--logoloop-fadeColorAuto:#0b0b0b]',
-          scaleOnHover && 'py-[calc(var(--logoloop-logoHeight)*0.1)]',
+          '[--logoloop-fadeColorAuto:#ffffff]',
           className
         ),
-      [isVertical, scaleOnHover, className]
+      [isVertical, className]
     );
 
     const handleMouseEnter = useCallback(() => {
@@ -341,10 +336,13 @@ export const InfiniteLoopWrapper = React.memo<InfiniteLoopProps>(
             <li
               key={key}
               className={cx(
-                'flex-none text-(length:--logoloop-itemHeight) leading-none',
-                isVertical ? 'mb-(--logoloop-gap)' : 'mr-(--logoloop-gap)',
+                'flex-none leading-none',
                 scaleOnHover && 'overflow-visible group/item'
               )}
+              style={{
+                fontSize: `${itemHeight}px`,
+                [isVertical ? 'marginBottom' : 'marginRight']: `${gap}px`,
+              }}
             >
               {renderItem(item, key)}
             </li>
@@ -357,15 +355,17 @@ export const InfiniteLoopWrapper = React.memo<InfiniteLoopProps>(
             key={key}
             className={cx(
               'flex-none',
-              isVertical ? 'mb-(--logoloop-gap)' : 'mr-(--logoloop-gap)',
               scaleOnHover && 'overflow-visible group/item'
             )}
+            style={{
+              [isVertical ? 'marginBottom' : 'marginRight']: `${gap}px`,
+            }}
           >
             {item.node}
           </li>
         );
       },
-      [isVertical, scaleOnHover, renderItem]
+      [isVertical, scaleOnHover, renderItem, gap, itemHeight]
     );
 
     const alignmentClass = useMemo(() => {
@@ -405,10 +405,12 @@ export const InfiniteLoopWrapper = React.memo<InfiniteLoopProps>(
             ? undefined
             : toCssLength(width)
           : (toCssLength(width) ?? '100%'),
+        paddingTop: scaleOnHover ? `${itemHeight * 0.1}px` : undefined,
+        paddingBottom: scaleOnHover ? `${itemHeight * 0.1}px` : undefined,
         ...cssVariables,
         ...style,
       }),
-      [width, cssVariables, style, isVertical]
+      [width, cssVariables, style, isVertical, scaleOnHover, itemHeight]
     );
 
     return (

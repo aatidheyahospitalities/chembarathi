@@ -23,21 +23,21 @@ export default function RootLayout({
       <head>
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=optional"
         />
       </head>
-      <body>
-        <SmoothScroll> {/* ✅ wrapped, everything else untouched */}
+      <body suppressHydrationWarning={true}>
+        <SmoothScroll>
+          {' '}
+          {/* ✅ wrapped, everything else untouched */}
           {/* Header - shared across all pages */}
           {/* <header className="border-b border-gray-200 dark:border-gray-800">
             <nav className="container px-4 py-4 mx-auto">
               <h1 className="text-2xl font-bold">Chembarathi</h1>
             </nav>
           </header> */}
-
           {/* Main content - each page renders here */}
           <main className="min-h-screen">{children}</main>
-
           {/* Footer - shared across all pages */}
           {/* <footer className="mt-16 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900">
             <div className="container px-4 py-8 mx-auto text-center text-gray-600 dark:text-gray-400">

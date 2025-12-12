@@ -8,7 +8,7 @@ interface Review {
 
 export default function UserReviewCard(review: Review) {
   return (
-    <div className="flex flex-col w-[500px] min-h-80 p-5 gap-(--spacing-padding-6x) bg-(--surface-primary-700) rounded-(--border-radius-md) ">
+    <div className="flex flex-col w-[500px] min-h-80 p-5! gap-(--spacing-padding-6x) bg-(--surface-primary-700) rounded-(--border-radius-md) ">
       <div className="flex justify-between">
         <div className="flex gap-(--spacing-padding-3x)">
           <span className="w-[47px] h-[47px] rounded-full bg-white"></span>

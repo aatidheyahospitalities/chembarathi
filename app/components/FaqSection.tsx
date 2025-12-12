@@ -10,12 +10,21 @@ export default function FaqSection(faqData: Readonly<FaqItemType>) {
   const List = faqData.faqItemCollection;
 
   return (
-    <div className="flex flex-col section-wrapper gap-(--spacing-padding-8x)">
-      <div className="flex flex-col gap-(--spacing-padding-3x) w-[50%]">
-        <span className="text-md-regular text-(--typography-color-secondary-500)">
+    <div
+      className="flex flex-col section-wrapper"
+      style={{ gap: 'var(--spacing-padding-8x)' }}
+    >
+      <div
+        className="flex flex-col w-[50%]"
+        style={{ gap: 'var(--spacing-padding-3x)' }}
+      >
+        <span
+          className="text-md-regular"
+          style={{ color: 'var(--typography-color-secondary-500)' }}
+        >
           FREQUENTLY ASKED QUESTIONS
         </span>
-        <h2 className="text-(--typography-color-secondary-100)">
+        <h2 style={{ color: 'var(--typography-color-secondary-100)' }}>
           Your Stay, Simplified
         </h2>
       </div>
@@ -24,36 +33,52 @@ export default function FaqSection(faqData: Readonly<FaqItemType>) {
         <Accordion type="single" collapsible className="w-full">
           {List.items.map((faqItem, index) => (
             <AccordionItem
-              key={index}
+              key={index + 1}
               value={`item-${index}`}
               className="border-none group"
             >
               <AccordionTrigger
                 className="
-                flex justify-between text-left text-[20px] font-regular leading-body-lg font-secondary py-5 
-                text-(--typography-color-secondary-600)
+                flex justify-between text-left  
                 no-underline hover:no-underline
-                [&>svg]:hidden  /* <-- Hides default shadcn chevron */
                 relative before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-px before:bg-[#2B2B2B]
+                hide-default-icon accordion-trigger
+                transition-all duration-200 ease-in-out
               "
+                style={{
+                  fontSize: '20px',
+                  lineHeight: 'var(--typography-line-height-body-lg)',
+                  fontFamily: 'var(--typography-font-family-secondary)',
+                  paddingTop: '20px',
+                  paddingBottom: '20px',
+                  color: 'var(--typography-color-secondary-600)',
+                }}
               >
                 {faqItem.question}
 
                 {/* Custom + / - icons */}
-                <span className="ml-4 text-2xl leading-none">
+                <span className="ml-4 text-2xl leading-none accordion-icon">
                   {/* + when closed */}
-                  <span className="material-symbols-outlined group-data-[state=closed]:inline group-data-[state=open]:hidden">
+                  <span className="material-symbols-outlined plus-icon">
                     add
                   </span>
 
                   {/* − when open */}
-                  <span className="material-symbols-outlined group-data-[state=open]:inline group-data-[state=closed]:hidden">
+                  <span className="material-symbols-outlined minus-icon">
                     remove
                   </span>
                 </span>
               </AccordionTrigger>
 
-              <AccordionContent className="text-[16px] font-regular leading-body-lg font-secondary text-(--typography-color-secondary-800)">
+              <AccordionContent
+                className=""
+                style={{
+                  lineHeight: 'var(--typography-line-height-body-lg)',
+                  fontSize: '16px',
+                  fontFamily: 'var(--typography-font-family-secondary)',
+                  color: 'var(--typography-color-secondary-800)',
+                }}
+              >
                 {faqItem.answer}
               </AccordionContent>
             </AccordionItem>

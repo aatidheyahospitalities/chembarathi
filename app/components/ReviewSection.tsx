@@ -80,14 +80,14 @@ export default function ReviewSection() {
             We’re proud to deliver a stay that guests consistently love.
           </span>
         </div>
-        <div className="grid grid-cols-4 gap-[26px] max-w-fit mx-auto">
+        <div className="grid grid-cols-4 gap-[26px] max-w-fit mx-auto self-center">
           <RatingItem rating={CleanlinessRating} label="Cleanliness" />
           <RatingItem rating={AccuracyRating} label="Accuracy" />
           <RatingItem rating={CheckInRating} label="Check-in" />
           <RatingItem rating={CommunicationRating} label="Communication" />
         </div>
       </div>
-      <div className="pb-(--spacing-padding-huge-x)">
+      <div className="pb-(--spacing-padding-huge-x)!">
         <InfiniteLoopWrapper items={items} alignItems="start" />
       </div>
     </div>

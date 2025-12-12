@@ -5,7 +5,6 @@ module.exports = {
     './lib/**/*.{js,ts,jsx,tsx}',
     './styles/**/*.{css}',
   ],
-  important: true,
   theme: {
     extend: {
       fontFamily: {
@@ -103,6 +102,40 @@ module.exports = {
           acknowledged: 'var(--typography-color-status-ackowledeged)',
         },
         link: 'var(--typography-color-link-link)',
+      },
+      keyframes: {
+        'accordion-down': {
+          from: {
+            height: '0',
+            opacity: '0',
+            paddingTop: '0',
+            paddingBottom: '0',
+          },
+          to: {
+            height: 'var(--radix-accordion-content-height)',
+            opacity: '1',
+            paddingTop: '0',
+            paddingBottom: '20px',
+          },
+        },
+        'accordion-up': {
+          from: {
+            height: 'var(--radix-accordion-content-height)',
+            opacity: '1',
+            paddingTop: '0',
+            paddingBottom: '20px',
+          },
+          to: {
+            height: '0',
+            opacity: '0',
+            paddingTop: '0',
+            paddingBottom: '0',
+          },
+        },
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+        'accordion-up': 'accordion-up 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
       },
     },
   },

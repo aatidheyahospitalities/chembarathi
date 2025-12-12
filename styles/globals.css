@@ -555,3 +555,53 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Hide default shadcn accordion chevron icon */
+.hide-default-icon > svg {
+  display: none !important;
+}
+
+/* Custom accordion icon states - NO ANIMATIONS, just show/hide */
+.accordion-icon .plus-icon {
+  display: block;
+}
+
+.accordion-icon .minus-icon {
+  display: none;
+}
+
+/* When accordion item is open, switch icons instantly */
+.group[data-state='open'] .accordion-icon .plus-icon {
+  display: none !important;
+}
+
+.group[data-state='open'] .accordion-icon .minus-icon {
+  display: block !important;
+}
+
+/* Enhanced smooth accordion content animations */
+[data-radix-accordion-content] {
+  overflow: hidden;
+}
+
+/* Smooth content wrapper transition */
+[data-radix-accordion-content] > div {
+  transition: all 0.2s ease-in-out;
+  will-change: transform, opacity;
+}
+
+/* Fade in text content smoothly */
+[data-state='open'] [data-radix-accordion-content] > div {
+  animation: fadeInContent 0.3s ease-out 0.1s both;
+}
+
+@keyframes fadeInContent {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
