@@ -9,6 +9,7 @@ import GalleryLoop from './components/GalleryLoop';
 import ReviewSection from './components/ReviewSection';
 import ScrollVelocityText from './components/ScrollVelocityText';
 import FaqSection from './components/FaqSection';
+import BottomBarSection from './components/BottomBarSection';
 
 export const revalidate = 600; // Revalidate every 10 minutes
 
@@ -42,6 +43,7 @@ export default async function HomePage() {
       <GalleryLoop />
       <ReviewSection />
       <FaqSection {...faqData} />
+      <BottomBarSection />
     </main>
   );
 }
