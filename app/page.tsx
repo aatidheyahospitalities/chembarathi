@@ -10,6 +10,7 @@ import ReviewSection from './components/ReviewSection';
 import ScrollVelocityText from './components/ScrollVelocityText';
 import FaqSection from './components/FaqSection';
 import BottomBarSection from './components/BottomBarSection';
+import RoomSection from './components/RoomSection';
 
 export const revalidate = 600; // Revalidate every 10 minutes
 
@@ -40,6 +41,7 @@ export default async function HomePage() {
         className="custom-scroll-text text-display text-(--typography-color-secondary-850) whitespace-nowrap m-0 leading-none pr-16 shrink-0"
       />
       <CommonSectionWithGallery commonSectionData={ExperienceTheBeautyData} />
+      <RoomSection />
       <GalleryLoop />
       <ReviewSection />
       <FaqSection {...faqData} />
