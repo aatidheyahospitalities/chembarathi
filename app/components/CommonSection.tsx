@@ -49,7 +49,7 @@ export default async function commonSection({
         </div>
       </div>
       <div
-        className={`flex relative aspect-video rounded-[32px] overflow-hidden ${
+        className={`flex relative aspect-video rounded-4xl overflow-hidden ${
           typeOfSection === 'TYPE1' ? 'w-full' : 'w-[50%]'
         }`}
       >

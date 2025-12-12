@@ -13,17 +13,15 @@ interface HorizontalScrollGSAPProps {
 
 export default function HorizontalScrollGSAP({
   children,
-}: HorizontalScrollGSAPProps) {
+}: Readonly<HorizontalScrollGSAPProps>) {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const container = containerRef.current;
     const scrollContent = scrollRef.current;
-    const progressElement = progressRef.current;
 
-    if (!container || !scrollContent || !progressElement) return;
+    if (!container || !scrollContent) return;
 
     // Calculate the horizontal scroll distance
     const getScrollAmount = () => {
@@ -50,13 +48,6 @@ export default function HorizontalScrollGSAP({
       anticipatePin: 1,
       invalidateOnRefresh: true,
       refreshPriority: -1,
-      onUpdate: self => {
-        // Update progress indicator
-        const progress = Math.round(self.progress * 100);
-        if (progressElement) {
-          progressElement.textContent = `Progress: ${progress}%`;
-        }
-      },
     });
 
     // Refresh ScrollTrigger on resize
@@ -89,13 +80,6 @@ export default function HorizontalScrollGSAP({
           }}
         >
           {children}
-        </div>
-      </div>
-
-      {/* Progress indicator */}
-      <div className="fixed z-10 px-6 py-3 transform -translate-x-1/2 rounded-full bottom-8 left-1/2 bg-white/20 backdrop-blur-sm">
-        <div ref={progressRef} className="text-sm font-medium text-gray-800">
-          Progress: 0%
         </div>
       </div>
     </div>

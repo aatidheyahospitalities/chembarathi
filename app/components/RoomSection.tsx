@@ -1,4 +1,4 @@
-import HorizontalScrollGSAP from './HorizontalScrollGSAP';
+import AnimatedHorizontalScroll from './HorizontalScroll';
 import img from '../lib/img/36e809e51ea4fffe2472f329ee94c5dd89f56ef8.jpg';
 import { StaticImageData } from 'next/image';
 
@@ -137,7 +137,7 @@ export default function RoomSection() {
           Rooms & Suites
         </h2>
       </div>
-      <HorizontalScrollGSAP>
+      <AnimatedHorizontalScroll>
         {Rooms.map(room => (
           <Room
             key={room.id}
@@ -147,7 +147,7 @@ export default function RoomSection() {
             features={room.features}
           />
         ))}
-      </HorizontalScrollGSAP>
+      </AnimatedHorizontalScroll>
     </div>
   );
 }
@@ -162,12 +162,17 @@ function Room({
   image?: StaticImageData | string;
   features?: Array<{ name: string; icon: string }>;
 }>) {
+  const imageUrl = typeof image === 'string' ? image : image?.src || '';
+
   return (
     <div className="w-[600px] h-[800px] rounded-4xl! overflow-hidden group cursor-pointer">
       <div
-        className="relative flex flex-col justify-end w-full h-full overflow-hidden align-bottom bg-center bg-cover rounded-lg shadow-lg"
+        className="relative flex flex-col justify-end w-full h-full overflow-hidden align-bottom bg-gray-300 rounded-lg shadow-lg"
         style={{
-          backgroundImage: `url(${typeof image === 'string' ? image : image?.src || ''})`,
+          backgroundImage: imageUrl ? `url(${imageUrl})` : 'none',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
         }}
       >
         {/* Subtle gradient overlay for text readability on hover */}
