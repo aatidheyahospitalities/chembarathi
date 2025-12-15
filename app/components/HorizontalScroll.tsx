@@ -9,10 +9,12 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface HorizontalScrollGSAPProps {
   children: React.ReactNode;
+  header?: React.ReactNode;
 }
 
 export default function HorizontalScrollGSAP({
   children,
+  header,
 }: Readonly<HorizontalScrollGSAPProps>) {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -69,17 +71,22 @@ export default function HorizontalScrollGSAP({
       className="relative overflow-hidden"
       style={{ height: '300vh' }}
     >
-      <div className="sticky top-0 flex items-center h-screen overflow-hidden">
-        <div
-          ref={scrollRef}
-          className="flex items-center gap-12"
-          style={{
-            willChange: 'transform',
-            paddingLeft: '96px',
-            paddingRight: '96px',
-          }}
-        >
-          {children}
+      <div className="sticky top-0 flex flex-col items-center h-screen overflow-hidden">
+        {header && (
+          <div className="z-10 w-full py-16! px-8! flex-0">{header}</div>
+        )}
+        <div className="flex items-center flex-1 w-full h-full pb-(--spacing-padding-huge-x)!">
+          <div
+            ref={scrollRef}
+            className="flex items-center h-full gap-12"
+            style={{
+              willChange: 'transform',
+              paddingLeft: '96px',
+              paddingRight: '96px',
+            }}
+          >
+            {children}
+          </div>
         </div>
       </div>
     </div>

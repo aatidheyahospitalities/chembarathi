@@ -129,15 +129,18 @@ export default function RoomSection() {
 
   return (
     <div>
-      <div className={`flex flex-col gap-(--spacing-padding-3x)`}>
-        <span className="text-md-regular text-(--typography-color-secondary-500) text-center">
-          ACCOMMODATIONS
-        </span>
-        <h2 className="text-(--typography-color-secondary-100) text-center">
-          Rooms & Suites
-        </h2>
-      </div>
-      <AnimatedHorizontalScroll>
+      <AnimatedHorizontalScroll
+        header={
+          <div className={`flex flex-col gap-(--spacing-padding-3x)!`}>
+            <span className="text-md-regular text-(--typography-color-secondary-500) text-center">
+              ACCOMMODATIONS
+            </span>
+            <h2 className="text-(--typography-color-secondary-100) text-center">
+              Rooms & Suites
+            </h2>
+          </div>
+        }
+      >
         {Rooms.map(room => (
           <Room
             key={room.id}
@@ -165,7 +168,7 @@ function Room({
   const imageUrl = typeof image === 'string' ? image : image?.src || '';
 
   return (
-    <div className="w-[600px] h-[800px] rounded-4xl! overflow-hidden group cursor-pointer">
+    <div className="w-150 h-full flex-1 rounded-4xl! overflow-hidden group cursor-pointer">
       <div
         className="relative flex flex-col justify-end w-full h-full overflow-hidden align-bottom bg-gray-300 rounded-lg shadow-lg"
         style={{
