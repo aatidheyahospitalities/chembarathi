@@ -52,7 +52,10 @@ export default function BottomBarSection() {
             />
           ))}
         </div>
-        <span className="font-primary text-[200px] text-(--typography-color-primary-600)! text-center">
+        <span
+          className="font-primary text-(--typography-color-primary-600)! text-center"
+          style={{ fontSize: 'clamp(4rem, 15vw, 12.5rem)' }}
+        >
           Chembarathi
         </span>
         <div className="flex justify-between align-middle">
