@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { ContentSectionWithGalleryType } from '../lib/type';
 
-export default async function commonSection({
+export default function commonSection({
   commonSectionData,
 }: {
   commonSectionData: ContentSectionWithGalleryType;

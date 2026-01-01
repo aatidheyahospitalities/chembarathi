@@ -1,9 +1,7 @@
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { HeroType } from '../lib/type';
 
-export default async function Banner({
-  heroData,
-}: Readonly<{ heroData: HeroType }>) {
+export default function Banner({ heroData }: Readonly<{ heroData: HeroType }>) {
   const heroTitle = heroData?.title || '';
   const heroImage = heroData?.image.url || '';
   const heroDescription = heroData?.description.json || null;

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { CommonSectionType } from '../lib/type';
 import CommonLinkButton from './CommonLinkButton';
 
-export default async function commonSection({
+export default function commonSection({
   commonSectionData,
   type,
 }: {
