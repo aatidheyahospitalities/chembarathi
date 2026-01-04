@@ -137,6 +137,14 @@ module.exports = {
         'accordion-down': 'accordion-down 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
         'accordion-up': 'accordion-up 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
       },
+      screens: {
+        xs: { max: '375px' }, // ≤ 375px (small phones)
+        sm: { max: '640px' }, // ≤ 640px (large phones)
+        md: { max: '768px' }, // ≤ 768px (tablets)
+        lg: { max: '1024px' }, // ≤ 1024px (small laptops)
+        xl: { max: '1280px' }, // ≤ 1280px (desktops)
+        '2xl': { max: '1536px' }, // ≤ 1536px (large screens)
+      },
     },
   },
   plugins: [],

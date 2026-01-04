@@ -73,9 +73,11 @@ export default function HorizontalScrollGSAP({
     >
       <div className="sticky top-0 flex flex-col items-center h-screen overflow-hidden">
         {header && (
-          <div className="z-10 w-full py-16! px-8! flex-0">{header}</div>
+          <div className="z-10 w-full py-16! px-8! xs:py-8! xs:px-4! flex-0">
+            {header}
+          </div>
         )}
-        <div className="flex items-center flex-1 w-full h-full pb-(--spacing-padding-huge-x)!">
+        <div className="flex items-center flex-1 w-full h-full pb-(--spacing-padding-huge-x)! xs:pb-8!">
           <div
             ref={scrollRef}
             className="flex items-center h-full gap-12"

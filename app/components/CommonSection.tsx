@@ -18,38 +18,40 @@ export default function commonSection({
 
   return (
     <div
-      className={`section-wrapper gap-(--spacing-padding-16x) flex flex-col ${
+      className={`section-wrapper gap-(--spacing-padding-16x) flex flex-col xs:!flex-col xs:!gap-(--spacing-padding-8x) ${
         typeOfSection === 'TYPE1' ? '' : 'flex-row'
       }`}
     >
       <div
-        className={`flex gap-(--spacing-padding-16x) ${
+        className={`flex gap-(--spacing-padding-16x) xs:!flex-col xs:!w-full xs:!gap-(--spacing-padding-6x) ${
           typeOfSection === 'TYPE1' ? 'w-full' : 'flex-col w-[50%]'
         }`}
       >
         <div
-          className={`flex flex-col gap-(--spacing-padding-3x) w-[50%] ${
+          className={`flex flex-col gap-(--spacing-padding-3x) w-[50%] xs:!w-full  ${
             typeOfSection === 'TYPE1' ? 'w-[50%]' : 'flex-col w-full'
           }`}
         >
           <span className="text-md-regular text-(--typography-color-secondary-500)">
             {eyebrow}
           </span>
-          <h2 className="text-(--typography-color-secondary-100)">{title}</h2>
+          <h2 className="text-(--typography-color-secondary-100) xs:!text-h4">
+            {title}
+          </h2>
         </div>
         <div
-          className={`flex flex-col gap-(--spacing-padding-10x) w-[50%] text-start ${
+          className={`flex flex-col gap-(--spacing-padding-10x) w-[50%] text-start xs:!w-full xs:!gap-(--spacing-padding-6x) ${
             typeOfSection === 'TYPE1' ? 'w-[50%]' : 'flex-col w-full'
           }`}
         >
-          <span className="text-xl-regular text-(--typography-color-secondary-800)">
+          <span className="text-xl-regular text-(--typography-color-secondary-800) xs:!text-body-lg">
             {description}
           </span>
           <CommonLinkButton text={ctaLabel} />
         </div>
       </div>
       <div
-        className={`flex relative aspect-video rounded-4xl overflow-hidden ${
+        className={`flex relative aspect-video rounded-4xl overflow-hidden xs:!w-full ${
           typeOfSection === 'TYPE1' ? 'w-full' : 'w-[50%]'
         }`}
       >

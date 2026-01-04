@@ -39,7 +39,7 @@ export default async function HomePage() {
       <ScrollVelocityText
         texts={['Rejuvenation Retreat • Forest Therapy •']}
         velocity={30}
-        className="custom-scroll-text text-display text-(--typography-color-secondary-850) whitespace-nowrap m-0 leading-none pr-16 shrink-0"
+        className="custom-scroll-text text-display text-(--typography-color-secondary-850) whitespace-nowrap m-0 leading-none pr-16 shrink-0 xs:!text-h2"
       />
       <CommonSectionWithGallery commonSectionData={ExperienceTheBeautyData} />
       <ReviewSection />

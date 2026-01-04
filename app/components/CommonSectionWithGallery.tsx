@@ -15,22 +15,28 @@ export default function commonSection({
     <div
       className={`section-wrapper gap-(--spacing-padding-16x) flex flex-col `}
     >
-      <div className={`flex gap-(--spacing-padding-16x) w-full`}>
-        <div className={`flex flex-col gap-(--spacing-padding-3x) w-[50%]`}>
+      <div
+        className={`flex gap-(--spacing-padding-16x) w-full xs:!flex-col xs:!gap-(--spacing-padding-6x)`}
+      >
+        <div
+          className={`flex flex-col gap-(--spacing-padding-3x) w-[50%] xs:w-full`}
+        >
           <span className="text-md-regular text-(--typography-color-secondary-500)">
             {eyebrow}
           </span>
-          <h2 className="text-(--typography-color-secondary-100)">{title}</h2>
+          <h2 className="text-(--typography-color-secondary-100) xs:!text-h4">
+            {title}
+          </h2>
         </div>
         <div
-          className={`flex flex-col gap-(--spacing-padding-10x) w-[50%] text-start`}
+          className={`flex flex-col gap-(--spacing-padding-10x) w-[50%] text-start xs:w-full`}
         >
-          <span className="text-xl-regular text-(--typography-color-secondary-800)">
+          <span className="text-xl-regular text-(--typography-color-secondary-800) xs:!text-body-lg">
             {description}
           </span>
         </div>
       </div>
-      <div className="grid grid-cols-12 grid-rows-2 gap-(--spacing-padding-4x) w-full h-[600px]">
+      <div className="grid grid-cols-12 grid-rows-2 gap-(--spacing-padding-4x) w-full h-150">
         {image.slice(0, 6).map((img, index) => {
           // Define span for each image position
           const spanClasses = [

@@ -135,7 +135,7 @@ export default function RoomSection() {
             <span className="text-md-regular text-(--typography-color-secondary-500) text-center">
               ACCOMMODATIONS
             </span>
-            <h2 className="text-(--typography-color-secondary-100) text-center">
+            <h2 className="text-(--typography-color-secondary-100) text-center xs:!text-h4">
               Rooms & Suites
             </h2>
           </div>
@@ -168,7 +168,7 @@ function Room({
   const imageUrl = typeof image === 'string' ? image : image?.src || '';
 
   return (
-    <div className="w-150 h-full flex-1 rounded-4xl! overflow-hidden group cursor-pointer">
+    <div className="w-150 h-full flex-1 rounded-4xl! overflow-hidden group cursor-pointer xs:w-[300px]">
       <div
         className="relative flex flex-col justify-end w-full h-full overflow-hidden align-bottom bg-gray-300 rounded-lg shadow-lg"
         style={{
