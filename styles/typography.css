@@ -91,12 +91,12 @@ h6,
   line-height: var(--typography-line-height-body-xl) !important;
 }
 
-.text-xl-regular {
+/* .text-xl-regular {
   font-family: var(--typography-font-family-secondary) !important;
   font-size: var(--typography-font-size-body-body-xl) !important;
   font-weight: var(--typography-font-weight-regular) !important;
   line-height: var(--typography-line-height-body-xl) !important;
-}
+} */
 
 .text-xl-bold {
   font-family: var(--typography-font-family-secondary) !important;
@@ -185,5 +185,12 @@ h6,
   }
   .banner-wrapper {
     padding-inline: 10%;
+  }
+}
+
+@media (max-width: 375) {
+  .section-wrapper {
+    padding-block: var(--spacing-padding-10x);
+    padding-inline: var(--spacing-padding-4x);
   }
 }

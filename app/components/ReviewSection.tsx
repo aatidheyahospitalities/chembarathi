@@ -80,7 +80,7 @@ export default function ReviewSection() {
             We’re proud to deliver a stay that guests consistently love.
           </span>
         </div>
-        <div className="grid grid-cols-4 gap-[26px] max-w-fit mx-auto self-center">
+        <div className="grid grid-cols-4 gap-[26px] max-w-fit mx-auto self-center xs:!grid-cols-2 ">
           <RatingItem rating={CleanlinessRating} label="Cleanliness" />
           <RatingItem rating={AccuracyRating} label="Accuracy" />
           <RatingItem rating={CheckInRating} label="Check-in" />
