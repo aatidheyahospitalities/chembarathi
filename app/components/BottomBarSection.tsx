@@ -34,7 +34,7 @@ export default function BottomBarSection() {
 
   return (
     <div className="flex flex-col">
-      <div className="flex items-center justify-between w-full border-b! section-wrapper border-(--surface-primary-500)! gap-16 ">
+      <div className="flex items-center justify-between w-full border-b! section-wrapper border-(--surface-primary-500)! gap-16 xs:!flex-col ">
         <h2 style={{ color: 'var(--typography-color-secondary-100)' }}>
           Reconnect With Nature
         </h2>
@@ -43,7 +43,7 @@ export default function BottomBarSection() {
         </button>
       </div>
       <div className="flex flex-col section-wrapper gap-(--spacing-padding-10x)! align-middle justify-center">
-        <div className="flex gap-[52px] align-middle justify-between">
+        <div className="flex gap-[52px] align-middle justify-between xs:!flex-col">
           {items.map((item, index) => (
             <ListItem
               key={index + 1}
@@ -58,11 +58,11 @@ export default function BottomBarSection() {
         >
           Chembarathi
         </span>
-        <div className="flex justify-between align-middle">
+        <div className="flex justify-between align-middle xs:!flex-col">
           <span className="flex text-xl-regular text-(--typography-color-primary-400)">
             © 2025 Chembarathi Wayanad. All Rights Reserved.
           </span>
-          <div className="flex gap-12 ">
+          <div className="flex gap-12 xs:!flex-col">
             <span className="flex text-xl-regular text-(--typography-color-primary-400)">
               Privacy Policy
             </span>
