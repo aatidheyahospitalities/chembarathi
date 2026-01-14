@@ -147,5 +147,150 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        // Heading Styles
+        '.text-display': {
+          'font-family': 'var(--typography-font-family-primary)',
+          'font-size': 'var(--typography-font-size-heading-display)',
+          'font-weight': 'var(--typography-font-weight-regular)',
+          'line-height': 'var(--typography-line-height-display)',
+        },
+        '.text-title': {
+          'font-family': 'var(--typography-font-family-primary)',
+          'font-size': 'var(--typography-font-size-heading-title)',
+          'font-weight': 'var(--typography-font-weight-regular)',
+          'line-height': 'var(--typography-line-height-title)',
+        },
+        '.text-heading-1': {
+          'font-family': 'var(--typography-font-family-primary)',
+          'font-size': 'var(--typography-font-size-heading-h1)',
+          'font-weight': 'var(--typography-font-weight-regular)',
+          'line-height': 'var(--typography-line-height-h1)',
+        },
+        '.text-heading-2': {
+          'font-family': 'var(--typography-font-family-primary)',
+          'font-size': 'var(--typography-font-size-heading-h2)',
+          'font-weight': 'var(--typography-font-weight-regular)',
+          'line-height': 'var(--typography-line-height-h2)',
+        },
+        '.text-heading-3': {
+          'font-family': 'var(--typography-font-family-primary)',
+          'font-size': 'var(--typography-font-size-heading-h3)',
+          'font-weight': 'var(--typography-font-weight-regular)',
+          'line-height': 'var(--typography-line-height-h3)',
+        },
+        '.text-heading-4': {
+          'font-family': 'var(--typography-font-family-secondary)',
+          'font-size': 'var(--typography-font-size-heading-h4)',
+          'font-weight': 'var(--typography-font-weight-regular)',
+          'line-height': 'var(--typography-line-height-h4)',
+        },
+        '.text-heading-5': {
+          'font-family': 'var(--typography-font-family-secondary)',
+          'font-size': 'var(--typography-font-size-heading-h5)',
+          'font-weight': 'var(--typography-font-weight-regular)',
+          'line-height': 'var(--typography-line-height-h5)',
+        },
+        '.text-heading-6': {
+          'font-family': 'var(--typography-font-family-secondary)',
+          'font-size': 'var(--typography-font-size-heading-h6)',
+          'font-weight': 'var(--typography-font-weight-medium)',
+          'line-height': 'var(--typography-line-height-h6)',
+        },
+        // Body Text Styles
+        '.text-xxl-medium': {
+          'font-family': 'var(--typography-font-family-secondary)',
+          'font-size': 'var(--typography-font-size-body-body-xxl)',
+          'font-weight': 'var(--typography-font-weight-medium)',
+          'line-height': 'var(--typography-line-height-body-xxl)',
+        },
+        '.text-xxl-regular': {
+          'font-family': 'var(--typography-font-family-secondary)',
+          'font-size': 'var(--typography-font-size-body-body-xxl)',
+          'font-weight': 'var(--typography-font-weight-regular)',
+          'line-height': 'var(--typography-line-height-body-xxl)',
+        },
+        '.text-xxl-bold': {
+          'font-family': 'var(--typography-font-family-secondary)',
+          'font-size': 'var(--typography-font-size-body-body-xxl)',
+          'font-weight': 'var(--typography-font-weight-bold)',
+          'line-height': 'var(--typography-line-height-body-xxl)',
+        },
+        '.text-xl-med': {
+          'font-family': 'var(--typography-font-family-secondary)',
+          'font-size': 'var(--typography-font-size-body-body-xl)',
+          'font-weight': 'var(--typography-font-weight-medium)',
+          'line-height': 'var(--typography-line-height-body-xl)',
+        },
+        '.text-xl-regular': {
+          'font-family': 'var(--typography-font-family-secondary)',
+          'font-size': 'var(--typography-font-size-body-body-xl)',
+          'font-weight': 'var(--typography-font-weight-regular)',
+          'line-height': 'var(--typography-line-height-body-xl)',
+        },
+        '.text-xl-bold': {
+          'font-family': 'var(--typography-font-family-secondary)',
+          'font-size': 'var(--typography-font-size-body-body-xl)',
+          'font-weight': 'var(--typography-font-weight-bold)',
+          'line-height': 'var(--typography-line-height-body-xl)',
+        },
+        '.text-lg-regular': {
+          'font-family': 'var(--typography-font-family-secondary)',
+          'font-size': 'var(--typography-font-size-body-body-lg)',
+          'font-weight': 'var(--typography-font-weight-regular)',
+          'line-height': 'var(--typography-line-height-body-lg)',
+        },
+        '.text-lg-med': {
+          'font-family': 'var(--typography-font-family-secondary)',
+          'font-size': 'var(--typography-font-size-body-body-lg)',
+          'font-weight': 'var(--typography-font-weight-medium)',
+          'line-height': 'var(--typography-line-height-body-lg)',
+        },
+        '.text-lg-bold': {
+          'font-family': 'var(--typography-font-family-secondary)',
+          'font-size': 'var(--typography-font-size-body-body-lg)',
+          'font-weight': 'var(--typography-font-weight-bold)',
+          'line-height': 'var(--typography-line-height-body-lg)',
+        },
+        '.text-md-regular': {
+          'font-family': 'var(--typography-font-family-secondary)',
+          'font-size': 'var(--typography-font-size-body-body-md)',
+          'font-weight': 'var(--typography-font-weight-regular)',
+          'line-height': 'var(--typography-line-height-body-md)',
+        },
+        '.text-md-bold': {
+          'font-family': 'var(--typography-font-family-secondary)',
+          'font-size': 'var(--typography-font-size-body-body-md)',
+          'font-weight': 'var(--typography-font-weight-bold)',
+          'line-height': 'var(--typography-line-height-body-md)',
+        },
+        '.text-md-med': {
+          'font-family': 'var(--typography-font-family-secondary)',
+          'font-size': 'var(--typography-font-size-body-body-md)',
+          'font-weight': 'var(--typography-font-weight-medium)',
+          'line-height': 'var(--typography-line-height-body-md)',
+        },
+        '.text-sm-regular': {
+          'font-family': 'var(--typography-font-family-secondary)',
+          'font-size': 'var(--typography-font-size-body-body-sm)',
+          'font-weight': 'var(--typography-font-weight-regular)',
+          'line-height': 'var(--typography-line-height-body-sm)',
+        },
+        '.text-sm-med': {
+          'font-family': 'var(--typography-font-family-secondary)',
+          'font-size': 'var(--typography-font-size-body-body-sm)',
+          'font-weight': 'var(--typography-font-weight-medium)',
+          'line-height': 'var(--typography-line-height-body-sm)',
+        },
+        '.text-sm-bold': {
+          'font-family': 'var(--typography-font-family-secondary)',
+          'font-size': 'var(--typography-font-size-body-body-sm)',
+          'font-weight': 'var(--typography-font-weight-bold)',
+          'line-height': 'var(--typography-line-height-body-sm)',
+        },
+      });
+    },
+  ],
 };
