@@ -14,7 +14,7 @@ export default function CommonLinkButton({
     >
       <div className="relative flex items-start">
         {/* Button Text in span */}
-        <span className="text-xl-regular text-(--typography-color-secondary-100)">
+        <span className="text-xl-regular xs:!text-lg-med text-(--typography-color-secondary-100)">
           {text}
         </span>
 
