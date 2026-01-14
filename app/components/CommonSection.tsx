@@ -51,8 +51,10 @@ export default function commonSection({
         </div>
       </div>
       <div
-        className={`flex relative aspect-video rounded-4xl overflow-hidden xs:!w-full ${
-          typeOfSection === 'TYPE1' ? 'w-full' : 'w-[50%]'
+        className={`flex relative  rounded-4xl xs:!rounded-[16px] overflow-hidden xs:!w-full  ${
+          typeOfSection === 'TYPE1'
+            ? 'w-full aspect-video xs:!aspect-[1/1]'
+            : 'w-[50%] aspect-[3/4]'
         }`}
       >
         <Image
