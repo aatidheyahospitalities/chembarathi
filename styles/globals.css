@@ -1,3 +1,32 @@
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+#smooth-wrapper {
+  height: 100%;
+  overflow: hidden;
+}
+
+#smooth-content {
+  will-change: transform;
+}
+
+
+@media (max-width: 1023px) {
+  html,
+  body {
+    height: auto;
+    overflow: auto;
+  }
+
+  #smooth-wrapper {
+    height: auto;
+    overflow: visible;
+  }
+}
+
 @font-face {
   font-family: 'Staylista';
   src: url('../styles/Stalysta_personal use.ttf') format('truetype');

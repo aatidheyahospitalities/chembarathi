@@ -9,7 +9,7 @@ const figtree = Figtree({
 });
 
 export const metadata: Metadata = {
-  title: 'Chembarathi',
+  title: 'Chembarathi Wayanad',
   description: 'Welcome to Chembarathi',
 };
 

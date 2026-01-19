@@ -7,24 +7,40 @@ import { ScrollSmoother } from "gsap/ScrollSmoother";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
-export default function SmoothScroll({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function SmoothScroll({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const wrapper = useRef<HTMLDivElement | null>(null);
   const content = useRef<HTMLDivElement | null>(null);
 
   useLayoutEffect(() => {
     if (!wrapper.current || !content.current) return;
 
-    const smoother = ScrollSmoother.create({
-      wrapper: wrapper.current,
-      content: content.current,
-      smooth: 2,
-      effects: true,
-      normalizeScroll: true,
+    const mm = gsap.matchMedia();
+    let smoother: ScrollSmoother | null = null;
+
+    // Desktop only
+    mm.add("(min-width: 1024px)", () => {
+      smoother = ScrollSmoother.create({
+        wrapper: wrapper.current!,
+        content: content.current!,
+        smooth: 1.5,
+        effects: true,
+        normalizeScroll: true,
+      });
+    });
+
+    // Mobile: native scroll ONLY
+    mm.add("(max-width: 1023px)", () => {
+      ScrollTrigger.normalizeScroll(false);
     });
 
     return () => {
-      smoother.kill();
+      smoother?.kill();
       ScrollTrigger.getAll().forEach((t) => t.kill());
+      mm.kill();
     };
   }, []);
 
