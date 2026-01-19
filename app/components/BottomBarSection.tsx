@@ -85,7 +85,7 @@ function ListItem({
 }: Readonly<{ title: string; subItems: string[] }>) {
   return (
     <div className="flex flex-col gap-(--spacing-padding-3x) flex-1">
-      <h3 className="text-xxl-regular text-(--typography-color-primary-400)">
+      <h3 className="text-lg-regular text-(--typography-color-primary-400) uppercase">
         {title}
       </h3>
       <div className="flex flex-col align-middle justify-center gap-(--spacing-padding-2x)">
