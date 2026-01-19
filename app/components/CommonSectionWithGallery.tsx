@@ -40,12 +40,12 @@ export default function commonSection({
         {image.slice(0, 6).map((img, index) => {
           // Define span for each image position with responsive breakpoints
           const spanClasses = [
-            'xs:col-span-3 sm:col-span-3 md:col-span-3', // Image 1: narrow
-            'xs:col-span-3 sm:col-span-5 md:col-span-5', // Image 2: widest
-            'xs:col-span-3 sm:col-span-4 md:col-span-4', // Image 3: wider
-            'xs:col-span-5 sm:col-span-5 md:col-span-5', // Image 4: widest
-            'xs:col-span-3 sm:col-span-3 md:col-span-3', // Image 5: narrow
-            'xs:col-span-4 sm:col-span-4 md:col-span-4', // Image 6: wider
+            'xs:col-span-3 3xl:col-span-3 md:col-span-3', // Image 1: narrow
+            'xs:col-span-3 3xl:col-span-5 md:col-span-5', // Image 2: widest
+            'xs:col-span-3 3xl:col-span-4 md:col-span-4', // Image 3: wider
+            'xs:col-span-5 3xl:col-span-5 md:col-span-5', // Image 4: widest
+            'xs:col-span-3 3xl:col-span-3 md:col-span-3', // Image 5: narrow
+            'xs:col-span-4 3xl:col-span-4 md:col-span-4', // Image 6: wider
           ];
 
           return (
