@@ -15,7 +15,7 @@ export default function FaqSection(faqData: Readonly<FaqItemType>) {
       style={{ gap: 'var(--spacing-padding-8x)' }}
     >
       <div
-        className="flex flex-col w-[50%]"
+        className="flex flex-col w-[50%] xs:!w-full"
         style={{ gap: 'var(--spacing-padding-3x)' }}
       >
         <span
@@ -24,7 +24,10 @@ export default function FaqSection(faqData: Readonly<FaqItemType>) {
         >
           FREQUENTLY ASKED QUESTIONS
         </span>
-        <h2 style={{ color: 'var(--typography-color-secondary-100)' }}>
+        <h2
+          style={{ color: 'var(--typography-color-secondary-100)' }}
+          className="xs:!text-h4"
+        >
           Your Stay, Simplified
         </h2>
       </div>
@@ -44,6 +47,7 @@ export default function FaqSection(faqData: Readonly<FaqItemType>) {
                 relative before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-px before:bg-[#2B2B2B]
                 hide-default-icon accordion-trigger
                 transition-all duration-200 ease-in-out
+                xs:!text-lg-regular
               "
                 style={{
                   fontSize: '20px',

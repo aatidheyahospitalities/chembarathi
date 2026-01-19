@@ -36,22 +36,22 @@ export default function commonSection({
           </span>
         </div>
       </div>
-      <div className="grid grid-cols-12 grid-rows-2 gap-(--spacing-padding-4x) w-full h-150">
+      <div className="grid grid-cols-12 grid-rows-2 gap-(--spacing-padding-4x) w-full h-150 xs:h-auto xs:!grid-cols-3 xs:!grid-rows-1">
         {image.slice(0, 6).map((img, index) => {
-          // Define span for each image position
+          // Define span for each image position with responsive breakpoints
           const spanClasses = [
-            'col-span-3', // Image 1: narrow
-            'col-span-5', // Image 2: widest
-            'col-span-4', // Image 3: wider
-            'col-span-5', // Image 4: widest
-            'col-span-3', // Image 5: narrow
-            'col-span-4', // Image 6: wider
+            'xs:col-span-3 sm:col-span-3 md:col-span-3', // Image 1: narrow
+            'xs:col-span-3 sm:col-span-5 md:col-span-5', // Image 2: widest
+            'xs:col-span-3 sm:col-span-4 md:col-span-4', // Image 3: wider
+            'xs:col-span-5 sm:col-span-5 md:col-span-5', // Image 4: widest
+            'xs:col-span-3 sm:col-span-3 md:col-span-3', // Image 5: narrow
+            'xs:col-span-4 sm:col-span-4 md:col-span-4', // Image 6: wider
           ];
 
           return (
             <div
               key={index + 1}
-              className={`relative w-full h-full ${spanClasses[index]}`}
+              className={`relative w-full h-full ${spanClasses[index]} ${index >= 3 ? 'xs:!hidden' : `${index === 1 ? 'xs:aspect-[3/4]' : 'xs:aspect-video'}`}`}
             >
               <Image
                 src={img.url}

@@ -34,15 +34,18 @@ export default function BottomBarSection() {
 
   return (
     <div className="flex flex-col">
-      <div className="flex items-center justify-between w-full border-b! section-wrapper border-(--surface-primary-500)! gap-16 xs:!flex-col ">
-        <h2 style={{ color: 'var(--typography-color-secondary-100)' }}>
+      <div className="flex items-center xs:!items-start  justify-between w-full border-b! section-wrapper border-(--surface-primary-500)! gap-16 xs:!gap-[27px] xs:!flex-col ">
+        <h2
+          className="xs:!text-h4"
+          style={{ color: 'var(--typography-color-secondary-100)' }}
+        >
           Reconnect With Nature
         </h2>
         <button className="px-(--spacing-padding-10x)! py-(--spacing-padding-3x)! rounded-full! text-lg-medium bg-(--typography-color-secondary-100)! text-xl-regular">
           Book Your Stay Today
         </button>
       </div>
-      <div className="flex flex-col section-wrapper gap-(--spacing-padding-10x)! align-middle justify-center">
+      <div className="flex flex-col section-wrapper gap-(--spacing-padding-10x)! xs:!gap-(--spacing-padding-8x)! align-middle justify-center">
         <div className="flex gap-[52px] align-middle justify-between xs:!flex-col">
           {items.map((item, index) => (
             <ListItem
@@ -54,22 +57,22 @@ export default function BottomBarSection() {
         </div>
         <span
           className="font-primary text-(--typography-color-primary-600)! text-center"
-          style={{ fontSize: 'clamp(4rem, 15vw, 12.5rem)' }}
+          style={{ fontSize: 'clamp(2rem, 15vw, 12.5rem)' }}
         >
           Chembarathi
         </span>
-        <div className="flex justify-between align-middle xs:!flex-col">
-          <span className="flex text-xl-regular text-(--typography-color-primary-400)">
+        <div className="flex justify-between align-middle xs:!flex-col-reverse xs:!gap-[24px]">
+          <span className="flex text-xl-regular xs:!text-md-regular text-(--typography-color-primary-400)">
             © 2025 Chembarathi Wayanad. All Rights Reserved.
           </span>
-          <div className="flex gap-12 xs:!flex-col">
-            <span className="flex text-xl-regular text-(--typography-color-primary-400)">
+          <div className="flex gap-12 xs:!gap-[12px] xs:!flex-col">
+            <span className="flex text-xl-regular xs:!text-md-regular text-(--typography-color-primary-400)">
               Privacy Policy
             </span>
-            <span className="flex text-xl-regular text-(--typography-color-primary-400)">
+            <span className="flex text-xl-regular xs:!text-md-regular text-(--typography-color-primary-400)">
               Terms & Conditions
             </span>
-            <span className="flex text-xl-regular text-(--typography-color-primary-400)">
+            <span className="flex text-xl-regular xs:!text-md-regular text-(--typography-color-primary-400)">
               Cancellation Policy
             </span>
           </div>
@@ -85,7 +88,7 @@ function ListItem({
 }: Readonly<{ title: string; subItems: string[] }>) {
   return (
     <div className="flex flex-col gap-(--spacing-padding-3x) flex-1">
-      <h3 className="text-xxl-regular text-(--typography-color-primary-400)">
+      <h3 className="text-xxl-regular xs:!text-lg-regular text-(--typography-color-primary-400)">
         {title}
       </h3>
       <div className="flex flex-col align-middle justify-center gap-(--spacing-padding-2x)">
