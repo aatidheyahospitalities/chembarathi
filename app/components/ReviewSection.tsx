@@ -71,24 +71,29 @@ export default function ReviewSection() {
         <div className="flex flex-col">
           <div className="flex justify-center align-middle">
             <WreathRingLeft />
-            <span className="text-center text-h2 text-(--typography-color-secondary-100) font-secondary">
+            <span className="text-center text-h2 xs:!text-h3 text-(--typography-color-secondary-100) font-secondary">
               {averageRating}
             </span>
             <WreathRingRight />
           </div>
-          <span className="text-center text-xxl-regular text-(--typography-color-secondary-600) font-secondary">
+          <span className="text-center text-xxl-regular xs:!text-lg-regular text-(--typography-color-secondary-600) font-secondary">
             We’re proud to deliver a stay that guests consistently love.
           </span>
         </div>
-        <div className="grid grid-cols-4 gap-[26px] max-w-fit mx-auto self-center xs:!grid-cols-2 ">
+        <div className="flex flex-row justify-between 3xl:!justify-center 3xl:!gap-[14px] mx-auto self-center">
           <RatingItem rating={CleanlinessRating} label="Cleanliness" />
           <RatingItem rating={AccuracyRating} label="Accuracy" />
           <RatingItem rating={CheckInRating} label="Check-in" />
           <RatingItem rating={CommunicationRating} label="Communication" />
         </div>
       </div>
-      <div className="pb-(--spacing-padding-huge-x)!">
+      <div className="pb-(--spacing-padding-huge-x)! xs:!hidden">
         <InfiniteLoopWrapper items={items} alignItems="start" />
+      </div>
+      <div className="px-(--spacing-padding-4x)! hidden xs:!flex pb-(--spacing-padding-huge-x)!  flex-col gap-[24px]">
+        {items.splice(0, 2).map((item, index) => (
+          <div key={index + 1} className='flex'>{item.node}</div>
+        ))}
       </div>
     </div>
   );
@@ -100,10 +105,10 @@ function RatingItem({
 }: Readonly<{ rating: number; label: string }>) {
   return (
     <div className="flex flex-col justify-center align-middle">
-      <span className="text-h3 text-(--typography-color-secondary-500) font-regular text-center  font-secondary">
+      <span className="text-h3 xs:!text-body-xl text-(--typography-color-secondary-500) font-regular text-center  font-secondary">
         {rating}
       </span>
-      <span className="text-body-lg text-(--typography-color-secondary-500) font-regular leading-6 text-center whitespace-nowrap font-secondary">
+      <span className="text-body-lg xs:!text-body-md text-(--typography-color-secondary-500) font-regular leading-6 text-center whitespace-nowrap font-secondary">
         {label}
       </span>
     </div>

@@ -8,15 +8,15 @@ interface Review {
 
 export default function UserReviewCard(review: Review) {
   return (
-    <div className="flex flex-col w-[500px] min-h-80 p-5! gap-(--spacing-padding-6x) bg-(--surface-primary-700) rounded-(--border-radius-md) ">
+    <div className="flex flex-col w-[500px] xs:!w-full min-h-80 xs:!h-fit p-5! gap-(--spacing-padding-6x) bg-(--surface-primary-700) rounded-(--border-radius-md) ">
       <div className="flex justify-between">
         <div className="flex gap-(--spacing-padding-3x)">
           <span className="w-[47px] h-[47px] rounded-full bg-white"></span>
           <div className="flex flex-col">
-            <span className="text-(--typography-color-secondary-100)">
+            <span className="text-(--typography-color-secondary-100) xs:!text-xl-regular">
               {review.name}
             </span>
-            <span className="text-(--typography-color-secondary-700)">
+            <span className="text-(--typography-color-secondary-700) xs:!text-md-regular">
               {review.place}
             </span>
           </div>
@@ -37,10 +37,10 @@ export default function UserReviewCard(review: Review) {
         </div>
       </div>
       <div className="flex flex-col justify-between flex-1 min-h-full">
-        <span className="text-xl-regular text-(--typography-color-secondary-800)">
+        <span className="text-xl-regular xs:!text-lg-regular text-(--typography-color-secondary-800)">
           {review.review}
         </span>
-        <span className="text-xl-regular text-(--typography-color-secondary-700)">
+        <span className="text-xl-regular xs:!text-lg-regular text-(--typography-color-secondary-700)">
           {review.date}
         </span>
       </div>

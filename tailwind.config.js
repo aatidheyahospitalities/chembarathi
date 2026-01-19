@@ -144,6 +144,7 @@ module.exports = {
         lg: { max: '1024px' }, // ≤ 1024px (small laptops)
         xl: { max: '1280px' }, // ≤ 1280px (desktops)
         '2xl': { max: '1536px' }, // ≤ 1536px (large screens)
+        '3xl': { max: '5920px' }, // ≤ 1920px (extra large screens)
       },
     },
   },
