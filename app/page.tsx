@@ -11,6 +11,7 @@ import ScrollVelocityText from './components/ScrollVelocityText';
 import FaqSection from './components/FaqSection';
 import BottomBarSection from './components/BottomBarSection';
 import RoomSection from './components/RoomSection';
+import RoomSlider from "./components/RoomSlider";
 
 export const revalidate = 600; // Revalidate every 10 minutes
 
@@ -35,13 +36,15 @@ export default async function HomePage() {
       <Banner heroData={heroData} />
       <CommonSection commonSectionData={AboutData} type="TYPE1" />
       <CommonSection commonSectionData={ExperienceData} type="TYPE2" />
-      <RoomSection />
-      <ScrollVelocityText
+      {/* <RoomSection /> */}
+      <RoomSlider />
+      
+      <CommonSectionWithGallery commonSectionData={ExperienceTheBeautyData} />
+       <ScrollVelocityText
         texts={['Rejuvenation Retreat • Forest Therapy •']}
         velocity={30}
         className="custom-scroll-text text-display text-(--typography-color-secondary-850) whitespace-nowrap m-0 leading-none pr-16 shrink-0 xs:!text-h2"
       />
-      <CommonSectionWithGallery commonSectionData={ExperienceTheBeautyData} />
       <ReviewSection />
       <FaqSection {...faqData} />
       <GalleryLoop />
