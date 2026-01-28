@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useState } from "react";
-import { motion } from "motion/react";
+import { useEffect, useRef, useState } from 'react';
+import { motion } from 'motion/react';
 
 type Room = {
   name: string;
@@ -10,28 +10,24 @@ type Room = {
 
 const rooms: Room[] = [
   {
-    name: "Honeymoon Suite",
-    images: ["/HoneymoonSuite.JPG"],
+    name: 'Honeymoon Suite',
+    images: ['/HoneymoonSuite.JPG'],
   },
   {
-    name: "Premium Cottage",
-    images: ["/PremiumCottage.JPG"],
+    name: 'Premium Cottage',
+    images: ['/PremiumCottage.JPG'],
   },
   {
-    name: "Deluxe Suite",
-    images: ["/PremiumCottage.JPG"],
+    name: 'Deluxe Suite',
+    images: ['/PremiumCottage.JPG'],
   },
   {
-    name: "Private Pool Room",
-    images: ["/PrivatePoolVilla.JPG"],
+    name: 'Private Pool Room',
+    images: ['/PrivatePoolVilla.JPG'],
   },
 ];
 
-const loopRooms = [
-  rooms[rooms.length - 1],
-  ...rooms,
-  rooms[0],
-];
+const loopRooms = [rooms[rooms.length - 1], ...rooms, rooms[0]];
 
 export default function RoomSlider() {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -47,8 +43,8 @@ export default function RoomSlider() {
     active === 0
       ? rooms.length - 1
       : active === loopRooms.length - 1
-      ? 0
-      : active - 1;
+        ? 0
+        : active - 1;
 
   useEffect(() => {
     if (!trackRef.current || !cardsRef.current[1]) return;
@@ -62,7 +58,7 @@ export default function RoomSlider() {
       left:
         cardsRef.current[active].offsetLeft -
         (window.innerWidth * SIDE_SPACE) / 100,
-      behavior: "smooth",
+      behavior: 'smooth',
     });
   }, [active]);
 
@@ -79,8 +75,7 @@ export default function RoomSlider() {
 
     if (active === loopRooms.length - 1) {
       setTimeout(() => {
-        trackRef.current!.scrollLeft =
-          cardsRef.current[1]?.offsetLeft;
+        trackRef.current!.scrollLeft = cardsRef.current[1]?.offsetLeft;
         setActive(1);
       }, 300);
     }
@@ -129,15 +124,15 @@ export default function RoomSlider() {
             <img
               src={room.images[0]}
               alt={room.name}
-              className="w-full h-[65vh] object-cover rounded-xl"
+              className="w-full aspect-video sm:!aspect-[3/4] object-cover rounded-xl"
             />
           </motion.div>
         ))}
       </div>
 
       {/* Title + dots */}
-      <div className="mt-8 text-center font-secondary">
-        <span className="text-white text-2xl md:text-4xl font-medium">
+      <div className="mt-8! text-center font-secondary">
+        <span className="text-white text-xxl-regular ">
           {rooms[realIndex].name}
         </span>
 
@@ -146,7 +141,7 @@ export default function RoomSlider() {
             <span
               key={i}
               className={`w-1 h-1 rounded-full ${
-                realIndex === i ? "bg-white" : "bg-white/30"
+                realIndex === i ? 'bg-white' : 'bg-white/30'
               }`}
             />
           ))}
@@ -160,12 +155,12 @@ export default function RoomSlider() {
           style={{
             top: cursor.y,
             left: cursor.x,
-            transform: "translate(12px, -50%)",
+            transform: 'translate(12px, -50%)',
           }}
         >
           <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow">
             <span className="text-black text-sm">
-              {cursor.x > window.innerWidth / 2 ? "→" : "←"}
+              {cursor.x > window.innerWidth / 2 ? '→' : '←'}
             </span>
           </div>
         </div>

@@ -36,7 +36,7 @@ export default function Banner({ heroData }: Readonly<{ heroData: HeroType }>) {
           Peace comfort nature luxury escape
         </p>
 
-       <button className="px-(--spacing-padding-10x)! py-(--spacing-padding-3x)! rounded-full! text-lg-medium bg-(--typography-color-secondary-100)! text-xl-regular">
+        <button className="px-(--spacing-padding-10x)! body-lg-reqular text-secondary-1000! py-(--spacing-padding-3x)! rounded-full! bg-(--typography-color-secondary-100)!">
           Book Your Stay
         </button>
       </div>
