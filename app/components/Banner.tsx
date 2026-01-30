@@ -16,8 +16,9 @@ export default function Banner({ heroData }: Readonly<{ heroData: HeroType }>) {
           className="
     inline-flex
     items-center
-    gap-2
-    px-4 py-[6px]
+    justify-center
+    align-middle
+    px-4! py-[2px]!
     rounded-full
     bg-white/10
     text-sm
