@@ -1,11 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import InfiniteLoopWrapper from "./InfiniteLoopWrapper";
-
-interface GalleryLoopProps {
-  readonly speed?: number;
-}
 
 const galleryImages = [
   "/gallery/scroll-section/1.jpg",
@@ -16,33 +13,31 @@ const galleryImages = [
   "/gallery/scroll-section/6.jpg",
 ];
 
-// Aspect ratio classes
-const ratios = [
-  "aspect-[16/9]",
-  "aspect-square",
-  "aspect-[3/4]",
-];
+const ratios = ["aspect-[16/9]", "aspect-square", "aspect-[3/4]"];
 
-// Pick random ratio ONCE
-const imagesWithRatio = galleryImages.map(src => ({
-  src,
-  ratio: ratios[Math.floor(Math.random() * ratios.length)],
-}));
+export default function GalleryLoop({ speed = 50 }) {
+  const [imagesWithRatio, setImagesWithRatio] = useState<
+    { src: string; ratio: string }[]
+  >([]);
 
-export default function GalleryLoop({ speed = 50 }: GalleryLoopProps) {
+  useEffect(() => {
+    setImagesWithRatio(
+      galleryImages.map(src => ({
+        src,
+        ratio: ratios[Math.floor(Math.random() * ratios.length)],
+      }))
+    );
+  }, []);
+
+  if (!imagesWithRatio.length) return null;
+
   const items = imagesWithRatio.map((img, i) => ({
     node: (
       <div
         key={i}
         className={`relative w-[300px] ${img.ratio} shrink-0 overflow-hidden rounded-lg`}
       >
-        <Image
-          src={img.src}
-          alt={`Gallery image ${i + 1}`}
-          fill
-          className="object-cover"
-          sizes="300px"
-        />
+        <Image src={img.src} alt="" fill className="object-cover" />
       </div>
     ),
   }));
