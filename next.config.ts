@@ -2,12 +2,21 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ['images.ctfassets.net'], // Add the Contentful image domain here
-    qualities: [100, 75],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.ctfassets.net',
+      },
+    ],
   },
-  // Enable strict mode for better development experience
   reactStrictMode: true,
-  /* config options here */
+  experimental: {
+    optimizePackageImports: [
+      '@mui/material',
+      '@mui/icons-material',
+    ],
+  },
+  turbopack: {},
 };
 
 export default nextConfig;
