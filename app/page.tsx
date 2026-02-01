@@ -50,7 +50,7 @@ export default async function HomePage() {
 
       <ReviewSection />
       <FaqSection {...faqData} />
-      {/* <GalleryLoop /> */}
+      <GalleryLoop />
       <BottomBarSection />
     </main>
   );
