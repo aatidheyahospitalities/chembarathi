@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
+import Image from 'next/image';
 
 type Room = {
   name: string;
@@ -121,11 +122,16 @@ export default function RoomSlider() {
             className="shrink-0 cursor-pointer"
             style={{ width: `${CARD_WIDTH}vw` }}
           >
-            <img
-              src={room.images[0]}
-              alt={room.name}
-              className="w-full aspect-video sm:!aspect-[3/4] object-cover rounded-xl"
-            />
+            <figure className="relative w-full aspect-video rounded-xl overflow-hidden">
+              <Image
+                src={room.images[0]}
+                alt={`${room.name} luxury resort room`}
+                fill
+                priority={i === 0}
+                sizes="70vw"
+                className="object-cover"
+              />
+            </figure>
           </motion.div>
         ))}
       </div>

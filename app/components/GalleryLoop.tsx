@@ -1,98 +1,54 @@
-import Image from 'next/image';
-import InfiniteLoopWrapper from './InfiniteLoopWrapper';
+"use client";
 
-import img1 from '../lib/img/test.jpg';
+import Image from "next/image";
+import InfiniteLoopWrapper from "./InfiniteLoopWrapper";
 
 interface GalleryLoopProps {
   readonly speed?: number;
 }
 
-export default function GalleryLoop({
-  speed = 50,
-}: Readonly<GalleryLoopProps>) {
-  // Gallery items with different aspect ratios
-  const galleryItems = [
-    {
-      id: 'sq-1',
-      width: 300,
-      height: 300,
-      src: img1,
-      alt: 'Gallery image 1',
-    }, // 1:1 Square
-    {
-      id: 'pt-1',
-      width: 300,
-      height: 400,
-      src: img1,
-      alt: 'Gallery image 2',
-    }, // 3:4 Portrait
-    {
-      id: 'ls-1',
-      width: 300,
-      height: 169,
-      src: img1,
-      alt: 'Gallery image 3',
-    }, // 16:9 Landscape
-    {
-      id: 'ls-2',
-      width: 300,
-      height: 225,
-      src: img1,
-      alt: 'Gallery image 4',
-    }, // 4:3 Landscape
-    {
-      id: 'sq-2',
-      width: 300,
-      height: 300,
-      src: img1,
-      alt: 'Gallery image 5',
-    }, // 1:1 Square
-    {
-      id: 'pt-2',
-      width: 300,
-      height: 400,
-      src: img1,
-      alt: 'Gallery image 6',
-    }, // 3:4 Portrait
-    {
-      id: 'ls-3',
-      width: 300,
-      height: 169,
-      src: img1,
-      alt: 'Gallery image 7',
-    }, // 16:9 Landscape
-    {
-      id: 'ls-4',
-      width: 300,
-      height: 225,
-      src: img1,
-      alt: 'Gallery image 8',
-    }, // 4:3 Landscape
-  ];
+const galleryImages = [
+  "/gallery/scroll-section/1.jpg",
+  "/gallery/scroll-section/2.jpg",
+  "/gallery/scroll-section/3.jpg",
+  "/gallery/scroll-section/4.jpg",
+  "/gallery/scroll-section/5.jpg",
+  "/gallery/scroll-section/6.jpg",
+];
 
-  // Convert gallery items to InfiniteLoopWrapper format
-  const items = galleryItems.map(item => ({
+// Aspect ratio classes
+const ratios = [
+  "aspect-[16/9]",
+  "aspect-square",
+  "aspect-[3/4]",
+];
+
+// Pick random ratio ONCE
+const imagesWithRatio = galleryImages.map(src => ({
+  src,
+  ratio: ratios[Math.floor(Math.random() * ratios.length)],
+}));
+
+export default function GalleryLoop({ speed = 50 }: GalleryLoopProps) {
+  const items = imagesWithRatio.map((img, i) => ({
     node: (
       <div
-        className="relative overflow-hidden rounded-lg shrink-0"
-        style={{
-          width: `${item.width}px`,
-          height: `${item.height}px`,
-        }}
+        key={i}
+        className={`relative w-[300px] ${img.ratio} shrink-0 overflow-hidden rounded-lg`}
       >
         <Image
-          src={item.src}
-          alt={item.alt}
+          src={img.src}
+          alt={`Gallery image ${i + 1}`}
           fill
           className="object-cover"
-          sizes={`${item.width}px`}
+          sizes="300px"
         />
       </div>
     ),
   }));
 
   return (
-    <section className="relative w-full py-(--spacing-padding-4x) bg-transparent">
+    <section className="relative w-full py-(--spacing-padding-4x)">
       <InfiniteLoopWrapper
         items={items}
         speed={speed}
