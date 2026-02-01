@@ -5,9 +5,13 @@ import dynamic from 'next/dynamic';
 
 import Banner from './components/Banner';
 import CommonSection from './components/CommonSection';
-const CommonSectionWithGallery = dynamic(() => import('./components/CommonSectionWithGallery'));
+const CommonSectionWithGallery = dynamic(
+  () => import('./components/CommonSectionWithGallery')
+);
 const ReviewSection = dynamic(() => import('./components/ReviewSection'));
-const ScrollVelocityText = dynamic(() => import('./components/ScrollVelocityText'));
+const ScrollVelocityText = dynamic(
+  () => import('./components/ScrollVelocityText')
+);
 const FaqSection = dynamic(() => import('./components/FaqSection'));
 const BottomBarSection = dynamic(() => import('./components/BottomBarSection'));
 const RoomSlider = dynamic(() => import('./components/RoomSlider'));
