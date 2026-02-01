@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 
 import Banner from './components/Banner';
 import CommonSection from './components/CommonSection';
+import GalleryLoop from './components/GalleryLoop';
 const CommonSectionWithGallery = dynamic(
   () => import('./components/CommonSectionWithGallery')
 );
