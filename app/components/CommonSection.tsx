@@ -35,7 +35,7 @@ export default function commonSection({
           <span className="text-md-regular text-(--typography-color-secondary-500)">
             {eyebrow}
           </span>
-          <h2 className="text-(--typography-color-secondary-100) xs:!text-h4">
+          <h2 className="text-heading-2 text-(--typography-color-secondary-100) xs:!text-heading-4">
             {title}
           </h2>
         </div>

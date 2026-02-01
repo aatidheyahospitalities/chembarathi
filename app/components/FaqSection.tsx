@@ -26,7 +26,7 @@ export default function FaqSection(faqData: Readonly<FaqItemType>) {
         </span>
         <h2
           style={{ color: 'var(--typography-color-secondary-100)' }}
-          className="xs:!text-h4"
+          className="text-heading-2 xs:!text-h4"
         >
           Your Stay, Simplified
         </h2>

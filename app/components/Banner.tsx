@@ -30,7 +30,7 @@ export default function Banner({ heroData }: Readonly<{ heroData: HeroType }>) {
         </span>
 
         {/* Title */}
-        <h1 className="xs:!text-h4">{title}</h1>
+        <h1 className="text-heading-1 xs:!text-h4">{title}</h1>
 
         {/* Description — correct paragraph style */}
         <p className="text-body-lg text-white/90">

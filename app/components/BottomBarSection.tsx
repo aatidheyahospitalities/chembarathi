@@ -36,7 +36,7 @@ export default function BottomBarSection() {
     <div className="flex flex-col">
       <div className="flex items-center xs:!items-start  justify-between w-full border-b! section-wrapper border-(--surface-primary-500)! gap-16 xs:!gap-[27px] xs:!flex-col ">
         <h2
-          className="xs:!text-h4"
+          className="text-heading-2 xs:!text-h4"
           style={{ color: 'var(--typography-color-secondary-100)' }}
         >
           Reconnect With Nature

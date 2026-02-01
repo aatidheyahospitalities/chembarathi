@@ -435,7 +435,7 @@ body {
   --typography-line-height-title: var(--size-giant);
   --typography-line-height-h1: 88px;
   --typography-line-height-h2: 77px;
-  --typography-line-height-h3: 60px;
+    --typography-line-height-h3: 60px;
   --typography-line-height-h4: 40px;
   --typography-line-height-h5: 36px;
   --typography-line-height-h6: 36.400001525878906px;
