@@ -38,7 +38,7 @@
 }
 
 .text-heading-4 {
-  font-family: var(--typography-font-family-secondary) !important;
+  font-family: var(--typography-font-family-primary) !important;
   font-size: var(--typography-font-size-heading-h4) !important;
   font-weight: var(--typography-font-weight-regular) !important;
   line-height: var(--typography-line-height-h4) !important;

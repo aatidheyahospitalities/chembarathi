@@ -36,7 +36,6 @@ export default async function HomePage() {
       <CommonSection commonSectionData={AboutData} type="TYPE1" />
       <CommonSection commonSectionData={ExperienceData} type="TYPE2" />
       <RoomSlider />
-      
       <CommonSectionWithGallery commonSectionData={ExperienceTheBeautyData} />
        <ScrollVelocityText
         texts={['Rejuvenation Retreat • Forest Therapy •']}

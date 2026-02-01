@@ -8,7 +8,7 @@ interface GalleryLoopProps {
 }
 
 export default function GalleryLoop({
-  speed = 120,
+  speed = 50,
 }: Readonly<GalleryLoopProps>) {
   // Gallery items with different aspect ratios
   const galleryItems = [

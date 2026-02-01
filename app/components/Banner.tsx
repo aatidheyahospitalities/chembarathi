@@ -30,14 +30,14 @@ export default function Banner({ heroData }: Readonly<{ heroData: HeroType }>) {
         </span>
 
         {/* Title */}
-        <h1 className="text-heading-1 xs:!text-h4">{title}</h1>
+        <h1 className="text-heading-1 xs:!text-heading-3">{title}</h1>
 
         {/* Description — correct paragraph style */}
-        <p className="text-body-lg text-white/90">
+        <p className="text-body-lg text-white/90 font-secondary!">
           Peace comfort nature luxury escape
         </p>
 
-        <button className="px-(--spacing-padding-10x)! body-lg-reqular text-secondary-1000! py-(--spacing-padding-3x)! rounded-full! bg-(--typography-color-secondary-100)!">
+        <button className="px-(--spacing-padding-10x)! body-lg-reqular text-secondary-1000! py-(--spacing-padding-3x)! rounded-full! bg-(--typography-color-secondary-100)! hover:cursor-pointer">
           Book Your Stay
         </button>
       </div>
