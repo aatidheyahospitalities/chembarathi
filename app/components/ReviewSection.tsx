@@ -56,43 +56,50 @@ export default function ReviewSection() {
   ];
 
   const averageRating = 4.7;
-  const CleanlinessRating = 4.7;
-  const AccuracyRating = 4.7;
-  const CheckInRating = 4.7;
-  const CommunicationRating = 4.7;
+  const CleanlinessRating = 5.0;
+  const CheckInRating = 4.8;
+  const CommunicationRating = 5.0;
+  const LocationRating = 5.0;
 
   const items = customerFeedback.map((review, index) => ({
-    node: <UserReviewCard key={index + 1} {...review} />,
+    node: <UserReviewCard key={index} {...review} />,
   }));
 
   return (
     <div>
-      <div className="section-wrapper flex flex-col align-middle justify-center gap-(--spacing-padding-10x)">
+      <div className="section-wrapper flex flex-col justify-center gap-(--spacing-padding-10x)">
         <div className="flex flex-col">
-          <div className="flex justify-center align-middle">
+          <div className="flex justify-center items-center">
             <WreathRingLeft />
             <span className="text-center text-h2 xs:!text-h3 text-(--typography-color-secondary-100) font-secondary">
-              {averageRating}
+              {averageRating.toFixed(1)}
             </span>
             <WreathRingRight />
           </div>
+
           <span className="text-center text-xxl-regular xs:!text-lg-regular text-(--typography-color-secondary-600) font-secondary">
             We’re proud to deliver a stay that guests consistently love.
           </span>
         </div>
-        <div className="flex flex-row justify-between 3xl:!justify-center 3xl:!gap-[14px] mx-auto self-center">
+
+        {/* Ratings */}
+        <div className="flex flex-row gap-[24px] justify-center mx-auto self-center">
           <RatingItem rating={CleanlinessRating} label="Cleanliness" />
-          <RatingItem rating={AccuracyRating} label="Accuracy" />
           <RatingItem rating={CheckInRating} label="Check-in" />
           <RatingItem rating={CommunicationRating} label="Communication" />
+          <RatingItem rating={LocationRating} label="Location" />
         </div>
       </div>
+
+      {/* Desktop loop */}
       <div className="pb-(--spacing-padding-huge-x)! xs:!hidden">
         <InfiniteLoopWrapper items={items} alignItems="start" />
       </div>
-      <div className="px-(--spacing-padding-4x)! hidden xs:!flex pb-(--spacing-padding-huge-x)!  flex-col gap-[24px]">
-        {items.splice(0, 2).map((item, index) => (
-          <div key={index + 1} className='flex'>{item.node}</div>
+
+      {/* Mobile static cards */}
+      <div className="px-(--spacing-padding-4x)! hidden xs:!flex pb-(--spacing-padding-huge-x)! flex-col gap-[24px]">
+        {items.slice(0, 2).map((item, index) => (
+          <div key={index}>{item.node}</div>
         ))}
       </div>
     </div>
@@ -104,11 +111,12 @@ function RatingItem({
   label,
 }: Readonly<{ rating: number; label: string }>) {
   return (
-    <div className="flex flex-col justify-center align-middle">
-      <span className="text-h3 xs:!text-body-xl text-(--typography-color-secondary-500) font-regular text-center  font-secondary">
-        {rating}
+    <div className="flex flex-col justify-center items-center">
+      <span className="text-h3 xs:!text-body-xl text-(--typography-color-secondary-500) font-secondary">
+        {rating.toFixed(1)}
       </span>
-      <span className="text-body-lg xs:!text-body-md text-(--typography-color-secondary-500) font-regular leading-6 text-center whitespace-nowrap font-secondary">
+
+      <span className="text-body-lg xs:!text-body-md text-(--typography-color-secondary-500) leading-6 text-center whitespace-nowrap font-secondary">
         {label}
       </span>
     </div>

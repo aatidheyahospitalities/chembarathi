@@ -12,6 +12,9 @@ const figtree = Figtree({
 export const metadata: Metadata = {
   title: 'Chembarathi Wayanad',
   description: 'Welcome to Chembarathi',
+  icons: {
+    icon: '/Favicon.svg',
+  },
 };
 
 export default function RootLayout({
