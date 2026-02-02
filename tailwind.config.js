@@ -183,7 +183,7 @@ module.exports = {
           'line-height': 'var(--typography-line-height-h3)',
         },
         '.text-heading-4': {
-          'font-family': 'var(--typography-font-family-secondary)',
+          'font-family': 'var(--typography-font-family-primary)',
           'font-size': 'var(--typography-font-size-heading-h4)',
           'font-weight': 'var(--typography-font-weight-regular)',
           'line-height': 'var(--typography-line-height-h4)',

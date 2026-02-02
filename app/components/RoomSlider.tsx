@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import Image from 'next/image';
+import { openWhatsApp } from '../Services/openWhatsApp';
 
 type Room = {
   name: string;
@@ -36,9 +37,15 @@ export default function RoomSlider() {
   const [active, setActive] = useState(1);
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const [visible, setVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const CARD_WIDTH = 70;
-  const SIDE_SPACE = 15;
+  // For mobile scroll tracking
+  const scrollStartRef = useRef<number>(0);
+  const isUserScrollingRef = useRef(false);
+
+  const CARD_WIDTH = 80;
+  const SIDE_SPACE = 10;
+  const SCROLL_THRESHOLD = 30;
 
   const realIndex =
     active === 0
@@ -46,6 +53,17 @@ export default function RoomSlider() {
       : active === loopRooms.length - 1
         ? 0
         : active - 1;
+
+  // Check if mobile once on mount
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia('(max-width: 640px)').matches);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     if (!trackRef.current || !cardsRef.current[1]) return;
@@ -68,22 +86,67 @@ export default function RoomSlider() {
 
     if (active === 0) {
       setTimeout(() => {
-        trackRef.current!.scrollLeft =
-          cardsRef.current[rooms.length]?.offsetLeft;
+        if (!trackRef.current || !cardsRef.current[rooms.length]) return;
+        trackRef.current.scrollLeft = cardsRef.current[rooms.length].offsetLeft;
         setActive(rooms.length);
       }, 300);
     }
 
     if (active === loopRooms.length - 1) {
       setTimeout(() => {
-        trackRef.current!.scrollLeft = cardsRef.current[1]?.offsetLeft;
+        if (!trackRef.current || !cardsRef.current[1]) return;
+        trackRef.current.scrollLeft = cardsRef.current[1].offsetLeft;
         setActive(1);
       }, 300);
     }
   }, [active]);
 
+  // Handle mobile scroll
+  useEffect(() => {
+    if (!isMobile || !trackRef.current) return;
+
+    const track = trackRef.current;
+
+    const handleTouchStart = () => {
+      isUserScrollingRef.current = true;
+      scrollStartRef.current = track.scrollLeft;
+    };
+
+    const handleTouchEnd = () => {
+      if (!isUserScrollingRef.current) return;
+
+      const scrollEnd = track.scrollLeft;
+      const scrollDistance = scrollEnd - scrollStartRef.current;
+
+      if (Math.abs(scrollDistance) > SCROLL_THRESHOLD) {
+        if (scrollDistance > 0) {
+          setActive(prev => prev + 1);
+        } else {
+          setActive(prev => prev - 1);
+        }
+      } else {
+        track.scrollTo({
+          left:
+            cardsRef.current[active].offsetLeft -
+            (window.innerWidth * SIDE_SPACE) / 100,
+          behavior: 'smooth',
+        });
+      }
+
+      isUserScrollingRef.current = false;
+    };
+
+    track.addEventListener('touchstart', handleTouchStart, { passive: true });
+    track.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+    return () => {
+      track.removeEventListener('touchstart', handleTouchStart);
+      track.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [isMobile, active]);
+
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!trackRef.current) return;
+    if (isMobile || !trackRef.current) return;
     const rect = trackRef.current.getBoundingClientRect();
     setCursor({
       x: e.clientX - rect.left,
@@ -91,20 +154,21 @@ export default function RoomSlider() {
     });
   };
 
+  const handleCardClick = () => {
+    if (isMobile) return;
+    setActive(cursor.x > window.innerWidth / 2 ? active + 1 : active - 1);
+  };
+
   return (
-    <section
-      onMouseEnter={() => setVisible(true)}
-      onMouseLeave={() => setVisible(false)}
-      onMouseMove={handleMouseMove}
-      onClick={() =>
-        setActive(cursor.x > window.innerWidth / 2 ? active + 1 : active - 1)
-      }
-      className="relative py-24 overflow-hidden"
-    >
+    <section className="relative py-24 overflow-hidden">
       {/* Slider */}
       <div
         ref={trackRef}
-        className="flex gap-6 overflow-x-scroll scrollbar-hide"
+        onMouseEnter={() => !isMobile && setVisible(true)}
+        onMouseLeave={() => !isMobile && setVisible(false)}
+        onMouseMove={handleMouseMove}
+        onClick={handleCardClick}
+        className="flex gap-4 overflow-x-scroll scrollbar-hide"
         style={{
           paddingLeft: `${SIDE_SPACE}vw`,
           paddingRight: `${SIDE_SPACE}vw`,
@@ -116,13 +180,16 @@ export default function RoomSlider() {
             ref={el => {
               if (el) cardsRef.current[i] = el;
             }}
-            drag="x"
-            dragMomentum
+            drag={isMobile ? false : 'x'}
+            dragMomentum={!isMobile}
             dragConstraints={{ left: 0, right: 0 }}
             className="shrink-0 cursor-pointer"
-            style={{ width: `${CARD_WIDTH}vw` }}
+            style={{
+              width: `${CARD_WIDTH}vw`,
+              touchAction: isMobile ? 'pan-x' : 'none',
+            }}
           >
-            <figure className="relative w-full aspect-video rounded-xl overflow-hidden">
+            <figure className="relative w-full aspect-video xs:!aspect-[3/4] rounded-xl overflow-hidden">
               <Image
                 src={room.images[0]}
                 alt={`${room.name} luxury resort room`}
@@ -137,8 +204,11 @@ export default function RoomSlider() {
       </div>
 
       {/* Title + dots */}
-      <div className="mt-8! text-center font-secondary">
-        <span className="text-white text-xxl-regular ">
+      <div className="mt-8! xs:!mt-4 text-center font-secondary ">
+        <span
+          className="text-white text-xxl-regular cursor-pointer"
+          onClick={() => openWhatsApp(rooms[realIndex].name)}
+        >
           {rooms[realIndex].name}
         </span>
 
@@ -155,7 +225,7 @@ export default function RoomSlider() {
       </div>
 
       {/* Cursor Arrow */}
-      {visible && (
+      {visible && !isMobile && (
         <div
           className="absolute z-50 pointer-events-none"
           style={{

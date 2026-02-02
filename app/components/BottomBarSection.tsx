@@ -36,7 +36,7 @@ export default function BottomBarSection() {
     <div className="flex flex-col">
       <div className="flex items-center xs:!items-start  justify-between w-full border-b! section-wrapper border-(--surface-primary-500)! gap-16 xs:!gap-[27px] xs:!flex-col ">
         <h2
-          className="text-heading-2 xs:!text-h4"
+          className="text-heading-2 xs:!text-heading-4"
           style={{ color: 'var(--typography-color-secondary-100)' }}
         >
           Reconnect With Nature
@@ -89,8 +89,8 @@ function ListItem({
   return (
     <div className="flex flex-col gap-(--spacing-padding-3x) flex-1">
       <h3 className="text-lg-regular text-(--typography-color-primary-400) uppercase">
-  {title}
-</h3>
+        {title}
+      </h3>
 
       <div className="flex flex-col align-middle justify-center gap-(--spacing-padding-2x)">
         {subItems.map((subItem, index) => (
