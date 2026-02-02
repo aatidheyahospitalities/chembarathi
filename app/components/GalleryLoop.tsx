@@ -13,7 +13,8 @@ const galleryImages = [
   "/gallery/scroll-section/6.jpg",
 ];
 
-const ratios = ["aspect-[16/9]", "aspect-square", "aspect-[3/4]"];
+// REMOVED aspect-video (16:9)
+const ratios = ["aspect-square", "aspect-[3/4]"];
 
 export default function GalleryLoop({ speed = 50 }) {
   const [imagesWithRatio, setImagesWithRatio] = useState<
@@ -22,7 +23,7 @@ export default function GalleryLoop({ speed = 50 }) {
 
   useEffect(() => {
     setImagesWithRatio(
-      galleryImages.map(src => ({
+      galleryImages.map((src) => ({
         src,
         ratio: ratios[Math.floor(Math.random() * ratios.length)],
       }))
