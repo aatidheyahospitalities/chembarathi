@@ -4,6 +4,9 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import { openWhatsApp } from '../Services/openWhatsApp';
+
 const navItems = [
   { label: 'Home', href: '/' },
   { label: 'Stay', href: '/stay' },
@@ -13,21 +16,31 @@ const navItems = [
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [headerVisible, setHeaderVisible] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
+
   const lastScrollY = useRef(0);
 
-  // 🔥 Close mobile menu on scroll
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+      const currentY = window.scrollY;
 
-      // Ignore tiny scroll jitter
-      if (Math.abs(currentScrollY - lastScrollY.current) < 10) return;
+      // detect top
+      setScrolled(currentY > 0);
 
-      if (menuOpen) {
-        setMenuOpen(false);
+      // ignore tiny scroll jitter
+      if (Math.abs(currentY - lastScrollY.current) < 10) return;
+
+      if (currentY > lastScrollY.current) {
+        // scrolling DOWN → hide header
+        setHeaderVisible(false);
+        if (menuOpen) setMenuOpen(false);
+      } else {
+        // scrolling UP → show header
+        setHeaderVisible(true);
       }
 
-      lastScrollY.current = currentScrollY;
+      lastScrollY.current = currentY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -37,13 +50,25 @@ export default function Header() {
   return (
     <header
       className={`fixed top-0 left-0 z-[9999] w-full
+        transition-transform duration-300 ease-out
+        ${headerVisible ? 'translate-y-0' : '-translate-y-full'}
+
         py-[24px]! px-huge-x!
         xs:!px-[16px] xs:!pt-[16px] xs:!pb-[0px]
-        ${menuOpen ? 'xs:!bg-(--surface-primary-800)' : 'bg-transparent'}
+
+        ${scrolled ? 'bg-(--surface-primary-800)' : 'bg-transparent'}
+
+        ${menuOpen ? 'xs:!bg-(--surface-primary-800)' : ''}
       `}
     >
       <div className="flex justify-between items-center">
-        <div className="hidden xs:!flex w-[10px] h-[10px]" />
+        <div className="hidden xs:!flex w-[50px] h-[50px] items-center">
+          <WhatsAppIcon
+            fontSize="small"
+            className="text-white cursor-pointer"
+            onClick={() => openWhatsApp('')}
+          />
+        </div>
 
         {/* LOGO */}
         <Link href="/" aria-label="Homepage">

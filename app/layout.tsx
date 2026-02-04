@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: 'Chembarathi Wayanad',
   description: 'Welcome to Chembarathi',
   icons: {
-    icon: '/Favicon.svg',
+    icon: '/Icons/Favicon.svg',
   },
 };
 
