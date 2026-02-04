@@ -169,7 +169,7 @@ export default function DestinationSlider() {
       </div>
       <div
         ref={trackRef}
-        className="relative w-full overflow-x-hidden cursor-none h-[80vh]"
+        className="relative w-full overflow-x-hidden cursor-none h-[80vh] xs:!h-fit"
         onClick={handleClick}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
@@ -191,7 +191,7 @@ export default function DestinationSlider() {
                 cardsRef.current[index] = el;
               }}
               className={`flex-shrink-0 w-[80vw] ${
-                isMobile ? 'aspect-[3/5]' : 'aspect-video'
+                isMobile ? 'aspect-[3/4]' : 'aspect-video'
               } rounded-xl overflow-hidden relative`}
               drag={!isMobile}
               dragConstraints={{ left: 0, right: 0 }}
