@@ -4,6 +4,7 @@ import { homeContentQuery, homeMetaDataQuery } from './API/Query/query';
 import dynamic from 'next/dynamic';
 
 import Banner from './components/Banner';
+import DestinationSlider from '@/app/components/DestinationSlider';
 import CommonSection from './components/CommonSection';
 import GalleryLoop from './components/GalleryLoop';
 const CommonSectionWithGallery = dynamic(
@@ -43,7 +44,8 @@ export default async function HomePage() {
       <Banner heroData={heroData} />
       <CommonSection commonSectionData={AboutData} type="TYPE1" />
       <CommonSection commonSectionData={ExperienceData} type="TYPE2" />
-      <RoomSlider />
+      <DestinationSlider />
+      {/* <RoomSlider /> */}
       <CommonSectionWithGallery commonSectionData={ExperienceTheBeautyData} />
       <ScrollVelocityText
         texts={['Rejuvenation Retreat • Forest Therapy •']}
