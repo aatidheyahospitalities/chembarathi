@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'motion/react';
+import Image from 'next/image';
 
 type Destination = {
   name: string;
@@ -10,11 +11,10 @@ type Destination = {
 
 const destinations: Destination[] = [
   { name: 'Private Pool Villa', images: ['/PrivatePoolVilla.JPG'] },
-  { name: 'Premium Cottage', images: ['/PremiumCottage.JPG'] },
-  { name: 'Deluxe Suite', images: ['/DeluxeSuite.JPG'] },
   { name: 'Honeymoon Suite', images: ['/HoneymoonSuite.JPG'] },
+  { name: 'Premium Cottage', images: ['/PremiumCottage.JPG'] },
+  { name: 'Deluxe Suite', images: ['/PremiumCottage.JPG'] },
 ];
-
 
 const loopDestinations = [
   destinations[destinations.length - 1],
@@ -47,7 +47,9 @@ export default function DestinationSlider() {
     if (trackRef.current && cardsRef.current[activeIndex]) {
       const card = cardsRef.current[activeIndex];
       if (card) {
-        const scrollLeft = card.offsetLeft - (trackRef.current.offsetWidth - card.offsetWidth) / 2;
+        const scrollLeft =
+          card.offsetLeft -
+          (trackRef.current.offsetWidth - card.offsetWidth) / 2;
         trackRef.current.scrollTo({
           left: scrollLeft,
           behavior: isJumpingRef.current ? 'auto' : 'smooth',
@@ -84,7 +86,9 @@ export default function DestinationSlider() {
   };
 
   const openWhatsApp = (destinationName: string) => {
-    const message = encodeURIComponent(`I'm interested in visiting ${destinationName}`);
+    const message = encodeURIComponent(
+      `I'm interested in visiting ${destinationName}`
+    );
     window.open(`https://wa.me/?text=${message}`, '_blank');
   };
 
@@ -92,11 +96,11 @@ export default function DestinationSlider() {
 
   // Navigation handlers
   const goToNext = () => {
-    setActiveIndex((prev) => prev + 1);
+    setActiveIndex(prev => prev + 1);
   };
 
   const goToPrevious = () => {
-    setActiveIndex((prev) => prev - 1);
+    setActiveIndex(prev => prev - 1);
   };
 
   // Mouse handlers
@@ -144,7 +148,7 @@ export default function DestinationSlider() {
   };
 
   return (
-    <div className="relative w-full h-screen flex flex-col items-center justify-center">
+    <div className="relative w-full  flex flex-col items-center justify-center">
       <div className="section-wrapper flex gap-(--spacing-padding-16x) w-full xs:!flex-col xs:!gap-(--spacing-padding-6x)">
         <div className="flex flex-col gap-(--spacing-padding-3x) w-[50%] xs:!w-full">
           <span className="text-md-regular text-(--typography-color-secondary-500)">
@@ -156,16 +160,16 @@ export default function DestinationSlider() {
         </div>
         <div className="flex flex-col gap-(--spacing-padding-10x) w-[50%] text-start xs:!w-full xs:!gap-(--spacing-padding-6x)">
           <span className="text-xl-regular text-(--typography-color-secondary-800) xs:!text-body-lg">
-            Enjoy the light-filled interiors with soaring ceilings and private terraces or courtyards that offer stunning views of the lush greenery. Experience the ultimate in comfort and privacy during your stay with us.
+            Enjoy the light-filled interiors with soaring ceilings and private
+            terraces or courtyards that offer stunning views of the lush
+            greenery. Experience the ultimate in comfort and privacy during your
+            stay with us.
           </span>
         </div>
       </div>
       <div
         ref={trackRef}
-        className="relative w-full overflow-x-hidden cursor-none"
-        onMouseMove={handleMouseMove}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        className="relative w-full overflow-x-hidden cursor-none h-[80vh]"
         onClick={handleClick}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
@@ -174,15 +178,21 @@ export default function DestinationSlider() {
           msOverflowStyle: 'none',
         }}
       >
-        <div className="flex gap-4 px-[10vw]">
+        <div
+          className="flex gap-4 px-[10vw] h-full"
+          onMouseMove={handleMouseMove}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           {loopDestinations.map((destination, index) => (
             <motion.div
               key={index}
-              ref={(el) => {
+              ref={el => {
                 cardsRef.current[index] = el;
               }}
-              className={`flex-shrink-0 w-[80vw] ${isMobile ? 'aspect-[3/5]' : 'aspect-video'
-                } rounded-xl overflow-hidden relative`}
+              className={`flex-shrink-0 w-[80vw] ${
+                isMobile ? 'aspect-[3/5]' : 'aspect-video'
+              } rounded-xl overflow-hidden relative`}
               drag={!isMobile}
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.1}
@@ -200,9 +210,10 @@ export default function DestinationSlider() {
                 }
               }}
             >
-              <img
+              <Image
                 src={destination.images[0]}
                 alt={destination.name}
+                layout="fill"
                 className="absolute inset-0 w-full h-full object-cover"
               />
             </motion.div>
@@ -215,11 +226,11 @@ export default function DestinationSlider() {
           className="fixed pointer-events-none z-50"
           style={{
             left: cursor.x,
-            top: cursor.y,
+            top: cursor.y + window.scrollY,
             transform: 'translate(-50%, -50%)',
           }}
         >
-          <div className="bg-white/10 backdrop-blur-md px-6 py-16 rounded-full border border-white/20 flex items-center gap-3">
+          <div className="bg-white/10! backdrop-blur-md! px-4! py-2! rounded-full border border-white/20 flex items-center gap-3">
             <span className="text-white font-semibold">View Details</span>
             <svg
               width="20"
@@ -238,7 +249,7 @@ export default function DestinationSlider() {
         </div>
       )}
 
-      <div className="flex justify-between items-end pt-[20px]! w-full px-[10vw]!">
+      <div className="flex justify-between items-end xs:!items-centerUp pt-[20px]! w-full px-[10vw]!">
         {/* Place name at bottom-left */}
         <button
           onClick={() => openWhatsApp(currentDestinationName)}
@@ -248,46 +259,42 @@ export default function DestinationSlider() {
         </button>
 
         {/* Navigation arrows at bottom-right */}
-        <div className="z-20 flex items-center gap-3">
+        <div className="z-20 flex h-full! items-center justify-center gap-3">
           <button
-            onClick={(e) => {
+            onClick={e => {
               e.stopPropagation();
               goToPrevious();
             }}
             className="bg-white/10 backdrop-blur-md rounded-full p-3 hover:bg-white/20 transition-all duration-300 border border-white/20"
           >
             <svg
-              width="24"
-              height="24"
               viewBox="0 0 24 24"
               fill="none"
               stroke="white"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="w-10 h-10"
+              className="w-10 h-10 xs:!w-6 xs:!h-6"
             >
               <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
           </button>
 
           <button
-            onClick={(e) => {
+            onClick={e => {
               e.stopPropagation();
               goToNext();
             }}
             className="bg-white/10 backdrop-blur-md rounded-full p-3 hover:bg-white/20 transition-all duration-300 border border-white/20"
           >
             <svg
-              width="24"
-              height="24"
               viewBox="0 0 24 24"
               fill="none"
               stroke="white"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="w-10 h-10"
+              className="w-10 h-10 xs:!w-6 xs:!h-6"
             >
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
