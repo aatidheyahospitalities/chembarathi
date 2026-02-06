@@ -190,7 +190,7 @@ export default function DestinationSlider() {
               ref={el => {
                 cardsRef.current[index] = el;
               }}
-              className={`flex-shrink-0 w-[80vw] xs:!aspect-[3/4] aspect-video rounded-xl overflow-hidden relative`}
+              className={`flex-shrink-0 w-[90vw] xs:!w-[85vw] xs:!aspect-[3/6] aspect-video rounded-xl overflow-hidden relative`}
               drag={!isMobile}
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.1}
@@ -247,7 +247,7 @@ export default function DestinationSlider() {
         </div>
       )}
 
-      <div className="flex justify-between items-end xs:!items-centerUp pt-[20px]! w-full px-[10vw]!">
+      <div className="flex justify-between items-end xs:!items-center xs:!justify-center pt-[20px]! w-full px-[10vw]!">
         {/* Place name at bottom-left */}
         <button
           onClick={() => openWhatsApp(currentDestinationName)}
@@ -257,7 +257,7 @@ export default function DestinationSlider() {
         </button>
 
         {/* Navigation arrows at bottom-right */}
-        <div className="z-20 flex h-full! items-center justify-center gap-3">
+        <div className="z- xs:!hidden flex h-full! items-center justify-center gap-3">
           <button
             onClick={e => {
               e.stopPropagation();

@@ -29,12 +29,7 @@ export default function BottomBarSection() {
     },
     {
       title: 'Engagement',
-      subItems: [
-        'Reviews',
-        'Testimonials',
-        'Careers',
-        'Partner with Us',
-      ],
+      subItems: ['Reviews', 'Testimonials', 'Careers', 'Partner with Us'],
     },
   ];
 
@@ -72,11 +67,7 @@ export default function BottomBarSection() {
 
         <button
           onClick={() => router.push('/book')}
-          className="px-(--spacing-padding-10x)! py-(--spacing-padding-3x)! rounded-full! cursor-pointer hover:opacity-80 transition"
-          style={{
-            background: 'var(--typography-color-secondary-100)',
-            color: 'var(--typography-color-secondary-1000)',
-          }}
+          className="px-(--spacing-padding-10x)! text-lg-regular! text-secondary-1000! py-(--spacing-padding-3x)! rounded-full! bg-(--typography-color-secondary-100)! hover:cursor-pointer"
         >
           Book Your Stay Today
         </button>
@@ -111,11 +102,16 @@ export default function BottomBarSection() {
             className="text-xl-regular xs:!text-md-regular"
             style={{ color: 'var(--typography-color-primary-400)' }}
           >
-            © {new Date().getFullYear()} Chembarathi Wayanad. All Rights Reserved.
+            © {new Date().getFullYear()} Chembarathi Wayanad. All Rights
+            Reserved.
           </span>
 
           <div className="flex gap-12 xs:!gap-[12px] xs:!flex-col">
-            {['Privacy Policy', 'Terms & Conditions', 'Cancellation Policy'].map(text => (
+            {[
+              'Privacy Policy',
+              'Terms & Conditions',
+              'Cancellation Policy',
+            ].map(text => (
               <button
                 key={text}
                 onClick={() => router.push('/')}
