@@ -190,9 +190,7 @@ export default function DestinationSlider() {
               ref={el => {
                 cardsRef.current[index] = el;
               }}
-              className={`flex-shrink-0 w-[80vw] ${
-                isMobile ? 'aspect-[3/4]' : 'aspect-video'
-              } rounded-xl overflow-hidden relative`}
+              className={`flex-shrink-0 w-[80vw] xs:!aspect-[3/4] aspect-video rounded-xl overflow-hidden relative`}
               drag={!isMobile}
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.1}
