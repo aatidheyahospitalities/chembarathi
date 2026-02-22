@@ -4,9 +4,8 @@ import { homeContentQuery, homeMetaDataQuery } from './API/Query/query';
 import dynamic from 'next/dynamic';
 
 import Banner from './components/Banner';
-import DestinationSlider from '@/app/components/DestinationSlider';
 import CommonSection from './components/CommonSection';
-import GalleryLoop from './components/GalleryLoop';
+import DestinationSlider from '@/app/components/DestinationSlider';
 const CommonSectionWithGallery = dynamic(
   () => import('./components/CommonSectionWithGallery')
 );
@@ -15,8 +14,6 @@ const ScrollVelocityText = dynamic(
   () => import('./components/ScrollVelocityText')
 );
 const FaqSection = dynamic(() => import('./components/FaqSection'));
-const BottomBarSection = dynamic(() => import('./components/BottomBarSection'));
-const RoomSlider = dynamic(() => import('./components/RoomSlider'));
 
 export const revalidate = 600;
 
@@ -42,10 +39,9 @@ export default async function HomePage() {
   return (
     <main>
       <Banner heroData={heroData} />
-      <CommonSection commonSectionData={AboutData} type="TYPE1" />
-      <CommonSection commonSectionData={ExperienceData} type="TYPE2" />
+      <CommonSection commonSectionData={AboutData} />
+      <CommonSection commonSectionData={ExperienceData} />
       <DestinationSlider />
-      {/* <RoomSlider /> */}
       <CommonSectionWithGallery commonSectionData={ExperienceTheBeautyData} />
       <ScrollVelocityText
         texts={['Rejuvenation Retreat • Forest Therapy •']}
@@ -54,8 +50,6 @@ export default async function HomePage() {
       />
       <ReviewSection />
       <FaqSection {...faqData} />
-      <GalleryLoop />
-      <BottomBarSection />
     </main>
   );
 }

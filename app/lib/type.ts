@@ -23,6 +23,7 @@ export interface CommonSectionType {
   ctaLabel: string;
   ctaUrl: string;
   image: { url: string };
+  contentTypeStyle: string;
 }
 
 export interface ContentSectionWithGalleryType {

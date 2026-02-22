@@ -12,6 +12,7 @@ export const homeContentQuery = {
         url
         }
         description
+      contentTypeStyle
     }
     aboutus {
         eyebrow
@@ -22,6 +23,7 @@ export const homeContentQuery = {
         url
         }
         description
+      contentTypeStyle
     }
     experienceTheBeauty {
         eyebrow
@@ -58,7 +60,7 @@ export const homeContentQuery = {
       }
     }
     }
- }`,
+}`,
   variables: {
     where: {
       slug: 'home-page',

@@ -4,12 +4,10 @@ import CommonLinkButton from './CommonLinkButton';
 
 export default function commonSection({
   commonSectionData,
-  type,
 }: {
   commonSectionData: CommonSectionType;
-  type: 'TYPE1' | 'TYPE2';
 }) {
-  const typeOfSection = type || 'TYPE1';
+  const typeOfSection = commonSectionData.contentTypeStyle || 'TYPE1';
   const title = commonSectionData?.title || '';
   const description = commonSectionData?.description || '';
   const ctaLabel = commonSectionData?.ctaLabel || '';
