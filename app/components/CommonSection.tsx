@@ -1,13 +1,18 @@
 import Image from 'next/image';
-import { CommonSectionType } from '../lib/type';
+import { CommonSectionType, SectionVariant } from '../lib/type';
 import CommonLinkButton from './CommonLinkButton';
+import { sectionVariants } from './const/variants';
 
-export default function commonSection({
+export default function CommonSection({
   commonSectionData,
 }: {
   commonSectionData: CommonSectionType;
 }) {
-  const typeOfSection = commonSectionData.contentTypeStyle || 'TYPE1';
+  const type: SectionVariant = (commonSectionData.contentTypeStyle ||
+    'TYPE1') as SectionVariant;
+
+  const variant = sectionVariants[type];
+
   const title = commonSectionData?.title || '';
   const description = commonSectionData?.description || '';
   const ctaLabel = commonSectionData?.ctaLabel || '';
@@ -15,46 +20,28 @@ export default function commonSection({
   const image = commonSectionData?.image?.url || '';
 
   return (
-    <div
-      className={`section-wrapper gap-(--spacing-padding-16x) flex flex-col xs:!flex-col xs:!gap-(--spacing-padding-8x) ${
-        typeOfSection === 'TYPE1' ? '' : 'flex-row'
-      }`}
-    >
-      <div
-        className={`flex gap-(--spacing-padding-16x) xs:!flex-col xs:!w-full xs:!gap-(--spacing-padding-6x) ${
-          typeOfSection === 'TYPE1' ? 'w-full' : 'flex-col w-[50%]'
-        }`}
-      >
-        <div
-          className={`flex flex-col gap-(--spacing-padding-3x) w-[50%] xs:!w-full  ${
-            typeOfSection === 'TYPE1' ? 'w-[50%]' : 'flex-col w-full'
-          }`}
-        >
+    <div className={variant.wrapper}>
+      <div className={variant.contentWrapper}>
+        <div className={variant.titleWrapper}>
           <span className="text-md-regular text-(--typography-color-secondary-500)">
             {eyebrow}
           </span>
+
           <h2 className="text-heading-2 text-(--typography-color-secondary-100) xs:!text-heading-4">
             {title}
           </h2>
         </div>
-        <div
-          className={`flex flex-col gap-(--spacing-padding-10x) w-[50%] text-start xs:!w-full xs:!gap-(--spacing-padding-6x) ${
-            typeOfSection === 'TYPE1' ? 'w-[50%]' : 'flex-col w-full'
-          }`}
-        >
+
+        <div className={variant.descriptionWrapper}>
           <span className="text-xl-regular text-(--typography-color-secondary-800) xs:!text-body-lg">
             {description}
           </span>
+
           <CommonLinkButton text={ctaLabel} />
         </div>
       </div>
-      <div
-        className={`flex relative  rounded-4xl xs:!rounded-[16px] overflow-hidden xs:!w-full  ${
-          typeOfSection === 'TYPE1'
-            ? 'w-full aspect-video xs:!aspect-[1/1]'
-            : 'w-[50%] aspect-[3/4]'
-        }`}
-      >
+
+      <div className={variant.imageWrapper}>
         <Image
           src={image}
           alt="Common Section Image"
