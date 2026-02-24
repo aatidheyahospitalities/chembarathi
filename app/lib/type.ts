@@ -87,13 +87,3 @@ export interface contentSectionWithGalleryCollection {
     items: ContentSectionWithGalleryType[] | [];
   };
 }
-
-export type SectionVariantStyles = {
-  wrapper: string;
-  contentWrapper: string;
-  titleWrapper: string;
-  descriptionWrapper: string;
-  imageWrapper: string;
-};
-
-export type SectionVariant = 'TYPE1' | 'TYPE2';
