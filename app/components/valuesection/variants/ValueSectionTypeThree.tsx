@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import { ValueSection } from '../type';
 import CommonLinkButton from '../../CommonLinkButton';
+import ParallaxImage from '../../ParallaxImage';
 
 export function VariantTypeThree({ field }: { field: ValueSection }) {
   return (
@@ -26,14 +26,7 @@ export function VariantTypeThree({ field }: { field: ValueSection }) {
 
       {/* Image */}
       <div className="flex relative  overflow-hidden w-full aspect-video xs:!aspect-[1/1]">
-        <Image
-          src={field.image}
-          alt="Common Section Image"
-          className="object-cover"
-          fill
-          loading="eager"
-          quality={100}
-        />
+        <ParallaxImage src={field.image} shift={20} />
       </div>
     </div>
   );
