@@ -1,10 +1,10 @@
 import Image from 'next/image';
-import { ContentSectionWithGalleryType } from '../lib/type';
+import { ValueSectionWithGalleryType } from './type';
 
 export default function commonSection({
   commonSectionData,
 }: {
-  commonSectionData: ContentSectionWithGalleryType;
+  commonSectionData: ValueSectionWithGalleryType;
 }) {
   const title = commonSectionData?.title || '';
   const description = commonSectionData?.description || '';

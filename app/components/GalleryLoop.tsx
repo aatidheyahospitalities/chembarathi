@@ -44,7 +44,7 @@ export default function GalleryLoop({ speed = 50 }) {
   }));
 
   return (
-    <section className="relative w-full py-(--spacing-padding-4x)">
+    <section className="relative w-full py-(--spacing-padding-16x)!">
       <InfiniteLoopWrapper
         items={items}
         speed={speed}

@@ -24,6 +24,7 @@ export interface CommonSectionType {
   ctaUrl: string;
   image: { url: string };
   contentTypeStyle: string;
+  showCtaLabel: boolean;
 }
 
 export interface ContentSectionWithGalleryType {
@@ -57,11 +58,21 @@ export interface HomePageType {
   faq: FaqItemType;
 }
 
+export interface AboutPageType {
+  ecosystem: CommonSectionType;
+}
+
 // Collection Interfaces
 
 export interface pagetypeoneCollection {
   pagetypeoneCollection: {
     items: HomePageType[] | [];
+  };
+}
+
+export interface pagetypetwoCollection {
+  pageTypeTwoCollection: {
+    items: AboutPageType[] | [];
   };
 }
 

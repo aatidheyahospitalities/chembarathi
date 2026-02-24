@@ -4,10 +4,10 @@ import { homeContentQuery, homeMetaDataQuery } from './API/Query/query';
 import dynamic from 'next/dynamic';
 
 import Banner from './components/Banner';
-import CommonSection from './components/CommonSection';
 import DestinationSlider from '@/app/components/DestinationSlider';
+import CommonSection from './components/valuesection/ValueSection';
 const CommonSectionWithGallery = dynamic(
-  () => import('./components/CommonSectionWithGallery')
+  () => import('./components/valuesection/ValueSectionWithGallery')
 );
 const ReviewSection = dynamic(() => import('./components/ReviewSection'));
 const ScrollVelocityText = dynamic(

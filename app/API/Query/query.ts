@@ -13,6 +13,7 @@ export const homeContentQuery = {
         }
         description
       contentTypeStyle
+      showCtaLabel
     }
     aboutus {
         eyebrow
@@ -24,6 +25,7 @@ export const homeContentQuery = {
         }
         description
       contentTypeStyle
+      showCtaLabel
     }
     experienceTheBeauty {
         eyebrow
@@ -68,6 +70,33 @@ export const homeContentQuery = {
   },
 };
 
+export const aboutContentQuery = {
+  query: `
+  query PageTypeTwo($where: PageTypeTwoFilter) {
+  pageTypeTwoCollection(where: $where) {
+    items {
+      ecosystem {
+        title
+        showCtaLabel
+        image {
+          url
+        }
+        description
+        eyebrow
+        ctaUrl
+        ctaLabel
+        contentTypeStyle
+      }
+    }
+  }
+}`,
+  variables: {
+    where: {
+      slug: 'about-page',
+    },
+  },
+};
+
 export const homeMetaDataQuery = {
   query: `
   query MetadataCollection($where: MetadataFilter) {
@@ -81,6 +110,23 @@ export const homeMetaDataQuery = {
   variables: {
     where: {
       slug: 'homepage',
+    },
+  },
+};
+
+export const aboutMetaDataQuery = {
+  query: `
+ query MetadataCollection($where: MetadataFilter) {
+  metadataCollection(where: $where) {
+      items {
+        title
+        description
+      }
+    }
+  }`,
+  variables: {
+    where: {
+      slug: 'aboutpage',
     },
   },
 };
