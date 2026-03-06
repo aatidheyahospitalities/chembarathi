@@ -87,6 +87,14 @@ export const aboutContentQuery = {
         ctaLabel
         contentTypeStyle
       }
+      faq {
+        faqItemCollection {
+          items {
+            answer
+            question
+          }
+        }
+      }
     }
   }
 }`,
