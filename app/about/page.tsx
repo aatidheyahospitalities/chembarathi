@@ -20,10 +20,12 @@ export default async function AboutPage() {
 
   const ecosystem = data.pageTypeTwoCollection.items[0].ecosystem;
   const faqData = data.pageTypeTwoCollection.items[0].faq;
+  const awwwards = data.pageTypeTwoCollection.items[0].awwwards;
 
   return (
     <main>
       <ValueSection commonSectionData={ecosystem} />
+      <ValueSection commonSectionData={awwwards} />
       <FaqSection {...faqData} />
     </main>
   );

@@ -60,6 +60,7 @@ export interface HomePageType {
 
 export interface AboutPageType {
   ecosystem: CommonSectionType;
+  awwwards: CommonSectionType;
   faq: FaqItemType;
 }
 

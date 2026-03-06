@@ -87,6 +87,18 @@ export const aboutContentQuery = {
         ctaLabel
         contentTypeStyle
       }
+      awwwards {
+        title
+        showCtaLabel
+        image {
+          url
+        }
+        description
+        eyebrow
+        ctaUrl
+        ctaLabel
+        contentTypeStyle
+      }
       faq {
         faqItemCollection {
           items {

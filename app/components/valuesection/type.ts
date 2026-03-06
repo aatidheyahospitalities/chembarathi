@@ -19,4 +19,4 @@ export interface ValueSectionWithGalleryType {
   };
 }
 
-export type ValueSectionVariant = 'TYPE1' | 'TYPE2' | 'TYPE3';
+export type ValueSectionVariant = 'TYPE1' | 'TYPE2' | 'TYPE3' | 'TYPE4';
