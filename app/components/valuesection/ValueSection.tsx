@@ -15,6 +15,7 @@ export default function commonSection({
     title: commonSectionData?.title || '',
     description: commonSectionData?.description || '',
     ctaLabel: commonSectionData?.ctaLabel || '',
+    ctaUrl: commonSectionData?.ctaUrl || '',
     image: commonSectionData?.image?.url || '',
     showCtaLabel: commonSectionData?.showCtaLabel || false,
   } as ValueSection;

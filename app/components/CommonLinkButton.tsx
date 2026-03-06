@@ -1,15 +1,28 @@
 'use client';
+import { useRouter } from 'next/navigation';
+import { openWhatsApp } from '../Services/openWhatsApp';
 
 export default function CommonLinkButton({
   text,
+  url,
   onclick,
 }: Readonly<{
   text: string;
+  url?: string;
   onclick?: () => void;
 }>) {
+  const router = useRouter();
+
+  const handleClick =
+    text === 'Start Your Experience'
+      ? () => openWhatsApp('')
+      : url
+        ? () => router.push(url)
+        : onclick;
+
   return (
     <button
-      onClick={onclick}
+      onClick={handleClick}
       className="group relative w-fit py-3 flex gap-2! items-center outline-none border-b-2! border-(--border-color-default)! cursor-pointer"
     >
       <div className="relative flex items-start">

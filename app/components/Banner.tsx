@@ -1,4 +1,6 @@
+'use client';
 import { HeroType } from '../lib/type';
+import { openWhatsApp } from '../Services/openWhatsApp';
 
 export default function Banner({ heroData }: Readonly<{ heroData: HeroType }>) {
   const title = heroData?.title || '';
@@ -37,7 +39,10 @@ export default function Banner({ heroData }: Readonly<{ heroData: HeroType }>) {
           Peace comfort nature luxury escape
         </p>
 
-        <button className="px-(--spacing-padding-10x)! text-lg-reqular! text-secondary-1000! py-(--spacing-padding-3x)! rounded-full! bg-(--typography-color-secondary-100)! hover:cursor-pointer font-secondary!">
+        <button
+          className="px-(--spacing-padding-10x)! text-lg-reqular! text-secondary-1000! py-(--spacing-padding-3x)! rounded-full! bg-(--typography-color-secondary-100)! hover:cursor-pointer font-secondary!"
+          onClick={() => openWhatsApp('')}
+        >
           Book Your Stay
         </button>
       </div>

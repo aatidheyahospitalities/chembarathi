@@ -21,7 +21,9 @@ export function VariantTypeOne({ field }: { field: ValueSection }) {
           <span className="text-xl-regular text-(--typography-color-secondary-800) xs:!text-body-lg">
             {field.description}
           </span>
-          {field.showCtaLabel && <CommonLinkButton text={field.ctaLabel} />}
+          {field.showCtaLabel && (
+            <CommonLinkButton text={field.ctaLabel} url={field.ctaUrl} />
+          )}
         </div>
       </div>
 

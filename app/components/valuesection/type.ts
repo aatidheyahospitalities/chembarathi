@@ -5,6 +5,7 @@ export type ValueSection = {
   eyebrow: string;
   image: string;
   showCtaLabel: boolean;
+  ctaUrl: string;
 };
 
 export interface ValueSectionWithGalleryType {

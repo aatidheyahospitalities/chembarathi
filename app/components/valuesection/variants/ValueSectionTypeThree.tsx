@@ -5,7 +5,7 @@ import ParallaxImage from '../../ParallaxImage';
 export function VariantTypeThree({ field }: { field: ValueSection }) {
   return (
     <div className=" flex flex-col">
-      <div className="flex p-(--spacing-padding-huge-x)! gap-[96px]!">
+      <div className="flex section-wrapper gap-[96px]! xs:!flex-col xs:!gap-[48px]">
         {/* Title Block */}
         <div className="flex flex-col gap-(--spacing-padding-3x">
           <span className="text-md-regular text-(--typography-color-secondary-500) text-nowrap">
@@ -17,10 +17,12 @@ export function VariantTypeThree({ field }: { field: ValueSection }) {
           <h2 className="text-heading-4 text-(--typography-color-secondary-100) font-secondary! ">
             {field.title}
           </h2>
-          <span className="text-xl-regular text-(--typography-color-secondary-800) w-[40%]">
+          <span className="text-xl-regular text-(--typography-color-secondary-800) w-[40%] xs:!w-full">
             {field.description}
           </span>
-          {field.showCtaLabel && <CommonLinkButton text={field.ctaLabel} />}
+          {field.showCtaLabel && (
+            <CommonLinkButton text={field.ctaLabel} url={field.ctaUrl} />
+          )}
         </div>
       </div>
 
