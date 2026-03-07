@@ -48,12 +48,14 @@ export interface FaqItemType {
 }
 
 export interface ConnectionSectionType {
-  title: string;
-  img: {
-    url: string;
-  };
-  description: {
-    contentList: string[];
+  descriptionCollection: {
+    items: {
+      title: string;
+      description: string;
+      img: {
+        url: string;
+      };
+    }[];
   };
 }
 

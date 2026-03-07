@@ -88,12 +88,14 @@ export const aboutContentQuery = {
         contentTypeStyle
       }
       connection {
-        title
-        img {
-          url
-        }
-        description {
-          contentList
+        descriptionCollection {
+          items {
+            title
+            img {
+              url
+            }
+            description
+          }
         }
       }
       awwwards {
