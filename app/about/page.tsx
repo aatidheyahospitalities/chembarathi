@@ -3,6 +3,7 @@ import { aboutContentQuery, aboutMetaDataQuery } from '../API/Query/query';
 import { metadataCollection, pagetypetwoCollection } from '../lib/type';
 import ValueSection from '../components/valuesection/ValueSection';
 import FaqSection from '../components/FaqSection';
+import FeatureSection from './components/FeatureSection';
 
 export const revalidate = 600;
 
@@ -19,12 +20,14 @@ export default async function AboutPage() {
   const data: pagetypetwoCollection = await contentfulFetch(aboutContentQuery);
 
   const ecosystem = data.pageTypeTwoCollection.items[0].ecosystem;
+  const connection = data.pageTypeTwoCollection.items[0].connection;
   const faqData = data.pageTypeTwoCollection.items[0].faq;
   const awwwards = data.pageTypeTwoCollection.items[0].awwwards;
 
   return (
     <main>
       <ValueSection commonSectionData={ecosystem} />
+      <FeatureSection sectionData={connection} />
       <ValueSection commonSectionData={awwwards} />
       <FaqSection {...faqData} />
     </main>

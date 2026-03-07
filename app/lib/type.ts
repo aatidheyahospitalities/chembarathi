@@ -47,6 +47,16 @@ export interface FaqItemType {
   };
 }
 
+export interface ConnectionSectionType {
+  title: string;
+  img: {
+    url: string;
+  };
+  description: {
+    contentList: string[];
+  };
+}
+
 // Page Type Interfaces
 export interface HomePageType {
   title: string;
@@ -60,6 +70,7 @@ export interface HomePageType {
 
 export interface AboutPageType {
   ecosystem: CommonSectionType;
+  connection: ConnectionSectionType;
   awwwards: CommonSectionType;
   faq: FaqItemType;
 }

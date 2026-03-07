@@ -87,6 +87,15 @@ export const aboutContentQuery = {
         ctaLabel
         contentTypeStyle
       }
+      connection {
+        title
+        img {
+          url
+        }
+        description {
+          contentList
+        }
+      }
       awwwards {
         title
         showCtaLabel
