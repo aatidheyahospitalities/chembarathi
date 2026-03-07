@@ -39,7 +39,7 @@ export default function FeatureSection({ sectionData }: FeatureSectionProps) {
   const currentRef = useRef(0);
   const busyRef = useRef(false);
   const topSlotRef = useRef<'A' | 'B'>('A');
-  const goToRef = useRef<(index: number) => void>(() => {});
+  const goToRef = useRef<(index: number, direction: 1 | -1) => void>(() => {});
 
   useEffect(() => {
     if (slides.length === 0) return;
@@ -58,9 +58,9 @@ export default function FeatureSection({ sectionData }: FeatureSectionProps) {
       return;
     }
 
-    const STAGGER = 0.07;
-    const DURATION_OUT = 0.55;
-    const DURATION_IN = 0.7;
+    const STAGGER = 0.05;
+    const DURATION_OUT = 0.4;
+    const DURATION_IN = 0.52;
 
     const headingStage = headingStageRef.current;
     const descStage = descStageRef.current;
@@ -139,23 +139,7 @@ export default function FeatureSection({ sectionData }: FeatureSectionProps) {
       return inners;
     };
 
-    const updateMeta = (nextIndex: number) => {
-      gsap.to(metaNum, {
-        yPercent: -110,
-        duration: 0.25,
-        ease: 'power2.in',
-        onComplete: () => {
-          metaNum.textContent = formatCount(nextIndex + 1);
-          gsap.fromTo(
-            metaNum,
-            { yPercent: 110 },
-            { yPercent: 0, duration: 0.3, ease: 'power2.out' }
-          );
-        },
-      });
-    };
-
-    const goTo = (nextIndex: number) => {
+    const goTo = (nextIndex: number, direction: 1 | -1) => {
       if (busyRef.current || nextIndex === currentRef.current) return;
       busyRef.current = true;
 
@@ -176,7 +160,9 @@ export default function FeatureSection({ sectionData }: FeatureSectionProps) {
 
       const headingInLines = buildSlot(headingIn, slides[nextIndex].title || '');
       const descInLines = buildSlot(descIn, slides[nextIndex].description || '');
-      gsap.set([...headingInLines, ...descInLines], { yPercent: 110 });
+      gsap.set([...headingInLines, ...descInLines], {
+        yPercent: direction > 0 ? 110 : -110,
+      });
       gsap.set([headingIn, descIn], { zIndex: 1 });
 
       if (top === 'A') {
@@ -186,7 +172,6 @@ export default function FeatureSection({ sectionData }: FeatureSectionProps) {
       }
 
       gsap.set(imageIn, { opacity: 0, scale: 1.04, zIndex: 1 });
-      updateMeta(nextIndex);
 
       const outLineCount = Math.max(headingOutLines.length, descOutLines.length);
       const outTotal = DURATION_OUT + STAGGER * Math.max(outLineCount - 1, 0);
@@ -206,7 +191,7 @@ export default function FeatureSection({ sectionData }: FeatureSectionProps) {
       timeline.to(
         headingOutLines,
         {
-          yPercent: -110,
+          yPercent: direction > 0 ? -110 : 110,
           duration: DURATION_OUT,
           ease: 'power3.in',
           stagger: STAGGER,
@@ -216,12 +201,34 @@ export default function FeatureSection({ sectionData }: FeatureSectionProps) {
       timeline.to(
         descOutLines,
         {
-          yPercent: -110,
+          yPercent: direction > 0 ? -110 : 110,
           duration: DURATION_OUT,
           ease: 'power3.in',
           stagger: STAGGER,
         },
         0
+      );
+      timeline.to(
+        metaNum,
+        {
+          yPercent: direction > 0 ? -110 : 110,
+          duration: DURATION_OUT,
+          ease: 'power3.in',
+        },
+        0
+      );
+      timeline.add(() => {
+        metaNum.textContent = formatCount(nextIndex + 1);
+        gsap.set(metaNum, { yPercent: direction > 0 ? 110 : -110 });
+      }, outTotal);
+      timeline.to(
+        metaNum,
+        {
+          yPercent: 0,
+          duration: DURATION_IN,
+          ease: 'power3.out',
+        },
+        outTotal
       );
       timeline.to(
         headingInLines,
@@ -320,13 +327,13 @@ export default function FeatureSection({ sectionData }: FeatureSectionProps) {
   const handleNext = () => {
     if (slides.length < 2) return;
     const nextIndex = (currentRef.current + 1) % slides.length;
-    goToRef.current(nextIndex);
+    goToRef.current(nextIndex, 1);
   };
 
   const handlePrev = () => {
     if (slides.length < 2) return;
     const nextIndex = (currentRef.current - 1 + slides.length) % slides.length;
-    goToRef.current(nextIndex);
+    goToRef.current(nextIndex, -1);
   };
 
   return (
