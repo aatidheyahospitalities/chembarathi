@@ -35,7 +35,7 @@ export default function RootLayout({
       <body suppressHydrationWarning>
         <Header />
         <SmoothScroll>
-          <main className="min-h-screen pt-20 relative z-0">{children}</main>
+          <main className="min-h-screen relative z-0">{children}</main>
           <GalleryLoop />
           <BottomBarSection />
         </SmoothScroll>
