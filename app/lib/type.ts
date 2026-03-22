@@ -47,6 +47,16 @@ export interface FaqItemType {
   };
 }
 
+export interface policyType {
+  policyblockCollection: {
+    items: {
+      heading: string;
+      name: string;
+      content: string;
+    }[];
+  };
+}
+
 export interface ConnectionSectionType {
   descriptionCollection: {
     items: {
@@ -77,6 +87,10 @@ export interface AboutPageType {
   faq: FaqItemType;
 }
 
+export interface PolicyPageType {
+   policy:policyType
+}
+
 // Collection Interfaces
 
 export interface pagetypeoneCollection {
@@ -89,6 +103,12 @@ export interface pagetypetwoCollection {
   pageTypeTwoCollection: {
     items: AboutPageType[] | [];
   };
+}
+
+export interface policyCollection {
+  policypageCollection: {
+    items: PolicyPageType[] | [];
+  }
 }
 
 export interface metadataCollection {

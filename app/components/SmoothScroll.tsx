@@ -30,7 +30,6 @@ export default function SmoothScroll({
   const content = useRef<HTMLDivElement | null>(null);
   const [isReady, setIsReady] = useState(false);
 
-  // Only load GSAP on desktop and when component mounts
   useEffect(() => {
     if (typeof window !== "undefined" && window.innerWidth >= 1024) {
       initGSAP().then(() => setIsReady(true));
@@ -41,7 +40,7 @@ export default function SmoothScroll({
 
   useLayoutEffect(() => {
     if (!isReady || !gsap || !wrapper.current || !content.current) return;
-    
+
     if (window.innerWidth < 1024) {
       return;
     }

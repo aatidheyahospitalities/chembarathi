@@ -161,3 +161,45 @@ export const aboutMetaDataQuery = {
     },
   },
 };
+
+export const policyMetaDataQuery = {
+  query: `
+ query MetadataCollection($where: MetadataFilter) {
+  metadataCollection(where: $where) {
+      items {
+        title
+        description
+      }
+    }
+  }`,
+  variables: {
+    where: {
+      slug: 'policypage',
+    },
+  },
+};
+
+export const policyContentQuery = {
+  query: `
+  query PolicypageCollection($where: PolicypageFilter) {
+  policypageCollection(where: $where) {
+    items {
+      policy {
+        policyblockCollection {
+          items {
+            heading
+            name
+            content
+          }
+        }
+      }
+    }
+  }
+}
+`,
+  variables: {
+    where: {
+      slug: 'policypage',
+    },
+  },
+};
