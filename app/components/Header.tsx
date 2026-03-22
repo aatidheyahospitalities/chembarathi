@@ -22,11 +22,23 @@ export default function Header() {
   const lastScrollY = useRef(0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentY = window.scrollY;
+    const TOP_THRESHOLD = 8;
 
-      // detect top
-      setScrolled(currentY > 0);
+    const handleScroll = () => {
+      const currentY = Math.max(
+        window.scrollY,
+        document.documentElement.scrollTop,
+        document.body.scrollTop
+      );
+      const isNearTop = currentY <= TOP_THRESHOLD;
+
+      setScrolled(!isNearTop);
+
+      if (isNearTop) {
+        setHeaderVisible(true);
+        lastScrollY.current = 0;
+        return;
+      }
 
       // ignore tiny scroll jitter
       if (Math.abs(currentY - lastScrollY.current) < 10) return;
@@ -43,6 +55,7 @@ export default function Header() {
       lastScrollY.current = currentY;
     };
 
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [menuOpen]);

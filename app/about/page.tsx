@@ -25,7 +25,7 @@ export default async function AboutPage() {
   const awwwards = data.pageTypeTwoCollection.items[0].awwwards;
 
   return (
-    <main>
+    <main className='pt-20!'>
       <ValueSection commonSectionData={ecosystem} />
       <FeatureSection sectionData={connection} />
       <ValueSection commonSectionData={awwwards} />
