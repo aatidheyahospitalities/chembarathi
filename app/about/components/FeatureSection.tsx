@@ -339,9 +339,9 @@ export default function FeatureSection({ sectionData }: FeatureSectionProps) {
   return (
     <section
       ref={rootRef}
-      className="section-wrapper flex gap-(--spacing-padding-16x) xs:!flex-col xs:!gap-(--spacing-padding-8x)"
+      className="section-wrapper flex  gap-(--spacing-padding-16x) xs:!flex-col-reverse xs:!gap-[20px] FeatureSection"
     >
-      <div className="w-full flex flex-col justify-center gap-(--spacing-padding-16x)">
+      <div className="w-full flex flex-col justify-center gap-(--spacing-padding-16x) xs:!gap-[20px]">
         <div ref={headingStageRef} className="relative overflow-hidden">
           <div
             ref={headingARef}
@@ -353,7 +353,7 @@ export default function FeatureSection({ sectionData }: FeatureSectionProps) {
           />
         </div>
 
-        <div className="flex gap-(--spacing-padding-16x) xs:!flex-col xs:!gap-(--spacing-padding-8x)">
+        <div className="flex gap-(--spacing-padding-16x) xs:!flex-col xs:!gap-(--spacing-padding-8x) xs:!gap-[20px]">
           <div
             className="text-xl-regular text-(--typography-color-secondary-100) whitespace-nowrap inline-flex items-center gap-(--spacing-padding-2x)"
             style={{ minWidth: '7ch', fontVariantNumeric: 'tabular-nums' }}
@@ -370,7 +370,7 @@ export default function FeatureSection({ sectionData }: FeatureSectionProps) {
             </span>
           </div>
 
-          <div className="flex flex-col gap-(--spacing-padding-8x) w-full">
+          <div className="flex flex-col gap-(--spacing-padding-8x) w-full xs:!gap-[16px]">
             <div ref={descStageRef} className="relative overflow-hidden min-h-[6.5rem]">
               <div
                 ref={descARef}

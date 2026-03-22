@@ -8,10 +8,10 @@ export function VariantTypeFour({ field }: { field: ValueSection }) {
     .map(item => item.replace(/^\s*-\s*/, '').trim())
     .filter(Boolean);
   return (
-    <div className="section-wrapper flex flex-row-reverse gap-(--spacing-padding-16x) xs:!flex-col-reverse xs:!gap-(--spacing-padding-8x)">
+    <div className="section-wrapper flex flex-row-reverse gap-(--spacing-padding-16x) xs:!flex-col-reverse xs:!gap-(--spacing-padding-5x) ValueSectionTypeFour">
       {/* Content */}
-      <div className="flex flex-col py-(--spacing-padding-16x)! gap-[32px] w-[50%] xs:!w-full xs:!gap-(--spacing-padding-6x) justify-center">
-        <div className="flex flex-col gap-(--spacing-padding-3x)">
+      <div className="flex flex-col py-(--spacing-padding-16x)! xs:!py-none gap-[32px] w-[50%] xs:!w-full xs:!gap-[12px] justify-center">
+        <div className="flex flex-col gap-(--spacing-padding-3x) xs:!gap-[12px]">
           <span className="text-md-regular text-(--typography-color-secondary-500)">
             {field.eyebrow}
           </span>
@@ -20,8 +20,8 @@ export function VariantTypeFour({ field }: { field: ValueSection }) {
           </h2>
         </div>
 
-        <div className="flex flex-col gap-(--spacing-padding-10x) text-start xs:!gap-(--spacing-padding-6x)">
-          <div className="flex  gap-[32px]">
+        <div className="flex flex-col gap-(--spacing-padding-10x) text-start xs:!gap-(--spacing-padding-8x)">
+          <div className="flex gap-[32px] xs:!gap-(--spacing-padding-6x) xs:!flex-col">
             {descriptionCards.map((text, index) => (
               <span
                 className="text-lg-regular text-(--typography-color-secondary-800) xs:!text-body-lg"
