@@ -28,11 +28,36 @@ export default function DestinationSlider() {
   const [cursorVisible, setCursorVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
+  const [transition, setTransition] = useState<any>({
+    type: 'tween',
+    ease: [0.32, 0.72, 0, 1],
+    duration: 0.5,
+  });
+
   const trackRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const isUserScrollingRef = useRef(false);
-  const touchStartXRef = useRef(0);
-  const isJumpingRef = useRef(false);
+
+  // Navigation handlers
+  const goToIndex = (index: number, immediate = false) => {
+    if (immediate) {
+      setTransition((prev: any) => ({ ...prev, duration: 0 }));
+      setActiveIndex(index);
+      // Reset transition after a frame
+      requestAnimationFrame(() => {
+        setTransition((prev: any) => ({ ...prev, duration: 0.5 }));
+      });
+    } else {
+      setActiveIndex(index);
+    }
+  };
+
+  const handleAnimationComplete = () => {
+    if (activeIndex === 0) {
+      goToIndex(destinations.length, true);
+    } else if (activeIndex === loopDestinations.length - 1) {
+      goToIndex(1, true);
+    }
+  };
 
   useEffect(() => {
     const checkMobile = () => {
@@ -42,41 +67,6 @@ export default function DestinationSlider() {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
-
-  useEffect(() => {
-    if (trackRef.current && cardsRef.current[activeIndex]) {
-      const card = cardsRef.current[activeIndex];
-      if (card) {
-        const scrollLeft =
-          card.offsetLeft -
-          (trackRef.current.offsetWidth - card.offsetWidth) / 2;
-        trackRef.current.scrollTo({
-          left: scrollLeft,
-          behavior: isJumpingRef.current ? 'auto' : 'smooth',
-        });
-      }
-    }
-  }, [activeIndex]);
-
-  useEffect(() => {
-    if (activeIndex === 0) {
-      setTimeout(() => {
-        isJumpingRef.current = true;
-        setActiveIndex(destinations.length);
-        setTimeout(() => {
-          isJumpingRef.current = false;
-        }, 50);
-      }, 300);
-    } else if (activeIndex === loopDestinations.length - 1) {
-      setTimeout(() => {
-        isJumpingRef.current = true;
-        setActiveIndex(1);
-        setTimeout(() => {
-          isJumpingRef.current = false;
-        }, 50);
-      }, 300);
-    }
-  }, [activeIndex]);
 
   // Helper functions
   const getRealIndex = (index: number) => {
@@ -96,11 +86,11 @@ export default function DestinationSlider() {
 
   // Navigation handlers
   const goToNext = () => {
-    setActiveIndex(prev => prev + 1);
+    goToIndex(activeIndex + 1);
   };
 
   const goToPrevious = () => {
-    setActiveIndex(prev => prev - 1);
+    goToIndex(activeIndex - 1);
   };
 
   // Mouse handlers
@@ -127,26 +117,6 @@ export default function DestinationSlider() {
     openWhatsApp(currentDestinationName);
   };
 
-  // Touch handlers
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (!isMobile) return;
-    touchStartXRef.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (!isMobile) return;
-    const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartXRef.current - touchEndX;
-
-    if (Math.abs(diff) > 30) {
-      if (diff > 0) {
-        goToNext();
-      } else {
-        goToPrevious();
-      }
-    }
-  };
-
   return (
     <div className="relative w-full  flex flex-col items-center justify-center">
       <div className="section-wrapper flex gap-(--spacing-padding-16x) w-full xs:!flex-col xs:!gap-(--spacing-padding-6x)">
@@ -169,17 +139,16 @@ export default function DestinationSlider() {
       </div>
       <div
         ref={trackRef}
-        className="relative w-full overflow-x-hidden cursor-none h-[80vh] xs:!h-fit"
+        className="relative w-full overflow-x-hidden cursor-none"
         onClick={handleClick}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        style={{
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-        }}
       >
-        <div
-          className="flex gap-4 px-[10vw] h-full"
+        <motion.div
+          animate={{
+            x: `calc(-${activeIndex} * (${isMobile ? '85vw' : 'calc(80vh * 16 / 9)'} + 1rem) + (100vw - ${isMobile ? '85vw' : 'calc(80vh * 16 / 9)'}) / 2)`,
+          }}
+          transition={transition}
+          onAnimationComplete={handleAnimationComplete}
+          className="flex gap-4"
           onMouseMove={handleMouseMove}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
@@ -190,15 +159,11 @@ export default function DestinationSlider() {
               ref={el => {
                 cardsRef.current[index] = el;
               }}
-              className={`flex-shrink-0 w-[90vw] xs:!w-[85vw] xs:!aspect-[3/6] aspect-video rounded-xl overflow-hidden relative`}
-              drag={!isMobile}
+              className={`flex-shrink-0 w-[calc(80vh*16/9)] h-[80vh] xs:!w-[85vw] xs:!h-auto xs:!aspect-[3/4] rounded-xl overflow-hidden relative`}
+              drag="x"
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.1}
-              onDragStart={() => {
-                isUserScrollingRef.current = true;
-              }}
               onDragEnd={(_, info) => {
-                isUserScrollingRef.current = false;
                 if (Math.abs(info.offset.x) > 50) {
                   if (info.offset.x < 0) {
                     goToNext();
@@ -216,7 +181,7 @@ export default function DestinationSlider() {
               />
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
 
       {!isMobile && cursorVisible && (
@@ -224,7 +189,7 @@ export default function DestinationSlider() {
           className="fixed pointer-events-none z-50"
           style={{
             left: cursor.x,
-            top: cursor.y + window.scrollY,
+            top: cursor.y + (typeof window !== 'undefined' ? window.scrollY : 0),
             transform: 'translate(-50%, -50%)',
           }}
         >
@@ -251,13 +216,29 @@ export default function DestinationSlider() {
         {/* Place name at bottom-left */}
         <button
           onClick={() => openWhatsApp(currentDestinationName)}
-          className="z-20 text-xxl-regular sm:text-3xl font-semibold hover:opacity-80 transition-opacity text-white!"
+          className="z-20 text-xxl-regular sm:text-3xl font-semibold hover:opacity-80 transition-opacity text-white! min-w-[300px] text-left"
         >
           {currentDestinationName}
         </button>
 
+        {/* Progress Indicator - Dots */}
+        <div className="flex gap-3 items-center justify-center flex-1 mb-2">
+          {destinations.map((_, i) => (
+            <motion.div
+              key={i}
+              className="h-2 rounded-full bg-white transition-all duration-300"
+              initial={false}
+              animate={{
+                width: getRealIndex(activeIndex) === i ? 24 : 8,
+                opacity: getRealIndex(activeIndex) === i ? 1 : 0.3,
+              }}
+              transition={transition}
+            />
+          ))}
+        </div>
+
         {/* Navigation arrows at bottom-right */}
-        <div className="z- xs:!hidden flex h-full! items-center justify-center gap-3">
+        <div className="z-20 xs:!hidden flex h-full! items-center justify-center gap-3">
           <button
             onClick={e => {
               e.stopPropagation();
