@@ -39,17 +39,29 @@ export default async function HomePage() {
   return (
     <main>
       <Banner heroData={heroData} />
-      <CommonSection commonSectionData={AboutData} />
-      <CommonSection commonSectionData={ExperienceData} />
-      <DestinationSlider />
-      <CommonSectionWithGallery commonSectionData={ExperienceTheBeautyData} />
+      <section id="about" style={{ scrollMarginTop: '80px' }}>
+        <CommonSection commonSectionData={AboutData} />
+      </section>
+      <section id="experience" style={{ scrollMarginTop: '80px' }}>
+        <CommonSection commonSectionData={ExperienceData} />
+      </section>
+      <section id="suites" style={{ scrollMarginTop: '80px' }}>
+        <DestinationSlider />
+      </section>
+      <section id="gallery" style={{ scrollMarginTop: '80px' }}>
+        <CommonSectionWithGallery commonSectionData={ExperienceTheBeautyData} />
+      </section>
       <ScrollVelocityText
         texts={['Rejuvenation Retreat • Forest Therapy •']}
         velocity={30}
         className="custom-scroll-text text-display text-(--typography-color-secondary-850) whitespace-nowrap m-0 leading-none pr-16 shrink-0 xs:!text-h2"
       />
-      <ReviewSection />
-      <FaqSection {...faqData} />
+      <section id="reviews" style={{ scrollMarginTop: '80px' }}>
+        <ReviewSection />
+      </section>
+      <section id="faqs" style={{ scrollMarginTop: '80px' }}>
+        <FaqSection {...faqData} />
+      </section>
     </main>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -8,19 +8,24 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { openWhatsApp } from '../Services/openWhatsApp';
 
 const navItems = [
-  { label: 'Home', href: '/' },
-  { label: 'Stay', href: '/stay' },
-  { label: 'Experiences', href: '/experiences' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'About', href: '#about', id: 'about' },
+  { label: 'Experience', href: '#experience', id: 'experience' },
+  { label: 'Suites & Cottages', href: '#suites', id: 'suites' },
+  { label: 'Gallery', href: '#gallery', id: 'gallery' },
+  { label: 'Reviews', href: '#reviews', id: 'reviews' },
+  { label: 'FAQs', href: '#faqs', id: 'faqs' },
 ];
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('');
 
   const lastScrollY = useRef(0);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
+  // Hide/show on scroll & scrolled state
   useEffect(() => {
     const TOP_THRESHOLD = 8;
 
@@ -40,15 +45,12 @@ export default function Header() {
         return;
       }
 
-      // ignore tiny scroll jitter
       if (Math.abs(currentY - lastScrollY.current) < 10) return;
 
       if (currentY > lastScrollY.current) {
-        // scrolling DOWN → hide header
         setHeaderVisible(false);
         if (menuOpen) setMenuOpen(false);
       } else {
-        // scrolling UP → show header
         setHeaderVisible(true);
       }
 
@@ -59,6 +61,64 @@ export default function Header() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [menuOpen]);
+
+  // Active section via IntersectionObserver
+  useEffect(() => {
+    const sectionIds = navItems.map(item => item.id);
+
+    // Track which sections are visible and their ratio
+    const visibilityMap = new Map<string, number>();
+
+    observerRef.current = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          visibilityMap.set(entry.target.id, entry.intersectionRatio);
+        });
+
+        // Pick the section with highest visibility ratio
+        let maxRatio = 0;
+        let mostVisible = '';
+        visibilityMap.forEach((ratio, id) => {
+          if (ratio > maxRatio) {
+            maxRatio = ratio;
+            mostVisible = id;
+          }
+        });
+
+        if (mostVisible) setActiveSection(mostVisible);
+      },
+      {
+        rootMargin: '-80px 0px -20% 0px',
+        threshold: [0, 0.1, 0.25, 0.5, 0.75, 1.0],
+      }
+    );
+
+    sectionIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observerRef.current?.observe(el);
+    });
+
+    return () => observerRef.current?.disconnect();
+  }, []);
+
+  // Smooth scroll with header offset
+  const handleNavClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+      e.preventDefault();
+      setMenuOpen(false);
+
+      const id = href.replace('#', '');
+      const target = document.getElementById(id);
+      if (!target) return;
+
+      const headerHeight = 80;
+      const top =
+        target.getBoundingClientRect().top + window.scrollY - headerHeight;
+
+      window.scrollTo({ top, behavior: 'smooth' });
+    },
+    []
+  );
 
   return (
     <header
@@ -75,6 +135,7 @@ export default function Header() {
       `}
     >
       <div className="flex justify-between items-center">
+        {/* WhatsApp icon – mobile left */}
         <div className="hidden xs:!flex w-[50px] h-[50px] items-center">
           <WhatsAppIcon
             fontSize="small"
@@ -100,6 +161,7 @@ export default function Header() {
           onClick={() => setMenuOpen(v => !v)}
           className="flex flex-col justify-center gap-[6px] xs:!flex hidden"
           aria-label="Toggle menu"
+          aria-expanded={menuOpen}
         >
           <span
             className={`w-[24px] h-[2px] bg-white transition-all duration-300
@@ -116,32 +178,37 @@ export default function Header() {
         </button>
 
         {/* DESKTOP MENU */}
-        <nav className="xs:!hidden flex gap-(--spacing-padding-huge-x)">
+        <nav className="xs:!hidden flex gap-(--spacing-padding-huge-x)" aria-label="Main navigation">
           <div className="flex text-lg-med text-white items-center">
             {navItems.map(item => (
-              <Link
-                key={item.href}
+              <a
+                key={item.id}
                 href={item.href}
-                className="flex py-[4px]! px-(--spacing-padding-6x)! items-center"
+                id={`nav-${item.id}`}
+                onClick={e => handleNavClick(e, item.href)}
+                className={`flex py-[4px]! px-(--spacing-padding-6x)! items-center transition-opacity duration-200
+                  ${activeSection === item.id ? 'opacity-100' : 'opacity-60 hover:opacity-100'}
+                `}
               >
                 {item.label}
-              </Link>
+              </a>
             ))}
           </div>
 
           <div className="flex flex-1 justify-end text-lg-med text-white items-center">
-            <Link
-              href="/book"
-              className="flex py-[4px]! px-(--spacing-padding-6x)! items-center"
+            <button
+              className="flex py-[4px]! px-(--spacing-padding-6x)! items-center cursor-pointer"
+              onClick={() => openWhatsApp('')}
             >
               Book Now
-            </Link>
+            </button>
           </div>
         </nav>
       </div>
 
       {/* MOBILE MENU */}
       <nav
+        aria-label="Mobile navigation"
         className={`
           mt-[16px]
           xs:!flex hidden
@@ -159,23 +226,28 @@ export default function Header() {
         `}
       >
         {navItems.map(item => (
-          <Link
-            key={item.href}
+          <a
+            key={item.id}
             href={item.href}
-            onClick={() => setMenuOpen(false)}
-            className="py-[12px]!"
+            id={`mobile-nav-${item.id}`}
+            onClick={e => handleNavClick(e, item.href)}
+            className={`py-[12px]! w-full text-center transition-opacity duration-200
+              ${activeSection === item.id ? 'opacity-100' : 'opacity-70'}
+            `}
           >
             {item.label}
-          </Link>
+          </a>
         ))}
 
-        <Link
-          href="/book"
-          onClick={() => setMenuOpen(false)}
-          className="py-[12px]! mt-[8px]"
+        <button
+          onClick={() => {
+            setMenuOpen(false);
+            openWhatsApp('');
+          }}
+          className="py-[12px]! mt-[8px] cursor-pointer"
         >
           Book Now
-        </Link>
+        </button>
       </nav>
     </header>
   );

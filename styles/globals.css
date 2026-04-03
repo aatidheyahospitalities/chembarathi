@@ -2,6 +2,7 @@ html,
 body {
   height: 100%;
   overflow-x: hidden !important;
+  scroll-behavior: smooth;
 }
 
 #smooth-wrapper {
