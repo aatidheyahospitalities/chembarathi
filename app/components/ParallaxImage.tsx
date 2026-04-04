@@ -1,7 +1,6 @@
-
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import Image from "next/image";
 
 interface ParallaxImageProps {
@@ -9,7 +8,7 @@ interface ParallaxImageProps {
   alt?: string;
   className?: string;
   containerClassName?: string;
-  shift?: number; // how much parallax movement (default: 20)
+  shift?: number; // parallax strength
   quality?: number;
 }
 
@@ -22,21 +21,39 @@ export default function ParallaxImage({
   quality = 100,
 }: ParallaxImageProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [offset, setOffset] = useState(0);
+  const innerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (!containerRef.current) return;
+    let rafId: number;
+    let current = 0;
+
+    const update = () => {
+      if (!containerRef.current || !innerRef.current) {
+        rafId = requestAnimationFrame(update);
+        return;
+      }
+
       const rect = containerRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
-      const progress = (windowHeight - rect.top) / (windowHeight + rect.height);
+
+      const progress =
+        (windowHeight - rect.top) / (windowHeight + rect.height);
+
       const clamped = Math.min(1, Math.max(0, progress));
-      setOffset((clamped - 0.5) * shift);
+      const target = (clamped - 0.5) * shift;
+
+      // Smooth interpolation (LERP)
+      current += (target - current) * 0.08;
+
+      // GPU-accelerated transform
+      innerRef.current.style.transform = `translate3d(0, ${current}%, 0)`;
+
+      rafId = requestAnimationFrame(update);
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    rafId = requestAnimationFrame(update);
+
+    return () => cancelAnimationFrame(rafId);
   }, [shift]);
 
   const inset = shift / 2;
@@ -47,14 +64,14 @@ export default function ParallaxImage({
       className={`relative overflow-hidden w-full ${containerClassName}`}
     >
       <div
+        ref={innerRef}
         style={{
           position: "absolute",
           top: `-${inset}%`,
           bottom: `-${inset}%`,
           left: 0,
           right: 0,
-          transform: `translateY(${offset}%)`,
-          transition: "transform 0.08s linear",
+          transform: "translate3d(0,0,0)",
           willChange: "transform",
         }}
       >
