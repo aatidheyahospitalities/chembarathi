@@ -198,7 +198,7 @@ export default function Header() {
           <div className="flex flex-1 justify-end text-lg-med text-white items-center">
             <button
               className="flex py-[4px]! px-(--spacing-padding-6x)! items-center cursor-pointer"
-              onClick={() => openWhatsApp('')}
+              onClick={() => window.open('https://bookingengine.stayflexi.com/?hotel_id=28009', '_blank')}
             >
               Book Now
             </button>
@@ -242,7 +242,7 @@ export default function Header() {
         <button
           onClick={() => {
             setMenuOpen(false);
-            openWhatsApp('');
+            window.open('https://bookingengine.stayflexi.com/?hotel_id=28009', '_blank');
           }}
           className="py-[12px]! mt-[8px] cursor-pointer"
         >

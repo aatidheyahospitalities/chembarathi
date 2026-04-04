@@ -1,7 +1,5 @@
 'use client';
 import { HeroType } from '../lib/type';
-import { openWhatsApp } from '../Services/openWhatsApp';
-
 export default function Banner({ heroData }: Readonly<{ heroData: HeroType }>) {
   const title = heroData?.title || '';
   const image = heroData?.image?.url || '';
@@ -41,7 +39,7 @@ export default function Banner({ heroData }: Readonly<{ heroData: HeroType }>) {
 
         <button
           className="px-(--spacing-padding-10x)! text-lg-reqular! text-secondary-1000! py-(--spacing-padding-3x)! rounded-full! bg-(--typography-color-secondary-100)! hover:cursor-pointer font-secondary!"
-          onClick={() => openWhatsApp('')}
+          onClick={() => window.open('https://bookingengine.stayflexi.com/?hotel_id=28009', '_blank')}
         >
           Book Your Stay
         </button>

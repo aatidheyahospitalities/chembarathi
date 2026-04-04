@@ -1,7 +1,5 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { openWhatsApp } from '../Services/openWhatsApp';
-
 export default function CommonLinkButton({
   text,
   url,
@@ -13,10 +11,20 @@ export default function CommonLinkButton({
 }>) {
   const router = useRouter();
 
-  const handleClick =
-    text === 'Start Your Experience'
-      ? () => openWhatsApp('')
-      : url
+  const isBookingCTA = [
+    'book now',
+    'start your experience',
+    'reserve now',
+    'check availability',
+  ].includes(text.toLowerCase());
+
+  const handleClick = isBookingCTA
+    ? () =>
+        window.open(
+          'https://bookingengine.stayflexi.com/?hotel_id=28009',
+          '_blank'
+        )
+    : url
         ? () => router.push(url)
         : onclick;
 

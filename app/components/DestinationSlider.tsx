@@ -75,11 +75,8 @@ export default function DestinationSlider() {
     return index - 1;
   };
 
-  const openWhatsApp = (destinationName: string) => {
-    const message = encodeURIComponent(
-      `I'm interested in visiting ${destinationName}`
-    );
-    window.open(`https://wa.me/?text=${message}`, '_blank');
+  const openBookingEngine = () => {
+    window.open('https://bookingengine.stayflexi.com/?hotel_id=28009', '_blank');
   };
 
   const currentDestinationName = destinations[getRealIndex(activeIndex)].name;
@@ -114,7 +111,7 @@ export default function DestinationSlider() {
   };
 
   const handleClick = () => {
-    openWhatsApp(currentDestinationName);
+    openBookingEngine();
   };
 
   return (
@@ -215,7 +212,7 @@ export default function DestinationSlider() {
       <div className="flex justify-between items-end xs:!items-center xs:!justify-center pt-[20px]! w-full px-[10vw]!">
         {/* Place name at bottom-left */}
         <button
-          onClick={() => openWhatsApp(currentDestinationName)}
+          onClick={() => openBookingEngine()}
           className="z-20 text-xxl-regular sm:text-3xl font-semibold hover:opacity-80 transition-opacity text-white! min-w-[300px] text-left"
         >
           {currentDestinationName}
