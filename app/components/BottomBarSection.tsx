@@ -66,7 +66,12 @@ export default function BottomBarSection() {
         </h2>
 
         <button
-          onClick={() => router.push('/book')}
+          onClick={() =>
+            window.open(
+              'https://bookingengine.stayflexi.com/?hotel_id=28009',
+              '_blank'
+            )
+          }
           className="px-(--spacing-padding-10x)! text-lg-regular! text-secondary-1000! py-(--spacing-padding-3x)! rounded-full! bg-(--typography-color-secondary-100)! hover:cursor-pointer"
         >
           Book Your Stay Today
