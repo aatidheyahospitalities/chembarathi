@@ -203,7 +203,6 @@ h6,
 }
 
 .policy-markdown {
-  font-family: var(--typography-font-family-secondary);
   color: var(--typography-color-secondary-800);
 }
 
@@ -212,7 +211,7 @@ h6,
 .policy-markdown ul,
 .policy-markdown ol,
 .policy-markdown blockquote {
-  font-family: inherit;
+  font-family: var(--typography-font-family-secondary);
   font-size: var(--typography-font-size-body-body-xl);
   font-weight: var(--typography-font-weight-regular);
   line-height: var(--typography-line-height-body-xl);

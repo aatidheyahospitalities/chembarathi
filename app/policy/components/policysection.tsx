@@ -224,8 +224,8 @@ export function PolicySection({ contents }: { contents: policyType | null }) {
                       type="button"
                       onClick={() => handleSectionClick(section.id)}
                       className={`text-lg-regular text-left transition-colors duration-200 md:text-md-regular ${isActive
-                          ? 'text-white!'
-                          : 'text-(--typography-color-primary-400)! hover:text-(--typography-color-secondary-100)!'
+                        ? 'text-white!'
+                        : 'text-(--typography-color-primary-400)! hover:text-(--typography-color-secondary-100)!'
                         }`}
                     >
                       {section.name}
@@ -255,7 +255,7 @@ export function PolicySection({ contents }: { contents: policyType | null }) {
                   {section.heading}
                 </h2>
 
-                <div className="policy-markdown space-y-4 text-xl-regular text-(--typography-color-secondary-800) lg:text-lg-regular md:text-md-regular lg:space-y-3 md:space-y-2">
+                <div className="policy-markdown space-y-4 text-xl-regular text-(--typography-color-secondary-800) lg:text-lg-regular md:text-md-regular lg:space-y-3 md:space-y-2 font-secondary">
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>
                     {section.content}
                   </ReactMarkdown>
