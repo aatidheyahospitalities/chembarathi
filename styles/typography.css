@@ -88,12 +88,12 @@ h6,
   line-height: var(--typography-line-height-body-xl) !important;
 }
 
-/* .text-xl-regular {
+.text-xl-regular {
   font-family: var(--typography-font-family-secondary) !important;
   font-size: var(--typography-font-size-body-body-xl) !important;
   font-weight: var(--typography-font-weight-regular) !important;
   line-height: var(--typography-line-height-body-xl) !important;
-} */
+}
 
 .text-xl-bold {
   font-family: var(--typography-font-family-secondary) !important;
@@ -190,4 +190,61 @@ h6,
     padding-block: var(--spacing-padding-10x);
     padding-inline: var(--spacing-padding-4x);
   }
+}
+
+.policy-page {
+  font-family: var(--typography-font-family-secondary);
+  color: var(--typography-color-secondary-800);
+}
+
+.policy-page .text-heading-4,
+.policy-page h1 {
+  font-family: var(--typography-font-family-primary);
+}
+
+.policy-markdown {
+  font-family: var(--typography-font-family-secondary);
+  color: var(--typography-color-secondary-800);
+}
+
+.policy-markdown p,
+.policy-markdown li,
+.policy-markdown ul,
+.policy-markdown ol,
+.policy-markdown blockquote {
+  font-family: inherit;
+  font-size: var(--typography-font-size-body-body-xl);
+  font-weight: var(--typography-font-weight-regular);
+  line-height: var(--typography-line-height-body-xl);
+}
+
+.policy-markdown ul,
+.policy-markdown ol {
+  padding-left: 1.5rem;
+}
+
+.policy-markdown ul {
+  list-style-type: disc;
+}
+
+.policy-markdown ol {
+  list-style-type: decimal;
+}
+
+.policy-markdown strong {
+  font-weight: var(--typography-font-weight-semibold);
+}
+
+.policy-markdown a {
+  color: var(--typography-color-link-link);
+  text-decoration: underline;
+}
+
+.policy-markdown h3,
+.policy-markdown h4 {
+  font-family: var(--typography-font-family-secondary);
+  font-size: var(--typography-font-size-body-body-xxl);
+  font-weight: var(--typography-font-weight-medium);
+  line-height: var(--typography-line-height-body-xxl);
+  color: var(--typography-color-secondary-100);
 }

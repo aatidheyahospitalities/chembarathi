@@ -1,19 +1,14 @@
 'use client';
 
 import { policyType } from '@/app/lib/type';
+import {
+  createPolicySectionId,
+  resolvePolicySectionId,
+  scrollToPolicySection,
+} from '@/app/policy/utils';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-
-function createSectionId(value: string, index: number) {
-  const slug = value
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-
-  return slug ? `policy-${slug}` : `policy-section-${index + 1}`;
-}
 
 export function PolicySection({ contents }: { contents: policyType | null }) {
   const rootRef = useRef<HTMLElement | null>(null);
@@ -23,7 +18,7 @@ export function PolicySection({ contents }: { contents: policyType | null }) {
     () =>
       (contents?.policyblockCollection.items ?? []).map((item, index) => ({
         ...item,
-        id: createSectionId(item.name || item.heading, index),
+        id: createPolicySectionId(item.name || item.heading, index),
       })),
     [contents]
   );
@@ -49,6 +44,22 @@ export function PolicySection({ contents }: { contents: policyType | null }) {
         : sections[0].id
     );
   }, [sections]);
+
+  const scrollToResolvedSection = async (
+    hash: string,
+    options?: { instant?: boolean; retries?: number }
+  ) => {
+    const resolvedId = resolvePolicySectionId(hash, sections);
+    if (!resolvedId) {
+      return;
+    }
+
+    setActiveSection(resolvedId);
+    await scrollToPolicySection(resolvedId, {
+      ...options,
+      sections,
+    });
+  };
 
   useLayoutEffect(() => {
     if (!sections.length || !rootRef.current || !sidebarPanelRef.current) {
@@ -99,6 +110,19 @@ export function PolicySection({ contents }: { contents: policyType | null }) {
           });
 
           ScrollTrigger.refresh();
+
+          const hash = window.location.hash.slice(1);
+          const resolvedId = resolvePolicySectionId(hash, sections);
+
+          if (resolvedId) {
+            setActiveSection(resolvedId);
+            window.setTimeout(() => {
+              void scrollToResolvedSection(resolvedId, {
+                instant: false,
+                retries: 8,
+              });
+            }, 250);
+          }
         }, rootRef);
 
         cleanup = () => ctx.revert();
@@ -116,39 +140,77 @@ export function PolicySection({ contents }: { contents: policyType | null }) {
   }, [sections]);
 
   const handleSectionClick = async (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (!element) {
-      return;
-    }
+    await scrollToResolvedSection(sectionId);
+  };
 
-    setActiveSection(sectionId);
-
-    try {
-      const { ScrollSmoother } = await import('gsap/ScrollSmoother');
-      const smoother = ScrollSmoother.get();
-
-      if (smoother) {
-        smoother.scrollTo(element, true, 'top 140px');
+  useEffect(() => {
+    const scrollToHashSection = () => {
+      const hash = window.location.hash.slice(1);
+      if (!hash) {
         return;
       }
-    } catch {
-      // Fall through to native smooth scrolling if smoother is unavailable.
+
+      void scrollToResolvedSection(hash, { instant: false, retries: 12 });
+    };
+
+    const handlePolicySectionNavigate = (event: Event) => {
+      const detail = (event as CustomEvent<{ sectionId?: string }>).detail;
+      if (detail?.sectionId) {
+        void scrollToResolvedSection(detail.sectionId, {
+          instant: false,
+          retries: 12,
+        });
+      }
+    };
+
+    const handleHashChange = () => {
+      void scrollToHashSection();
+    };
+
+    if (window.location.hash) {
+      const timer = window.setTimeout(() => {
+        void scrollToHashSection();
+      }, 200);
+
+      window.addEventListener('hashchange', handleHashChange);
+      window.addEventListener('policy-section-navigate', handlePolicySectionNavigate);
+
+      return () => {
+        window.clearTimeout(timer);
+        window.removeEventListener('hashchange', handleHashChange);
+        window.removeEventListener(
+          'policy-section-navigate',
+          handlePolicySectionNavigate
+        );
+      };
     }
 
-    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
+    window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener('policy-section-navigate', handlePolicySectionNavigate);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener(
+        'policy-section-navigate',
+        handlePolicySectionNavigate
+      );
+    };
+  }, [sections]);
 
   if (!sections.length) {
     return null;
   }
 
   return (
-    <section ref={rootRef} className="px-(--spacing-padding-huge-x)!">
+    <section
+      ref={rootRef}
+      className="px-(--spacing-padding-huge-x)! font-secondary"
+    >
       <div className="mx-auto grid max-w-[1320px] grid-cols-[400px_minmax(0,1fr)] gap-(--spacing-padding-huge-x)">
         <aside className="self-start py-(--spacing-padding-huge-x)!">
           <div ref={sidebarPanelRef} className="w-[400px] rounded-[24px] px-6 py-8">
             <div className="flex flex-col gap-(--spacing-padding-8x)">
-              <p className="text-(--typography-color-secondary-100) font-[22px]">
+              <p className="text-lg-regular text-(--typography-color-secondary-100)">
                 Sections
               </p>
 
@@ -178,7 +240,7 @@ export function PolicySection({ contents }: { contents: policyType | null }) {
 
         <div className="flex min-w-0 max-w-[760px] flex-col gap-(--spacing-padding-10x) py-(--spacing-padding-huge-x)!">
           <div className="space-y-4">
-            <h1 className="text-heading-4 text-(--typography-color-secondary-800) font-secondary!">
+            <h1 className="text-heading-4 text-(--typography-color-secondary-800)">
               Policies and Terms
             </h1>
           </div>
@@ -194,7 +256,7 @@ export function PolicySection({ contents }: { contents: policyType | null }) {
                   {section.heading}
                 </h2>
 
-                <div className="space-y-4 text-xl-regular leading-8 text-(--typography-color-secondary-800)">
+                <div className="policy-markdown space-y-4 text-xl-regular text-(--typography-color-secondary-800)">
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>
                     {section.content}
                   </ReactMarkdown>

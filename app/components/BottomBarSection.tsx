@@ -1,9 +1,15 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import {
+  navigateToPolicyLink,
+  navigateWithScrollReset,
+  getPolicyFooterHref,
+} from '../policy/utils';
 
 export default function BottomBarSection() {
   const router = useRouter();
+  const pathname = usePathname();
 
   const items = [
     {
@@ -87,6 +93,7 @@ export default function BottomBarSection() {
               title={item.title}
               subItems={item.subItems}
               routeMap={routeMap}
+              pathname={pathname}
             />
           ))}
         </nav>
@@ -119,7 +126,13 @@ export default function BottomBarSection() {
             ].map(text => (
               <button
                 key={text}
-                onClick={() => router.push('/')}
+                onClick={() =>
+                  void navigateToPolicyLink(
+                    getPolicyFooterHref(text),
+                    router,
+                    pathname
+                  )
+                }
                 className="text-xl-regular xs:!text-md-regular text-left cursor-pointer hover:opacity-70 transition"
                 style={{ color: 'var(--typography-color-primary-400)' }}
               >
@@ -137,10 +150,12 @@ function ListItem({
   title,
   subItems,
   routeMap,
+  pathname,
 }: {
   title: string;
   subItems: string[];
   routeMap: Record<string, string>;
+  pathname: string;
 }) {
   const router = useRouter();
 
@@ -157,7 +172,13 @@ function ListItem({
         {subItems.map(subItem => (
           <li key={subItem}>
             <button
-              onClick={() => router.push(routeMap[subItem] || '/')}
+              onClick={() =>
+                void navigateWithScrollReset(
+                  routeMap[subItem] || '/',
+                  router,
+                  pathname
+                )
+              }
               className="text-lg-regular text-left cursor-pointer hover:opacity-70 transition"
               style={{ color: 'var(--typography-color-secondary-700)' }}
             >

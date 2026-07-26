@@ -5,6 +5,7 @@ import { Figtree } from 'next/font/google';
 import GalleryLoop from './components/GalleryLoop';
 import SmoothScroll from './components/SmoothScroll';
 import BottomBarSection from './components/BottomBarSection';
+import RouteScrollManager from './components/RouteScrollManager';
 
 const figtree = Figtree({
   subsets: ['latin'],
@@ -33,6 +34,7 @@ export default function RootLayout({
         />
       </head>
       <body suppressHydrationWarning>
+        <RouteScrollManager />
         <Header />
         <SmoothScroll>
           <main className="min-h-screen relative z-0">{children}</main>

@@ -19,8 +19,8 @@ export default async function PolicyPage() {
   const policyContent = data.policypageCollection.items[0]?.policy || null; // Safely access the policy content
 
   return (
-    <main className='pt-20!'>
-       <PolicySection contents={policyContent} />
+    <main className="policy-page pt-20!">
+      <PolicySection contents={policyContent} />
     </main>
   );
 }
