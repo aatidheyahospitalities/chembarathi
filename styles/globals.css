@@ -66,6 +66,48 @@ body {
   animation: loop var(--loop-duration, 20s) linear infinite;
 }
 
+/* Masonry Gallery */
+
+/*
+ * Lets the browser skip rendering work for off-screen items. Safe here because
+ * each item's height comes from its aspect-ratio and definite column width, so
+ * skipping the contents cannot change the layout.
+ */
+.gallery-item {
+  content-visibility: auto;
+}
+
+@keyframes gallery-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.gallery-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.07),
+    transparent
+  );
+  animation: gallery-shimmer 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-shimmer::after {
+    animation: none;
+  }
+}
+
 /* 01 Base - Color Palette and Sizes */
 :root {
   /* Transparent */
