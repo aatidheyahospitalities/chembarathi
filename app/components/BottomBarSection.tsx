@@ -26,6 +26,7 @@ export default function BottomBarSection() {
       subItems: [
         'Home',
         'About',
+        'Experience',
         'Amenities',
         'Gallery',
         'Blog',
@@ -42,6 +43,7 @@ export default function BottomBarSection() {
   const routeMap: Record<string, string> = {
     Home: '/',
     About: '/about',
+    Experience: '/experience',
     Amenities: '/amenities',
     Gallery: '/gallery',
     Blog: '/blog',

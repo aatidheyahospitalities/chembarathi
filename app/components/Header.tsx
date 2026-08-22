@@ -3,18 +3,37 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname, useRouter } from 'next/navigation';
+
+import { scrollToElement } from '../lib/scroll';
 
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { openWhatsApp } from '../Services/openWhatsApp';
 
-const navItems = [
+type NavItem = {
+  label: string;
+  href: string;
+  id: string;
+  /** Points at a real route rather than a homepage anchor. */
+  isRoute?: boolean;
+};
+
+const navItems: NavItem[] = [
   { label: 'About', href: '#about', id: 'about' },
-  { label: 'Experience', href: '#experience', id: 'experience' },
+  {
+    label: 'Experience',
+    href: '/experience',
+    id: 'experience',
+    isRoute: true,
+  },
   { label: 'Suites & Cottages', href: '#suites', id: 'suites' },
   { label: 'Gallery', href: '#gallery', id: 'gallery' },
   { label: 'Reviews', href: '#reviews', id: 'reviews' },
   { label: 'FAQs', href: '#faqs', id: 'faqs' },
 ];
+
+/** Matches the fixed headers height, so anchored sections clear it. */
+const HEADER_OFFSET = 'top 80px';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -22,8 +41,14 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
 
+  const router = useRouter();
+  const pathname = usePathname();
+
   const lastScrollY = useRef(0);
   const observerRef = useRef<IntersectionObserver | null>(null);
+  /** Section to scroll to once the homepage has mounted, set by anchor
+   * clicks made from another route. */
+  const pendingSectionRef = useRef<string | null>(null);
 
   // Hide/show on scroll & scrolled state
   useEffect(() => {
@@ -64,7 +89,10 @@ export default function Header() {
 
   // Active section via IntersectionObserver
   useEffect(() => {
-    const sectionIds = navItems.map(item => item.id);
+    // Route items have no in-page section to observe.
+    const sectionIds = navItems
+      .filter(item => !item.isRoute)
+      .map(item => item.id);
 
     // Track which sections are visible and their ratio
     const visibilityMap = new Map<string, number>();
@@ -99,26 +127,64 @@ export default function Header() {
     });
 
     return () => observerRef.current?.disconnect();
-  }, []);
+  }, [pathname]);
 
-  // Smooth scroll with header offset
+  // Finishes an anchor click made from another route, once the homepage has
+  // mounted and the target section exists.
+  useEffect(() => {
+    const id = pendingSectionRef.current;
+    if (!id || pathname !== '/') return;
+
+    let attempts = 0;
+    const timer = window.setInterval(() => {
+      const target = document.getElementById(id);
+
+      if (target) {
+        pendingSectionRef.current = null;
+        window.clearInterval(timer);
+        void scrollToElement(target, false, HEADER_OFFSET);
+        return;
+      }
+
+      attempts += 1;
+      if (attempts > 20) {
+        pendingSectionRef.current = null;
+        window.clearInterval(timer);
+      }
+    }, 100);
+
+    return () => window.clearInterval(timer);
+  }, [pathname]);
+
+  // Smooth scroll with header offset. Route items fall through to <Link>.
   const handleNavClick = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-      e.preventDefault();
+    (e: React.MouseEvent<HTMLAnchorElement>, item: NavItem) => {
       setMenuOpen(false);
 
-      const id = href.replace('#', '');
-      const target = document.getElementById(id);
+      if (item.isRoute) return;
+
+      e.preventDefault();
+
+      // Anchors live on the homepage. From any other route, go there first
+      // and let the pending-scroll effect finish once it has mounted.
+      if (pathname !== '/') {
+        pendingSectionRef.current = item.id;
+        router.push('/');
+        return;
+      }
+
+      const target = document.getElementById(item.id);
       if (!target) return;
 
-      const headerHeight = 80;
-      const top =
-        target.getBoundingClientRect().top + window.scrollY - headerHeight;
-
-      window.scrollTo({ top, behavior: 'smooth' });
+      void scrollToElement(target, false, HEADER_OFFSET);
     },
-    []
+    [pathname, router]
   );
+
+  const isActive = (item: NavItem) =>
+    item.isRoute
+      ? pathname === item.href
+      : pathname === '/' && activeSection === item.id;
 
   return (
     <header
@@ -178,27 +244,35 @@ export default function Header() {
         </button>
 
         {/* DESKTOP MENU */}
-        <nav className="xs:!hidden flex gap-(--spacing-padding-huge-x)" aria-label="Main navigation">
+        <nav
+          className="xs:!hidden flex gap-(--spacing-padding-huge-x)"
+          aria-label="Main navigation"
+        >
           <div className="flex text-lg-med text-white items-center">
             {navItems.map(item => (
-              <a
+              <Link
                 key={item.id}
                 href={item.href}
                 id={`nav-${item.id}`}
-                onClick={e => handleNavClick(e, item.href)}
+                onClick={e => handleNavClick(e, item)}
                 className={`flex py-[4px]! px-(--spacing-padding-6x)! items-center transition-opacity duration-200
-                  ${activeSection === item.id ? 'opacity-100' : 'opacity-60 hover:opacity-100'}
+                  ${isActive(item) ? 'opacity-100' : 'opacity-60 hover:opacity-100'}
                 `}
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </div>
 
           <div className="flex flex-1 justify-end text-lg-med text-white items-center">
             <button
               className="flex py-[4px]! px-(--spacing-padding-6x)! items-center cursor-pointer"
-              onClick={() => window.open('https://bookingengine.stayflexi.com/?hotel_id=28009', '_blank')}
+              onClick={() =>
+                window.open(
+                  'https://bookingengine.stayflexi.com/?hotel_id=28009',
+                  '_blank'
+                )
+              }
             >
               Book Now
             </button>
@@ -226,23 +300,26 @@ export default function Header() {
         `}
       >
         {navItems.map(item => (
-          <a
+          <Link
             key={item.id}
             href={item.href}
             id={`mobile-nav-${item.id}`}
-            onClick={e => handleNavClick(e, item.href)}
+            onClick={e => handleNavClick(e, item)}
             className={`py-[12px]! w-full text-center transition-opacity duration-200
-              ${activeSection === item.id ? 'opacity-100' : 'opacity-70'}
+              ${isActive(item) ? 'opacity-100' : 'opacity-70'}
             `}
           >
             {item.label}
-          </a>
+          </Link>
         ))}
 
         <button
           onClick={() => {
             setMenuOpen(false);
-            window.open('https://bookingengine.stayflexi.com/?hotel_id=28009', '_blank');
+            window.open(
+              'https://bookingengine.stayflexi.com/?hotel_id=28009',
+              '_blank'
+            );
           }}
           className="py-[12px]! mt-[8px] cursor-pointer"
         >
