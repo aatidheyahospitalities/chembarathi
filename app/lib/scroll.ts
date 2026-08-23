@@ -4,14 +4,17 @@ export async function scrollToTop(instant = true): Promise<void> {
     const smoother = ScrollSmoother.get();
 
     if (smoother) {
-      smoother.scrollTo(0, instant);
+      // ScrollSmoother's second argument is `smooth` — the inverse of ours.
+      smoother.scrollTo(0, !instant);
       return;
     }
   } catch {
     // Fall through to native scrolling.
   }
 
-  window.scrollTo({ top: 0, behavior: instant ? 'auto' : 'smooth' });
+  // `auto` defers to the CSS `scroll-behavior`, which globals.css sets to
+  // `smooth`; only `instant` guarantees a jump.
+  window.scrollTo({ top: 0, behavior: instant ? 'instant' : 'smooth' });
 }
 
 export async function scrollToElement(
@@ -32,7 +35,7 @@ export async function scrollToElement(
   }
 
   element.scrollIntoView({
-    behavior: instant ? 'auto' : 'smooth',
+    behavior: instant ? 'instant' : 'smooth',
     block: 'start',
   });
 }

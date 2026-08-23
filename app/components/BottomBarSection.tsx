@@ -1,6 +1,7 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import { useTransitionRouter } from './PageTransition';
 import {
   navigateToPolicyLink,
   navigateWithScrollReset,
@@ -8,7 +9,7 @@ import {
 } from '../policy/utils';
 
 export default function BottomBarSection() {
-  const router = useRouter();
+  const router = useTransitionRouter();
   const pathname = usePathname();
 
   const items = [
@@ -159,7 +160,7 @@ function ListItem({
   routeMap: Record<string, string>;
   pathname: string;
 }) {
-  const router = useRouter();
+  const router = useTransitionRouter();
 
   return (
     <div className="flex flex-col gap-(--spacing-padding-3x) flex-1">

@@ -6,6 +6,7 @@ import GalleryLoop from './components/GalleryLoop';
 import SmoothScroll from './components/SmoothScroll';
 import BottomBarSection from './components/BottomBarSection';
 import RouteScrollManager from './components/RouteScrollManager';
+import PageTransitionProvider from './components/PageTransition';
 
 const figtree = Figtree({
   subsets: ['latin'],
@@ -34,13 +35,15 @@ export default function RootLayout({
         />
       </head>
       <body suppressHydrationWarning>
-        <RouteScrollManager />
-        <Header />
-        <SmoothScroll>
-          <main className="min-h-screen relative z-0">{children}</main>
-          <GalleryLoop />
-          <BottomBarSection />
-        </SmoothScroll>
+        <PageTransitionProvider>
+          <RouteScrollManager />
+          <Header />
+          <SmoothScroll>
+            <main className="min-h-screen relative z-0">{children}</main>
+            <GalleryLoop />
+            <BottomBarSection />
+          </SmoothScroll>
+        </PageTransitionProvider>
       </body>
     </html>
   );

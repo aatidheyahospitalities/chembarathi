@@ -3,9 +3,10 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 import { scrollToElement } from '../lib/scroll';
+import { useTransitionRouter } from './PageTransition';
 
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { openWhatsApp } from '../Services/openWhatsApp';
@@ -19,7 +20,7 @@ type NavItem = {
 };
 
 const navItems: NavItem[] = [
-  { label: 'About', href: '#about', id: 'about' },
+  { label: 'About', href: '/about', id: 'about', isRoute: true },
   {
     label: 'Experience',
     href: '/experience',
@@ -27,7 +28,7 @@ const navItems: NavItem[] = [
     isRoute: true,
   },
   { label: 'Suites & Cottages', href: '#suites', id: 'suites' },
-  { label: 'Gallery', href: '#gallery', id: 'gallery' },
+  { label: 'Gallery', href: '/gallery', id: 'gallery', isRoute: true },
   { label: 'Reviews', href: '#reviews', id: 'reviews' },
   { label: 'FAQs', href: '#faqs', id: 'faqs' },
 ];
@@ -41,7 +42,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
 
-  const router = useRouter();
+  const router = useTransitionRouter();
   const pathname = usePathname();
 
   const lastScrollY = useRef(0);
