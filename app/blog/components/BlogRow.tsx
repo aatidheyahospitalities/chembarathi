@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import type { BlogPostCardType } from '@/app/lib/type';
+import ArrowCue from './ArrowCue';
 import { assetAlt, formatPostDate, toIsoDate } from '../utils';
 
 /**
@@ -40,22 +41,12 @@ export default function BlogRow({
             {post.title}
           </h2>
 
-          {/* Visual cue only — the row itself is the link, so this must not be
-              a nested anchor or an extra tab stop. */}
-          <span
-            aria-hidden
-            className="relative flex w-full max-w-[340px] items-center justify-between border-b! border-(--border-color-default)! pb-(--spacing-padding-3x)! text-xl-regular text-(--typography-color-secondary-100) xs:!max-w-none xs:!text-lg-med"
-          >
-            Read Story
-            <span className="material-symbols-outlined text-base! transition-transform duration-300 ease-in-out group-hover:translate-x-1 group-hover:-translate-y-1">
-              north_east
-            </span>
-            {/* Underline sweep, same motion as CommonLinkButton. Sits over the
-                1px rule rather than replacing it, so the line never disappears. */}
-            <span className="pointer-events-none absolute left-0 -bottom-px h-px w-full overflow-hidden">
-              <span className="block h-full w-full origin-left scale-x-0 bg-white transition-transform duration-300 ease-in-out group-hover:scale-x-100" />
-            </span>
-          </span>
+          {/* Href-less on purpose — the row itself is the link, so the cue must
+              not be a nested anchor or an extra tab stop. */}
+          <ArrowCue
+            label="Read Story"
+            className="max-w-[340px] xs:!max-w-none"
+          />
         </div>
 
         <div className="relative aspect-[3/2] w-[35%] shrink-0 overflow-hidden rounded-4xl md:!order-first md:!w-full xs:!rounded-[16px]">

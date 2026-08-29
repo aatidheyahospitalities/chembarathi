@@ -1,16 +1,18 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
 import { getBlogPost, getBlogSlugs, getRelatedPosts } from '../data';
+import ArticleAside from '../components/ArticleAside';
 import ArticleBody from '../components/ArticleBody';
 import ArticleCta from '../components/ArticleCta';
+import ArticleHero from '../components/ArticleHero';
+import ArticleMasthead from '../components/ArticleMasthead';
 import RelatedPosts from '../components/RelatedPosts';
+import StickyRail from '../components/StickyRail';
 import {
   assetAlt,
   BLOG_BASE_URL,
   excerptFromRichText,
-  formatPostDate,
   toIsoDate,
 } from '../utils';
 
@@ -106,42 +108,38 @@ export default async function BlogPostPage({ params }: PageProps) {
       />
 
       <article>
-        {/* Hero opens the page, ahead of the title — the LCP element, so it
-            loads eagerly. */}
+        {/* Masthead first, hero second: the title carries the page and the
+            image confirms it, the way a press piece opens. */}
+        <ArticleMasthead
+          title={post.title}
+          date={post.date}
+          heading={post.heading}
+        />
+
+        {/* Full-bleed, so it sits outside the section padding above and below.
+            The LCP element, hence eager. */}
         {post.coverImage?.url && (
-          <div className="relative aspect-[16/7] w-full overflow-hidden md:!aspect-[3/2] xs:!aspect-[4/5]">
-            <Image
-              src={post.coverImage.url}
-              alt={assetAlt(post.coverImage, post.title)}
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover"
-            />
-          </div>
+          <ArticleHero
+            src={post.coverImage.url}
+            alt={assetAlt(post.coverImage, post.title)}
+          />
         )}
 
-        <div className="section-wrapper flex flex-col items-center gap-(--spacing-padding-10x) xs:!gap-(--spacing-padding-8x)">
-          <header className="flex w-full max-w-[760px] flex-col items-center gap-(--spacing-padding-4x) text-center xs:!gap-(--spacing-padding-3x)">
-            <time
-              dateTime={toIsoDate(post.date)}
-              className="text-md-regular uppercase text-(--typography-color-secondary-500)"
-            >
-              {formatPostDate(post.date)}
-            </time>
+        {/* Rail and body share the masthead's 12-column grid, so the body
+            starts on the same line the title does. Stacks at ≤768px.
+            `data-article-row` is what `StickyRail` measures to know when to
+            let the rail go. */}
+        <div
+          data-article-row
+          className="section-wrapper grid grid-cols-12 gap-(--spacing-padding-10x) md:!grid-cols-1"
+        >
+          {/* `self-start` so the cell wraps the rail's own height instead of
+              stretching to the body's — a full-height cell cannot be pinned. */}
+          <StickyRail className="col-span-3 self-start md:!col-span-1">
+            <ArticleAside title={post.title} date={post.date} />
+          </StickyRail>
 
-            <h1 className="text-heading-2 text-(--typography-color-secondary-100) lg:!text-heading-3 xs:!text-heading-4">
-              {post.title}
-            </h1>
-
-            {post.heading && (
-              <p className="text-xxl-regular text-(--typography-color-secondary-800) lg:!text-xl-regular xs:!text-lg-regular">
-                {post.heading}
-              </p>
-            )}
-          </header>
-
-          <div className="w-full max-w-[760px]">
+          <div className="col-span-7 col-start-5 min-w-0 lg:!col-span-9 lg:!col-start-4 md:!col-span-1 md:!col-start-1">
             <ArticleBody content={post.content} title={post.title} />
           </div>
         </div>

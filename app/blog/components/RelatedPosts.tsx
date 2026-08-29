@@ -1,12 +1,16 @@
-import Image from 'next/image';
-import Link from 'next/link';
-
 import type { BlogPostCardType } from '@/app/lib/type';
-import { assetAlt, formatPostDate, toIsoDate } from '../utils';
+import BlogRow from './BlogRow';
+import RevealOnScroll from './RevealOnScroll';
 
 /**
- * Four most-recent posts other than the one being read, as a card grid.
- * Renders nothing while the archive is too small to fill a meaningful row.
+ * The most-recent posts other than the one being read.
+ *
+ * Uses the same `BlogRow` as the listing rather than a card grid, so an
+ * article ends in the shape the archive is already read in. Sits on a lifted
+ * panel (`--surface-primary-700` against the page's `--surface-primary-800`)
+ * so the seam does the separating and no extra rule is needed.
+ *
+ * Renders nothing while the archive is too small to fill a meaningful list.
  */
 export default function RelatedPosts({
   posts,
@@ -15,51 +19,34 @@ export default function RelatedPosts({
 
   return (
     <section
-      aria-labelledby="related-stories"
-      className="section-wrapper flex flex-col gap-(--spacing-padding-10x) border-t! border-(--surface-primary-500)! xs:!gap-(--spacing-padding-6x)"
+      aria-labelledby="more-stories"
+      className="bg-(--surface-primary-700)"
     >
-      <h2
-        id="related-stories"
-        className="text-heading-4 text-(--typography-color-secondary-100) xs:!text-heading-5"
-      >
-        More Stories
-      </h2>
+      <div className="section-wrapper flex flex-col gap-(--spacing-padding-16x) xs:!gap-(--spacing-padding-8x)">
+        {/* Indented to start on `BlogRow`'s title column — its date column is
+            200px (140px at ≤1024px) plus the row gap. Keep in step with
+            `BlogRow` if either changes. The margin needs `!` for the same
+            reason the border utilities do: preflight is imported unlayered, so
+            its `* { margin: 0 }` outranks any layered spacing utility. */}
+        <h2
+          id="more-stories"
+          className="ml-[240px]! text-heading-3 text-(--typography-color-secondary-100) lg:!ml-[172px] lg:!text-heading-4 md:!ml-0 xs:!text-heading-5"
+        >
+          More Stories
+        </h2>
 
-      <ul className="grid grid-cols-4 gap-(--spacing-padding-8x) md:!grid-cols-2 md:!gap-(--spacing-padding-6x) xs:!grid-cols-1">
-        {posts.map(post => (
-          <li key={post.slug}>
-            <Link
-              href={`/blog/${post.slug}`}
-              className="group flex flex-col gap-(--spacing-padding-4x)"
-            >
-              <div className="relative aspect-[3/2] overflow-hidden rounded-4xl xs:!rounded-[16px]">
-                {post.coverImage?.url ? (
-                  <Image
-                    src={post.coverImage.url}
-                    alt={assetAlt(post.coverImage, post.title)}
-                    fill
-                    sizes="(max-width: 540px) 100vw, (max-width: 768px) 50vw, 25vw"
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-                  />
-                ) : (
-                  <div className="h-full w-full bg-(--surface-primary-700)" />
-                )}
-              </div>
-
-              <time
-                dateTime={toIsoDate(post.date)}
-                className="text-md-regular uppercase text-(--typography-color-secondary-500)"
-              >
-                {formatPostDate(post.date)}
-              </time>
-
-              <h3 className="text-xl-regular text-(--typography-color-secondary-100) transition-opacity duration-200 group-hover:opacity-70">
-                {post.title}
-              </h3>
-            </Link>
-          </li>
-        ))}
-      </ul>
+        {/* Wrapped so the rows fade and lift on scroll the way the listing's
+            do — `BlogRow` emits `[data-reveal]`, but only a client component
+            can mount the hook that animates it. */}
+        <RevealOnScroll
+          count={posts.length}
+          className="flex flex-col border-t! border-(--surface-primary-500)!"
+        >
+          {posts.map(post => (
+            <BlogRow key={post.slug} post={post} />
+          ))}
+        </RevealOnScroll>
+      </div>
     </section>
   );
 }
