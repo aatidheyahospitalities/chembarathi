@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation';
 import { getBlogPost, getBlogSlugs, getRelatedPosts } from '../data';
 import ArticleAside from '../components/ArticleAside';
 import ArticleBody from '../components/ArticleBody';
-import ArticleCta from '../components/ArticleCta';
 import ArticleHero from '../components/ArticleHero';
 import ArticleMasthead from '../components/ArticleMasthead';
 import RelatedPosts from '../components/RelatedPosts';
@@ -146,7 +145,6 @@ export default async function BlogPostPage({ params }: PageProps) {
       </article>
 
       <RelatedPosts posts={relatedPosts} />
-      <ArticleCta />
     </main>
   );
 }
