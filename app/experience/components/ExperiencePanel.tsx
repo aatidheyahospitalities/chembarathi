@@ -19,7 +19,10 @@ export default function ExperiencePanel({
         reversed ? 'flex-row-reverse' : ''
       }`}
     >
-      <div className="relative w-[50%] h-[420px] rounded-4xl overflow-hidden md:!w-full xs:!h-[260px] xs:!rounded-[16px]">
+      {/* 16:9 rather than a fixed height: the column is a percentage of the
+          viewport, so a pinned height let the crop drift wider on large
+          screens and taller on small ones. */}
+      <div className="relative w-[50%] aspect-video rounded-4xl overflow-hidden md:!w-full xs:!rounded-[16px]">
         <Image
           src={item.image}
           alt={item.alt}
