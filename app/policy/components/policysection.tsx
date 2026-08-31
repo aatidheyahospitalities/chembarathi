@@ -6,7 +6,14 @@ import {
   resolvePolicySectionId,
   scrollToPolicySection,
 } from '@/app/policy/utils';
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -31,7 +38,7 @@ export function PolicySection({ contents }: { contents: policyType | null }) {
     section => section.id === activeSection
   )
     ? activeSection
-    : sections[0]?.id ?? '';
+    : (sections[0]?.id ?? '');
 
   useEffect(() => {
     if (!sections.length) {
@@ -45,21 +52,24 @@ export function PolicySection({ contents }: { contents: policyType | null }) {
     );
   }, [sections]);
 
-  const scrollToResolvedSection = async (
-    hash: string,
-    options?: { instant?: boolean; retries?: number }
-  ) => {
-    const resolvedId = resolvePolicySectionId(hash, sections);
-    if (!resolvedId) {
-      return;
-    }
+  /* Memoised on the section list so the two effects below can list it as a
+     dependency instead of silently closing over a function that is new on
+     every render. */
+  const scrollToResolvedSection = useCallback(
+    async (hash: string, options?: { instant?: boolean; retries?: number }) => {
+      const resolvedId = resolvePolicySectionId(hash, sections);
+      if (!resolvedId) {
+        return;
+      }
 
-    setActiveSection(resolvedId);
-    await scrollToPolicySection(resolvedId, {
-      ...options,
-      sections,
-    });
-  };
+      setActiveSection(resolvedId);
+      await scrollToPolicySection(resolvedId, {
+        ...options,
+        sections,
+      });
+    },
+    [sections]
+  );
 
   useLayoutEffect(() => {
     if (!sections.length || !rootRef.current || !sidebarPanelRef.current) {
@@ -137,7 +147,7 @@ export function PolicySection({ contents }: { contents: policyType | null }) {
       isDisposed = true;
       cleanup?.();
     };
-  }, [sections]);
+  }, [sections, scrollToResolvedSection]);
 
   const handleSectionClick = async (sectionId: string) => {
     await scrollToResolvedSection(sectionId);
@@ -173,7 +183,10 @@ export function PolicySection({ contents }: { contents: policyType | null }) {
       }, 200);
 
       window.addEventListener('hashchange', handleHashChange);
-      window.addEventListener('policy-section-navigate', handlePolicySectionNavigate);
+      window.addEventListener(
+        'policy-section-navigate',
+        handlePolicySectionNavigate
+      );
 
       return () => {
         window.clearTimeout(timer);
@@ -186,7 +199,10 @@ export function PolicySection({ contents }: { contents: policyType | null }) {
     }
 
     window.addEventListener('hashchange', handleHashChange);
-    window.addEventListener('policy-section-navigate', handlePolicySectionNavigate);
+    window.addEventListener(
+      'policy-section-navigate',
+      handlePolicySectionNavigate
+    );
 
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
@@ -195,7 +211,7 @@ export function PolicySection({ contents }: { contents: policyType | null }) {
         handlePolicySectionNavigate
       );
     };
-  }, [sections]);
+  }, [sections, scrollToResolvedSection]);
 
   if (!sections.length) {
     return null;
@@ -208,7 +224,10 @@ export function PolicySection({ contents }: { contents: policyType | null }) {
     >
       <div className="mx-auto grid max-w-[1320px] grid-cols-[400px_minmax(0,1fr)] gap-(--spacing-padding-huge-x) lg:grid-cols-1 lg:gap-(--spacing-padding-10x)">
         <aside className="self-start py-(--spacing-padding-huge-x)! lg:py-(--spacing-padding-6x)! md:py-(--spacing-padding-4x)! lg:order-2">
-          <div ref={sidebarPanelRef} className="w-[400px] rounded-[24px] px-6 py-8 lg:w-full lg:rounded-[16px] lg:px-5 lg:py-6 md:px-4 md:py-5">
+          <div
+            ref={sidebarPanelRef}
+            className="w-[400px] rounded-[24px] px-6 py-8 lg:w-full lg:rounded-[16px] lg:px-5 lg:py-6 md:px-4 md:py-5"
+          >
             <div className="flex flex-col gap-(--spacing-padding-8x) lg:gap-(--spacing-padding-6x)">
               <p className="text-lg-regular text-(--typography-color-secondary-100) md:text-md-regular">
                 Sections
@@ -223,10 +242,11 @@ export function PolicySection({ contents }: { contents: policyType | null }) {
                       key={section.id}
                       type="button"
                       onClick={() => handleSectionClick(section.id)}
-                      className={`text-lg-regular text-left transition-colors duration-200 md:text-md-regular ${isActive
-                        ? 'text-white!'
-                        : 'text-(--typography-color-primary-400)! hover:text-(--typography-color-secondary-100)!'
-                        }`}
+                      className={`text-lg-regular text-left transition-colors duration-200 md:text-md-regular ${
+                        isActive
+                          ? 'text-white!'
+                          : 'text-(--typography-color-primary-400)! hover:text-(--typography-color-secondary-100)!'
+                      }`}
                     >
                       {section.name}
                     </button>

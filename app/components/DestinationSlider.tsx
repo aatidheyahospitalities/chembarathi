@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { motion } from 'motion/react';
+import { motion, type Transition } from 'motion/react';
 import Image from 'next/image';
 
 type Destination = {
@@ -28,7 +28,7 @@ export default function DestinationSlider() {
   const [cursorVisible, setCursorVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  const [transition, setTransition] = useState<any>({
+  const [transition, setTransition] = useState<Transition>({
     type: 'tween',
     ease: [0.32, 0.72, 0, 1],
     duration: 0.5,
@@ -40,11 +40,11 @@ export default function DestinationSlider() {
   // Navigation handlers
   const goToIndex = (index: number, immediate = false) => {
     if (immediate) {
-      setTransition((prev: any) => ({ ...prev, duration: 0 }));
+      setTransition((prev: Transition) => ({ ...prev, duration: 0 }));
       setActiveIndex(index);
       // Reset transition after a frame
       requestAnimationFrame(() => {
-        setTransition((prev: any) => ({ ...prev, duration: 0.5 }));
+        setTransition((prev: Transition) => ({ ...prev, duration: 0.5 }));
       });
     } else {
       setActiveIndex(index);
@@ -76,7 +76,10 @@ export default function DestinationSlider() {
   };
 
   const openBookingEngine = () => {
-    window.open('https://bookingengine.stayflexi.com/?hotel_id=28009', '_blank');
+    window.open(
+      'https://bookingengine.stayflexi.com/?hotel_id=28009',
+      '_blank'
+    );
   };
 
   const currentDestinationName = destinations[getRealIndex(activeIndex)].name;
@@ -186,7 +189,8 @@ export default function DestinationSlider() {
           className="fixed pointer-events-none z-50"
           style={{
             left: cursor.x,
-            top: cursor.y + (typeof window !== 'undefined' ? window.scrollY : 0),
+            top:
+              cursor.y + (typeof window !== 'undefined' ? window.scrollY : 0),
             transform: 'translate(-50%, -50%)',
           }}
         >

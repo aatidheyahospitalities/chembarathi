@@ -1,48 +1,34 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import InfiniteLoopWrapper from "./InfiniteLoopWrapper";
+import Image from 'next/image';
+import InfiniteLoopWrapper from './InfiniteLoopWrapper';
 
+/* Ratios are assigned by position rather than picked at random. A random pick
+   cannot run during render without the server and the client disagreeing, so
+   it had to happen in an effect — which meant the strip rendered nothing at
+   all until after mount. Fixed shapes keep the staggered look and let the
+   images render with the rest of the page. */
 const galleryImages = [
-  "/gallery/scroll-section/1.jpg",
-  "/gallery/scroll-section/2.jpg",
-  "/gallery/scroll-section/3.jpg",
-  "/gallery/scroll-section/4.jpg",
-  "/gallery/scroll-section/5.jpg",
-  "/gallery/scroll-section/6.jpg",
+  { src: '/gallery/scroll-section/1.jpg', ratio: 'aspect-square' },
+  { src: '/gallery/scroll-section/2.jpg', ratio: 'aspect-[3/4]' },
+  { src: '/gallery/scroll-section/3.jpg', ratio: 'aspect-[3/4]' },
+  { src: '/gallery/scroll-section/4.jpg', ratio: 'aspect-square' },
+  { src: '/gallery/scroll-section/5.jpg', ratio: 'aspect-[3/4]' },
+  { src: '/gallery/scroll-section/6.jpg', ratio: 'aspect-square' },
 ];
 
-// REMOVED aspect-video (16:9)
-const ratios = ["aspect-square", "aspect-[3/4]"];
+const items = galleryImages.map((img, i) => ({
+  node: (
+    <div
+      key={i}
+      className={`relative w-[300px] ${img.ratio} shrink-0 overflow-hidden rounded-lg`}
+    >
+      <Image src={img.src} alt="" fill className="object-cover" />
+    </div>
+  ),
+}));
 
 export default function GalleryLoop({ speed = 50 }) {
-  const [imagesWithRatio, setImagesWithRatio] = useState<
-    { src: string; ratio: string }[]
-  >([]);
-
-  useEffect(() => {
-    setImagesWithRatio(
-      galleryImages.map((src) => ({
-        src,
-        ratio: ratios[Math.floor(Math.random() * ratios.length)],
-      }))
-    );
-  }, []);
-
-  if (!imagesWithRatio.length) return null;
-
-  const items = imagesWithRatio.map((img, i) => ({
-    node: (
-      <div
-        key={i}
-        className={`relative w-[300px] ${img.ratio} shrink-0 overflow-hidden rounded-lg`}
-      >
-        <Image src={img.src} alt="" fill className="object-cover" />
-      </div>
-    ),
-  }));
-
   return (
     <section className="relative w-full py-(--spacing-padding-16x)!">
       <InfiniteLoopWrapper
