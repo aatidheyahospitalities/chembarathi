@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
-import { scrollToElement } from '../lib/scroll';
+import { onScrollPosition, scrollToElement } from '../lib/scroll';
 import { useTransitionRouter } from './PageTransition';
 
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
@@ -36,6 +36,12 @@ const navItems: NavItem[] = [
 /** Matches the fixed headers height, so anchored sections clear it. */
 const HEADER_OFFSET = 'top 80px';
 
+/** Within this many pixels of the top, the header counts as being at rest. */
+const TOP_THRESHOLD = 8;
+
+/** Movement below this is treated as noise rather than a change of direction. */
+const DIRECTION_THRESHOLD = 10;
+
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
@@ -51,42 +57,45 @@ export default function Header() {
    * clicks made from another route. */
   const pendingSectionRef = useRef<string | null>(null);
 
-  // Hide/show on scroll & scrolled state
+  /*
+   * Hide/show on scroll, and the background that comes with it.
+   *
+   * The background is tied to the scroll-up reveal rather than to a scroll
+   * offset. Previously it switched on 8px past the top, which painted a solid
+   * band across a hero still filling the viewport — the header is transparent
+   * precisely so the hero reads as full-bleed. Scrolling down now slides the
+   * header away while it is still transparent, and it only picks up a
+   * background on the way back in, where it sits over real content and needs
+   * one to stay legible. Returning to the top drops it again.
+   */
   useEffect(() => {
-    const TOP_THRESHOLD = 8;
-
-    const handleScroll = () => {
-      const currentY = Math.max(
-        window.scrollY,
-        document.documentElement.scrollTop,
-        document.body.scrollTop
-      );
-      const isNearTop = currentY <= TOP_THRESHOLD;
-
-      setScrolled(!isNearTop);
-
-      if (isNearTop) {
+    const handlePosition = (currentY: number) => {
+      if (currentY <= TOP_THRESHOLD) {
         setHeaderVisible(true);
+        setScrolled(false);
         lastScrollY.current = 0;
         return;
       }
 
-      if (Math.abs(currentY - lastScrollY.current) < 10) return;
-
-      if (currentY > lastScrollY.current) {
-        setHeaderVisible(false);
-        if (menuOpen) setMenuOpen(false);
-      } else {
-        setHeaderVisible(true);
-      }
+      const delta = currentY - lastScrollY.current;
+      if (Math.abs(delta) < DIRECTION_THRESHOLD) return;
 
       lastScrollY.current = currentY;
+
+      if (delta > 0) {
+        setHeaderVisible(false);
+        // Functional update so this effect doesn't depend on `menuOpen` —
+        // it now holds a per-frame ticker subscription, which should not be
+        // torn down and rebuilt every time the menu toggles.
+        setMenuOpen(open => (open ? false : open));
+      } else {
+        setHeaderVisible(true);
+        setScrolled(true);
+      }
     };
 
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [menuOpen]);
+    return onScrollPosition(handlePosition);
+  }, []);
 
   // Active section via IntersectionObserver
   useEffect(() => {
@@ -189,14 +198,31 @@ export default function Header() {
 
   return (
     <header
+      /* Colour and border get their own, slower curve rather than riding the
+         slide's 300ms ease-out — matched to the transform they arrive as an
+         abrupt block, so they fade over 500ms on a symmetric ease instead.
+
+         The hairline is what makes the reveal legible at all on most routes:
+         `--surface-primary-800` is #151e19, the exact colour `globals.css`
+         paints on `body`, so the background alone only ever showed up where
+         the header sat over imagery — the homepage and experience heroes.
+         `--surface-primary-500` is the same hairline used by `BlogRow`,
+         `ArticleMasthead`, `RelatedPosts` and `BottomBarSection`. The border
+         is always present and only changes colour, so nothing shifts by a
+         pixel when it comes and goes. */
       className={`fixed top-0 left-0 z-[9999] w-full
-        transition-transform duration-300 ease-out
+        [transition:transform_300ms_ease-out,_background-color_500ms_ease-in-out,_border-color_500ms_ease-in-out]
         ${headerVisible ? 'translate-y-0' : '-translate-y-full'}
 
+        border-b!
         py-[24px]! px-huge-x!
         xs:!px-[16px] xs:!pt-[16px] xs:!pb-[0px]
 
-        ${scrolled ? 'bg-(--surface-primary-800)' : 'bg-transparent'}
+        ${
+          scrolled
+            ? 'bg-(--surface-primary-800) border-(--surface-primary-500)!'
+            : 'bg-transparent border-transparent!'
+        }
 
         ${menuOpen ? 'xs:!bg-(--surface-primary-800)' : ''}
       `}
