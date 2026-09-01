@@ -6,6 +6,9 @@ export const POSTS_PER_PAGE = 6;
 /** Related cards shown at the foot of an article. */
 export const RELATED_POST_COUNT = 4;
 
+/** Latest posts teased in the homepage journal section. */
+export const HOME_POST_COUNT = 3;
+
 export const BLOG_BASE_URL = 'https://chembarathi.com/blog';
 
 /**

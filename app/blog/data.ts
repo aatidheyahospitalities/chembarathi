@@ -50,6 +50,25 @@ export async function getBlogPage(skip = 0): Promise<{
   };
 }
 
+/**
+ * The newest posts, for the homepage journal teaser.
+ *
+ * Deliberately the same `blogListQuery` the archive paginates with — it
+ * already orders `date_DESC`, so "latest" is just its first page at a smaller
+ * limit. No second source of blog data, and a Contentful outage degrades to an
+ * empty list, which the section renders as nothing at all.
+ */
+export async function getLatestPosts(
+  limit: number
+): Promise<BlogPostCardType[]> {
+  const data = await tolerant<blogPostCardCollection>(
+    () => contentfulFetch(blogListQuery(Math.max(1, limit), 0)),
+    'latest posts query'
+  );
+
+  return data?.blogPostCollection?.items ?? [];
+}
+
 export async function getBlogSlugs(): Promise<string[]> {
   const data = await tolerant<blogSlugCollection>(
     () => contentfulFetch(blogSlugsQuery),
