@@ -5,29 +5,21 @@ import { motion } from 'motion/react';
 
 import Image from 'next/image';
 
+import { ROOM_TYPES } from '../lib/rooms';
+
 type Room = {
   name: string;
   images: string[];
 };
 
-const rooms: Room[] = [
-  {
-    name: 'Honeymoon Suite',
-    images: ['/HoneymoonSuite.JPG'],
-  },
-  {
-    name: 'Premium Cottage',
-    images: ['/PremiumCottage.JPG'],
-  },
-  {
-    name: 'Deluxe Suite',
-    images: ['/PremiumCottage.JPG'],
-  },
-  {
-    name: 'Private Pool Room',
-    images: ['/PrivatePoolVilla.JPG'],
-  },
-];
+/* Shares `app/lib/rooms.ts` with the accommodation slider and the footer.
+   This component is not mounted anywhere yet, but it named the same rooms
+   differently ("Private Pool Room", "Deluxe Suite"), which is exactly the
+   drift the shared list exists to stop. */
+const rooms: Room[] = ROOM_TYPES.map(room => ({
+  name: room.name,
+  images: [room.image],
+}));
 
 const loopRooms = [rooms[rooms.length - 1], ...rooms, rooms[0]];
 

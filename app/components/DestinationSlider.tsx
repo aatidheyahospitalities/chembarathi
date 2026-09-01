@@ -4,17 +4,19 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, type Transition } from 'motion/react';
 import Image from 'next/image';
 
+import { ROOM_TYPES } from '../lib/rooms';
+
 type Destination = {
   name: string;
   images: string[];
 };
 
-const destinations: Destination[] = [
-  { name: 'Private Pool Villa', images: ['/PrivatePoolVilla.JPG'] },
-  { name: 'Honeymoon Suite', images: ['/HoneymoonSuite.JPG'] },
-  { name: 'Premium Cottage', images: ['/PremiumCottage.JPG'] },
-  { name: 'Deluxe Suite', images: ['/PremiumCottage.JPG'] },
-];
+/* Names and imagery come from `app/lib/rooms.ts`, which the footer reads too —
+   the two used to hold their own copies and had drifted apart. */
+const destinations: Destination[] = ROOM_TYPES.map(room => ({
+  name: room.name,
+  images: [room.image],
+}));
 
 const loopDestinations = [
   destinations[destinations.length - 1],

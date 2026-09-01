@@ -7,6 +7,7 @@ import {
   navigateWithScrollReset,
   getPolicyFooterHref,
 } from '../policy/utils';
+import { ROOM_TYPES } from '../lib/rooms';
 
 export default function BottomBarSection() {
   const router = useTransitionRouter();
@@ -15,12 +16,9 @@ export default function BottomBarSection() {
   const items = [
     {
       title: 'Cottages',
-      subItems: [
-        'Cottages & Suites',
-        'Premium Cottage',
-        'Private Pool Villa',
-        'Honeymoon Suite',
-      ],
+      // Names come from `app/lib/rooms.ts`, the same list the accommodation
+      // slider renders, so the two cannot name a room differently again.
+      subItems: ['Cottages & Suites', ...ROOM_TYPES.map(room => room.name)],
     },
     {
       title: 'Quick Links',
@@ -55,9 +53,7 @@ export default function BottomBarSection() {
     Careers: '/careers',
     'Partner with Us': '/partner',
     'Cottages & Suites': '/cottages',
-    'Premium Cottage': '/premium-cottage',
-    'Private Pool Villa': '/private-pool-villa',
-    'Honeymoon Suite': '/honeymoon-suite',
+    ...Object.fromEntries(ROOM_TYPES.map(room => [room.name, room.href])),
   };
 
   return (
