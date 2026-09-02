@@ -323,3 +323,41 @@ export const relatedBlogPostsQuery = (slug: string) => ({
     where: { slug_not: slug },
   },
 });
+
+/**
+ * The experiences, from the shared `contentsection` model.
+ *
+ * Reuses `contentsection` rather than adding a content type: it already
+ * carries eyebrow/title/description/image, which is exactly what an
+ * experience is, and the space uses it for page sections already. Experiences
+ * are distinguished by an `experience-` slug prefix.
+ *
+ * Ordered by first publish so the sequence matches the order the entries were
+ * created in — `contentsection` has no explicit ordering field.
+ */
+export const experiencesQuery = {
+  query: `
+  query ExperienceCollection($where: ContentsectionFilter) {
+  contentsectionCollection(
+    where: $where
+    limit: 30
+    order: sys_firstPublishedAt_ASC
+  ) {
+    items {
+      slug
+      eyebrow
+      title
+      description
+      image {
+        url
+        title
+        description
+      }
+    }
+  }
+}
+`,
+  variables: {
+    where: { slug_contains: 'experience-' },
+  },
+};

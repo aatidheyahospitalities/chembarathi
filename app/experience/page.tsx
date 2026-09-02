@@ -1,22 +1,30 @@
 import type { Metadata } from 'next';
 
 import FaqSection from '../components/FaqSection';
-import { experienceFaq, experiences } from './content';
+import { experienceFaq } from './content';
+import { getExperiences } from './data';
 import ExperienceHero from './components/ExperienceHero';
 import ExperiencePanel from './components/ExperiencePanel';
+import { buildMetadata } from '../lib/metadata';
 
 /**
- * Content lives in ./content.ts rather than Contentful, so there is nothing to
- * revalidate — the page is fully static. The header, gallery loop, and bottom
- * bar all come from the root layout; this page renders its own sections only.
+ * The panels come from Contentful via `getExperiences`, which falls back to
+ * the bundled copy in ./content.ts while the CMS has no `experience-` entries.
+ * The hero and FAQ are still local. The header, gallery loop, and bottom bar
+ * all come from the root layout; this page renders its own sections only.
  */
-export const metadata: Metadata = {
+export const revalidate = 600;
+
+export const metadata: Metadata = buildMetadata({
+  path: '/experience',
   title: 'Experience | Chembarathi Wayanad',
   description:
     'Forest therapy walks, sunrise yoga, Ayurvedic spa rituals, dining under open skies, and an infinity pool over the valley — the experiences that shape a stay at Chembarathi Wayanad.',
-};
+});
 
-export default function ExperiencePage() {
+export default async function ExperiencePage() {
+  const experiences = await getExperiences();
+
   return (
     <main>
       <ExperienceHero />
