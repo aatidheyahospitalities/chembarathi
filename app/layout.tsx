@@ -7,17 +7,41 @@ import SmoothScroll from './components/SmoothScroll';
 import BottomBarSection from './components/BottomBarSection';
 import RouteScrollManager from './components/RouteScrollManager';
 import PageTransitionProvider from './components/PageTransition';
+import { OG_IMAGE, SITE_NAME, SITE_URL } from './lib/metadata';
 
 const figtree = Figtree({
   subsets: ['latin'],
   variable: '--font-figtree',
 });
 
+/**
+ * Site-wide defaults. `metadataBase` belongs here so every page's relative OG
+ * image resolves against the real domain — without it Next resolves against
+ * localhost and the share card breaks wherever it is unfurled. Pages override
+ * the rest via `buildMetadata`.
+ */
 export const metadata: Metadata = {
-  title: 'Chembarathi Wayanad',
-  description: 'Welcome to Chembarathi',
+  metadataBase: new URL(SITE_URL),
+  /* A plain fallback, deliberately not a `{ default, template }` pair. Pages
+     set their own full title through `buildMetadata`, and the
+     Contentful-authored ones already carry the brand, so a template appended
+     it twice — "Journal | Chembarathi Wayanad | Chembarathi Wayanad". */
+  title: SITE_NAME,
+  description:
+    'A luxury boutique resort in Wayanad — private pool villas and forest cottages set in the hills of Kerala.',
   icons: {
     icon: '/Icons/Favicon.svg',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    siteName: SITE_NAME,
+    url: SITE_URL,
+    images: [OG_IMAGE],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [OG_IMAGE],
   },
 };
 

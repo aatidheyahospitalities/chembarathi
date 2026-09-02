@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import SectionHeading from '../components/SectionHeading';
+import { buildMetadata } from '../lib/metadata';
 import MasonryGallery from '../components/gallery/MasonryGallery';
 import { applyDevRepeat } from '../lib/gallery/devRepeat';
 import { discoverGalleryImages } from '../lib/gallery/discoverGalleryImages';
@@ -13,11 +14,12 @@ import { discoverGalleryImages } from '../lib/gallery/discoverGalleryImages';
  */
 export const dynamic = 'force-static';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
+  path: '/gallery',
   title: 'Gallery | Chembarathi Wayanad',
   description:
     'A visual tour of Chembarathi Wayanad — our suites, cottages, and the forest that surrounds them.',
-};
+});
 
 const GALLERY_EYEBROW = 'Gallery';
 const GALLERY_TITLE = 'Moments at Chembarathi';

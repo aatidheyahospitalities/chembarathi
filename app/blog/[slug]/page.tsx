@@ -8,6 +8,7 @@ import ArticleHero from '../components/ArticleHero';
 import ArticleMasthead from '../components/ArticleMasthead';
 import RelatedPosts from '../components/RelatedPosts';
 import StickyRail from '../components/StickyRail';
+import { OG_IMAGE } from '../../lib/metadata';
 import {
   assetAlt,
   BLOG_BASE_URL,
@@ -47,7 +48,9 @@ export async function generateMetadata({
           alt: assetAlt(post.coverImage, post.title),
         },
       ]
-    : undefined;
+    : // A post with no cover still needs a card image, or the share renders
+      // as a bare text link.
+      [OG_IMAGE];
 
   return {
     title,

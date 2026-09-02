@@ -7,6 +7,7 @@ import { getBlogPage } from './data';
 import BlogList from './components/BlogList';
 import BlogMasthead from './components/BlogMasthead';
 import { BLOG_BASE_URL } from './utils';
+import { buildMetadata } from '../lib/metadata';
 
 export const revalidate = 600;
 
@@ -29,24 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const title = entry?.title || FALLBACK_TITLE;
   const description = entry?.description || FALLBACK_DESCRIPTION;
 
-  return {
-    title,
-    description,
-    alternates: { canonical: BLOG_BASE_URL },
-    openGraph: {
-      type: 'website',
-      locale: 'en_US',
-      url: BLOG_BASE_URL,
-      siteName: 'Chembarathi Wayanad',
-      title,
-      description,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-    },
-  };
+  return buildMetadata({ path: '/blog', title, description });
 }
 
 export default async function BlogPage() {
