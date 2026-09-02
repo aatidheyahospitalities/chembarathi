@@ -4,58 +4,38 @@ import InfiniteLoopWrapper from './InfiniteLoopWrapper';
 import UserReviewCard from './UserReviewCard';
 
 export default function ReviewSection() {
+  /* Real guest reviews. No location is published with them, so the card's
+     `place` line is simply omitted rather than invented. */
   const customerFeedback = [
     {
-      name: 'Elena G.',
-      place: 'Barcelona, Spain',
+      name: 'Yadhu Krishnan',
       review:
-        'The private pool villa was luxurious and offered stunning views. The service was impeccable, and we felt pampered throughout our stay.',
-      date: 'August 20, 2025',
-      rating: 4.8,
-    },
-    {
-      name: 'Kenji T.',
-      place: 'Kyoto, Japan',
-      review:
-        'Serene and beautiful. The forest therapy walk was a highlight, and the food was exceptional. A perfect escape from the city.',
-      date: 'November 15, 2025',
-      rating: 4.9,
-    },
-    {
-      name: 'Sophie M.',
-      place: 'Paris, France',
-      review:
-        'Absolutely magical! The attention to detail was incredible. Loved the sustainable practices and organic meals. Will definitely return.',
-      date: 'September 5, 2025',
+        'I had an amazing stay at Chemparathi Resort. The location is serene and surrounded by beautiful greenery, making it a perfect escape from busy city life. The rooms were spotless, spacious, and very comfortable. The staff were extremely friendly and attentive, always ensuring we had everything we needed. The food was delicious and freshly prepared. Overall, it was a refreshing and memorable experience. Highly recommended!',
+      date: 'March 2026',
       rating: 5,
     },
     {
-      name: 'Raj P.',
-      place: 'Mumbai, India',
+      name: 'Akhil Mohan',
       review:
-        'A truly rejuvenating experience. The yoga sessions at sunrise and the ayurvedic spa treatments were world-class. Highly recommended!',
-      date: 'October 12, 2025',
-      rating: 4.7,
+        'The atmosphere was calm, cozy, and peaceful, making it a truly relaxing place to stay. The climate and overall ambience added to the experience and were exceptionally pleasant. The service was excellent, with staff providing attentive and courteous hospitality throughout our stay. The food was also very good and well-prepared. The candlelight dinner was beautifully arranged and added a special touch to our stay. Overall, it was a wonderful experience, and we thoroughly enjoyed our time here.',
+      date: 'July 2026',
+      rating: 5,
     },
     {
-      name: 'Lisa K.',
-      place: 'New York, USA',
+      name: 'Farhan',
       review:
-        'The perfect blend of luxury and nature. Staff went above and beyond to make our anniversary special. The treehouse suite was amazing!',
-      date: 'July 28, 2025',
-      rating: 4.9,
-    },
-    {
-      name: 'Marco R.',
-      place: 'Rome, Italy',
-      review:
-        'Exceeded all expectations! The organic farm-to-table dining, peaceful surroundings, and warm hospitality made this an unforgettable stay.',
-      date: 'December 1, 2025',
+        'The property is tucked inside greenery with such peaceful vibes. The thatched cottages, clean lawns, and warm hospitality made our trip special. The staff were very courteous and responsive. If you want to wake up to birds, mist, and pure calm—this is the place. Highly recommended for couples and families. We’ll definitely come back! Thank you, Team Chembarathi.',
+      date: 'July 2026',
       rating: 5,
     },
   ];
 
-  const averageRating = 4.7;
+  /* Derived, not hardcoded: the headline number used to sit at 4.7 while every
+     card on screen read 5, which reads as invented the moment anyone checks. */
+  const averageRating =
+    customerFeedback.reduce((sum, item) => sum + item.rating, 0) /
+    customerFeedback.length;
+
   const CleanlinessRating = 5.0;
   const CheckInRating = 4.8;
   const CommunicationRating = 5.0;
@@ -98,7 +78,7 @@ export default function ReviewSection() {
 
       {/* Mobile static cards */}
       <div className="px-(--spacing-padding-4x)! hidden xs:!flex pb-(--spacing-padding-huge-x)! flex-col gap-[24px]">
-        {items.slice(0, 2).map((item, index) => (
+        {items.map((item, index) => (
           <div key={index}>{item.node}</div>
         ))}
       </div>
