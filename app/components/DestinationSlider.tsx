@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, type Transition } from 'motion/react';
 import Image from 'next/image';
 
 import { ROOM_TYPES } from '../lib/rooms';
+import { onScrollPosition } from '../lib/scroll';
 
 type Destination = {
   name: string;
@@ -59,6 +61,7 @@ export default function DestinationSlider() {
   const trackRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const cursorRef = useRef<HTMLDivElement>(null);
+  const cursorPositionRef = useRef({ x: 0, y: 0 });
   /* Set on drag end and read by the click handler. Without it, finishing a
      swipe counted as a tap and threw the visitor into the booking engine. */
   const draggedRef = useRef(false);
@@ -133,19 +136,46 @@ export default function DestinationSlider() {
   const handleMouseMove = (e: React.MouseEvent) => {
     if (isMobile) return;
 
+    cursorPositionRef.current = { x: e.clientX, y: e.clientY };
     const node = cursorRef.current;
     if (!node) return;
 
     node.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
   };
 
-  const handleMouseEnter = () => {
-    if (!isMobile) setCursorVisible(true);
+  const handleMouseEnter = (e: React.MouseEvent) => {
+    if (isMobile) return;
+
+    cursorPositionRef.current = { x: e.clientX, y: e.clientY };
+    setCursorVisible(true);
   };
 
   const handleMouseLeave = () => {
     setCursorVisible(false);
   };
+
+  useEffect(() => {
+    if (!cursorVisible || !cursorRef.current) return;
+
+    const { x, y } = cursorPositionRef.current;
+    cursorRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+  }, [cursorVisible]);
+
+  useEffect(() => {
+    if (!cursorVisible) return;
+
+    return onScrollPosition(() => {
+      const track = trackRef.current;
+      if (!track) return;
+
+      const { x, y } = cursorPositionRef.current;
+      const rect = track.getBoundingClientRect();
+      const pointerIsInside =
+        x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+
+      if (!pointerIsInside) setCursorVisible(false);
+    });
+  }, [cursorVisible]);
 
   const handleClick = () => {
     // A swipe ends with a click event; only a real tap should open booking.
@@ -179,17 +209,17 @@ export default function DestinationSlider() {
       </div>
       <div
         ref={trackRef}
-        className="relative w-full overflow-x-hidden cursor-none"
+        className="relative w-full overflow-x-hidden cursor-none xs:!cursor-auto"
         onClick={handleClick}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         <motion.div
           animate={{ x: trackOffset }}
           transition={transition}
           onAnimationComplete={handleAnimationComplete}
           className="flex gap-4"
-          onMouseMove={handleMouseMove}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
         >
           {loopDestinations.map((destination, index) => (
             <motion.div
@@ -232,48 +262,45 @@ export default function DestinationSlider() {
         </motion.div>
       </div>
 
-      {!isMobile && cursorVisible && (
-        /* `left`/`top` stay at 0 and the position is applied as a transform in
-           `handleMouseMove`, so following the pointer never touches React.
-           The old version added `window.scrollY` to `top` on a `position:
-           fixed` element, which offset the cursor by the whole scroll distance
-           -- and under ScrollSmoother that number is wrong anyway. */
-        <div
-          ref={cursorRef}
-          className="fixed left-0 top-0 pointer-events-none z-50"
-        >
-          <div className="bg-white/10! backdrop-blur-md! px-4! py-2! rounded-full border border-white/20 flex items-center gap-3">
-            <span className="text-white font-semibold">View Details</span>
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M7 17L17 7" />
-              <path d="M7 7h10v10" />
-            </svg>
-          </div>
-        </div>
-      )}
+      {!isMobile &&
+        cursorVisible &&
+        createPortal(
+          /* Render outside ScrollSmoother's transformed content so these
+             viewport coordinates stay accurate at every scroll position. */
+          <div
+            ref={cursorRef}
+            className="fixed left-0 top-0 pointer-events-none z-[10000]"
+          >
+            <div className="bg-white/10! backdrop-blur-md! px-4! py-2! rounded-full border border-white/20 flex items-center gap-3">
+              <span className="text-white font-semibold">View Details</span>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M7 17L17 7" />
+                <path d="M7 7h10v10" />
+              </svg>
+            </div>
+          </div>,
+          document.body
+        )}
 
-      <div className="flex justify-between items-end gap-(--spacing-padding-6x) xs:!flex-col xs:!items-center xs:!gap-(--spacing-padding-4x) pt-[20px]! w-full px-[10vw]! md:!px-(--spacing-padding-8x)!">
-        {/* Place name at bottom-left. The room names now run to six words, so
-            this is a flexible basis rather than a 300px floor that forced the
-            dots off-screen on a phone. */}
+      <div className="section-wrapper grid w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-(--spacing-padding-6x) pt-[20px]! pb-0! xs:!flex xs:!flex-col xs:!gap-(--spacing-padding-4x)">
         <button
           onClick={() => openBookingEngine()}
-          className="z-20 text-xxl-regular sm:text-3xl font-semibold hover:opacity-80 transition-opacity text-white! basis-[300px] shrink text-left xs:!basis-auto xs:!text-center"
+          className="z-20 max-w-[32rem] justify-self-start text-left text-xl-regular text-white! transition-opacity hover:opacity-80 xs:!max-w-none xs:!text-center"
         >
           {currentDestinationName}
         </button>
 
         {/* Progress Indicator - Dots */}
-        <div className="flex gap-3 items-center justify-center flex-1 mb-2">
+        <div className="flex items-center justify-self-center gap-3">
           {destinations.map((_, i) => (
             <motion.div
               key={i}
@@ -289,7 +316,7 @@ export default function DestinationSlider() {
         </div>
 
         {/* Navigation arrows at bottom-right */}
-        <div className="z-20 xs:!hidden flex h-full! items-center justify-center gap-3">
+        <div className="z-20 flex items-center justify-self-end gap-3 xs:!hidden">
           <button
             onClick={e => {
               e.stopPropagation();
@@ -305,7 +332,7 @@ export default function DestinationSlider() {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="w-10 h-10 xs:!w-6 xs:!h-6"
+              className="h-6 w-6"
             >
               <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
@@ -326,7 +353,7 @@ export default function DestinationSlider() {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="w-10 h-10 xs:!w-6 xs:!h-6"
+              className="h-6 w-6"
             >
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>

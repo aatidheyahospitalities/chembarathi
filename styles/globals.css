@@ -725,3 +725,25 @@ body {
   pointer-events: none;
   background-color: #151e19;
 }
+
+/* Header hide/reveal behavior, kept explicit so transform utility ordering
+   cannot interrupt the slide animation. */
+.site-header {
+  transform: translate3d(0, 0, 0);
+  transition:
+    transform 0.8s cubic-bezier(0.24, 0.43, 0.15, 0.97),
+    background-color 0.6s cubic-bezier(0.24, 0.43, 0.15, 0.97),
+    border-color 0.6s cubic-bezier(0.24, 0.43, 0.15, 0.97);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.site-header[data-visible='false'] {
+  transform: translate3d(0, -120%, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header {
+    transition: none;
+  }
+}

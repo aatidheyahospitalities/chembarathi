@@ -39,8 +39,8 @@ const HEADER_OFFSET = 'top 80px';
 /** Within this many pixels of the top, the header counts as being at rest. */
 const TOP_THRESHOLD = 8;
 
-/** Movement below this is treated as noise rather than a change of direction. */
-const DIRECTION_THRESHOLD = 10;
+/** Matches the protected top zone used by the Elementis reference header. */
+const HIDE_START = 130;
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -52,6 +52,7 @@ export default function Header() {
   const pathname = usePathname();
 
   const lastScrollY = useRef(0);
+  const hasScrollPosition = useRef(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
   /** Section to scroll to once the homepage has mounted, set by anchor
    * clicks made from another route. */
@@ -70,17 +71,23 @@ export default function Header() {
    */
   useEffect(() => {
     const handlePosition = (currentY: number) => {
+      if (!hasScrollPosition.current) {
+        hasScrollPosition.current = true;
+        lastScrollY.current = currentY;
+        return;
+      }
+
       if (currentY <= TOP_THRESHOLD) {
         setHeaderVisible(true);
         setScrolled(false);
-        lastScrollY.current = 0;
+        lastScrollY.current = currentY;
         return;
       }
 
       const delta = currentY - lastScrollY.current;
-      if (Math.abs(delta) < DIRECTION_THRESHOLD) return;
-
       lastScrollY.current = currentY;
+
+      if (currentY <= HIDE_START) return;
 
       if (delta > 0) {
         setHeaderVisible(false);
@@ -88,7 +95,7 @@ export default function Header() {
         // it now holds a per-frame ticker subscription, which should not be
         // torn down and rebuilt every time the menu toggles.
         setMenuOpen(open => (open ? false : open));
-      } else {
+      } else if (delta < 0) {
         setHeaderVisible(true);
         setScrolled(true);
       }
@@ -210,10 +217,8 @@ export default function Header() {
          `ArticleMasthead`, `RelatedPosts` and `BottomBarSection`. The border
          is always present and only changes colour, so nothing shifts by a
          pixel when it comes and goes. */
-      className={`fixed top-0 left-0 z-[9999] w-full
-        [transition:transform_300ms_ease-out,_background-color_500ms_ease-in-out,_border-color_500ms_ease-in-out]
-        ${headerVisible ? 'translate-y-0' : '-translate-y-full'}
-
+      data-visible={headerVisible}
+      className={`site-header fixed top-0 left-0 z-[9999] w-full
         border-b!
         py-[24px]! px-huge-x!
         xs:!px-[16px] xs:!pt-[16px] xs:!pb-[0px]
@@ -318,13 +323,15 @@ export default function Header() {
           absolute top-full left-0 w-full
           bg-(--surface-primary-800)
           transition-all duration-300 ease-out
-          origin-top
+          overflow-hidden
+          motion-reduce:transition-none
           ${
             menuOpen
-              ? 'opacity-100 translate-y-0 scale-y-100 pointer-events-auto'
-              : 'opacity-0 -translate-y-3 scale-y-95 pointer-events-none'
+              ? 'max-h-[420px] opacity-100 translate-y-0 pointer-events-auto'
+              : 'max-h-0 opacity-0 -translate-y-2 pointer-events-none'
           }
         `}
+        aria-hidden={!menuOpen}
       >
         {navItems.map(item => (
           <Link
