@@ -4,7 +4,7 @@ import { homeContentQuery, homeMetaDataQuery } from './API/Query/query';
 import dynamic from 'next/dynamic';
 
 import Banner from './components/Banner';
-import DestinationSlider from '@/app/components/DestinationSlider';
+import RoomsSection from '@/app/components/RoomsSection';
 import CommonSection from './components/valuesection/ValueSection';
 const CommonSectionWithGallery = dynamic(
   () => import('./components/valuesection/ValueSectionWithGallery')
@@ -46,7 +46,7 @@ export default async function HomePage() {
         <CommonSection commonSectionData={ExperienceData} />
       </section>
       <section id="suites" style={{ scrollMarginTop: '80px' }}>
-        <DestinationSlider />
+        <RoomsSection />
       </section>
       <section id="gallery" style={{ scrollMarginTop: '80px' }}>
         <CommonSectionWithGallery commonSectionData={ExperienceTheBeautyData} />
