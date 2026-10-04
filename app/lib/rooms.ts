@@ -23,32 +23,32 @@ export type RoomType = {
 export const ROOM_TYPES: RoomType[] = [
   {
     name: 'Premium Cottage with Pool & Mountain View',
-    image: '/gallery/masonry/10.jpg',
+    image: '/cottages/premium-cottage-with-pool-and-mountain-view.jpg',
     href: '/premium-cottage-pool-mountain-view',
   },
   {
     name: 'Deluxe Cottage with Lawn View',
-    image: '/PremiumCottage.JPG',
+    image: '/cottages/deluxe-cottage-lawn-view.jpg',
     href: '/deluxe-cottage-lawn-view',
   },
   {
     name: 'Premium Cottage with Mountain View',
-    image: '/gallery/masonry/3.jpg',
+    image: '/cottages/premium-cottage-mountain-view.jpg',
     href: '/premium-cottage-mountain-view',
   },
   {
     name: 'Deluxe Cottage with Forest View',
-    image: '/gallery/masonry/6.jpg',
+    image: '/cottages/deluxe-cottage-forest-view.jpg',
     href: '/deluxe-cottage-forest-view',
   },
   {
     name: 'Private Pool Villa',
-    image: '/PrivatePoolVilla.JPG',
+    image: '/cottages/private-pool-villa.jpg',
     href: '/private-pool-villa',
   },
   {
     name: 'Honeymoon Suite with Jacuzzi',
-    image: '/HoneymoonSuite.JPG',
+    image: '/cottages/honeymoon-suite-jacuzzi.jpg',
     href: '/honeymoon-suite-jacuzzi',
   },
 ];

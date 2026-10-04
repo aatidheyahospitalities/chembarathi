@@ -15,8 +15,8 @@ export async function generateMetadata(): Promise<Metadata> {
     metaData.metadataCollection.items[0]?.description ||
     'Read our privacy policy to understand how we collect, use, and protect your personal information at Chembarathi Wayanad.';
 
-  /* Was declaring /HoneymoonSuite.JPG as 1200x630; that file is a 2560x1708
-     photo, so the dimensions were a lie and crawlers cropped it badly. */
+  /* The policy page uses the site's dedicated social image rather than a room
+     photograph whose aspect ratio would be cropped unpredictably. */
   return buildMetadata({ path: '/policy', title, description });
 }
 
