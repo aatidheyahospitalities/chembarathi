@@ -16,39 +16,42 @@
 export type RoomType = {
   name: string;
   image: string;
-  /** Footer link target, derived from the name. */
+  /** Booking destination used by room links in the footer. */
   href: string;
 };
+
+export const BOOKING_ENGINE_URL =
+  'https://bookingengine.stayflexi.com/?hotel_id=28009';
 
 export const ROOM_TYPES: RoomType[] = [
   {
     name: 'Premium Cottage with Pool & Mountain View',
     image: '/cottages/premium-cottage-with-pool-and-mountain-view.jpg',
-    href: '/premium-cottage-pool-mountain-view',
+    href: BOOKING_ENGINE_URL,
   },
   {
     name: 'Deluxe Cottage with Lawn View',
     image: '/cottages/deluxe-cottage-lawn-view.jpg',
-    href: '/deluxe-cottage-lawn-view',
+    href: BOOKING_ENGINE_URL,
   },
   {
     name: 'Premium Cottage with Mountain View',
     image: '/cottages/premium-cottage-mountain-view.jpg',
-    href: '/premium-cottage-mountain-view',
+    href: BOOKING_ENGINE_URL,
   },
   {
     name: 'Deluxe Cottage with Forest View',
     image: '/cottages/deluxe-cottage-forest-view.jpg',
-    href: '/deluxe-cottage-forest-view',
+    href: BOOKING_ENGINE_URL,
   },
   {
     name: 'Private Pool Villa',
     image: '/cottages/private-pool-villa.jpg',
-    href: '/private-pool-villa',
+    href: BOOKING_ENGINE_URL,
   },
   {
     name: 'Honeymoon Suite with Jacuzzi',
     image: '/cottages/honeymoon-suite-jacuzzi.jpg',
-    href: '/honeymoon-suite-jacuzzi',
+    href: BOOKING_ENGINE_URL,
   },
 ];

@@ -7,7 +7,7 @@ import {
   navigateWithScrollReset,
   getPolicyFooterHref,
 } from '../policy/utils';
-import { ROOM_TYPES } from '../lib/rooms';
+import { BOOKING_ENGINE_URL, ROOM_TYPES } from '../lib/rooms';
 
 export default function BottomBarSection() {
   const router = useTransitionRouter();
@@ -52,7 +52,7 @@ export default function BottomBarSection() {
     Testimonials: '/testimonials',
     Careers: '/careers',
     'Partner with Us': '/partner',
-    'Cottages & Suites': '/cottages',
+    'Cottages & Suites': BOOKING_ENGINE_URL,
     ...Object.fromEntries(ROOM_TYPES.map(room => [room.name, room.href])),
   };
 
@@ -171,13 +171,16 @@ function ListItem({
         {subItems.map(subItem => (
           <li key={subItem}>
             <button
-              onClick={() =>
-                void navigateWithScrollReset(
-                  routeMap[subItem] || '/',
-                  router,
-                  pathname
-                )
-              }
+              onClick={() => {
+                const href = routeMap[subItem] || '/';
+
+                if (href.startsWith('http')) {
+                  window.open(href, '_blank', 'noopener,noreferrer');
+                  return;
+                }
+
+                void navigateWithScrollReset(href, router, pathname);
+              }}
               className="text-lg-regular text-left cursor-pointer hover:opacity-70 transition"
               style={{ color: 'var(--typography-color-secondary-700)' }}
             >
