@@ -67,6 +67,9 @@ const useResizeObserver = (
     return () => {
       observers.forEach(observer => observer?.disconnect());
     };
+    // The dependency list belongs to the caller, so the rule has nothing to
+    // check against; `callback` and `elements` are refs or memoised there.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependencies);
 };
 
@@ -107,6 +110,8 @@ const useImageLoader = (
         img.removeEventListener('error', handleImageLoad);
       });
     };
+    // Caller-supplied dependency list — see the note in useResizeObserver.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependencies);
 };
 
@@ -189,7 +194,15 @@ const useAnimationLoop = (
       }
       lastTimestampRef.current = null;
     };
-  }, [targetVelocity, seqWidth, seqHeight, isHovered, hoverSpeed, isVertical]);
+  }, [
+    trackRef,
+    targetVelocity,
+    seqWidth,
+    seqHeight,
+    isHovered,
+    hoverSpeed,
+    isVertical,
+  ]);
 };
 
 export const InfiniteLoopWrapper = React.memo<InfiniteLoopProps>(

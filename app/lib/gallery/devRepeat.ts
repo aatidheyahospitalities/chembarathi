@@ -14,6 +14,13 @@ import type { GalleryImage } from './type';
  * the folder flow through either way.
  */
 export function applyDevRepeat(images: GalleryImage[]): GalleryImage[] {
+  // Hard stop outside development. Without it the name is a lie: the helper
+  // ran in production builds too, so a count left at 20 for local testing
+  // shipped a gallery of twenty duplicates of every photo. `/gallery` is
+  // `force-static`, so the decision is made during `next build`, where
+  // NODE_ENV is already 'production'.
+  if (process.env.NODE_ENV === 'production') return images;
+
   const passes = Math.max(1, Math.floor(galleryConfig.devRepeatCount));
 
   if (passes === 1 || images.length === 0) return images;

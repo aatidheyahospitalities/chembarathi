@@ -1,6 +1,9 @@
 import { contentfulFetch } from './API/Contentful/getContent';
 import { metadataCollection, pagetypeoneCollection } from './lib/type';
 import { homeContentQuery, homeMetaDataQuery } from './API/Query/query';
+import { buildMetadata } from './lib/metadata';
+import { getLatestPosts } from './blog/data';
+import { HOME_POST_COUNT } from './blog/utils';
 import dynamic from 'next/dynamic';
 
 import Banner from './components/Banner';
@@ -14,20 +17,31 @@ const ScrollVelocityText = dynamic(
   () => import('./components/ScrollVelocityText')
 );
 const FaqSection = dynamic(() => import('./components/FaqSection'));
+const HomeBlogSection = dynamic(() => import('./components/HomeBlogSection'));
+const LocationSection = dynamic(() => import('./components/LocationSection'));
 
 export const revalidate = 600;
 
 export async function generateMetadata() {
   const metaData: metadataCollection = await contentfulFetch(homeMetaDataQuery);
+  const entry = metaData.metadataCollection.items[0];
 
-  return {
-    title: metaData.metadataCollection.items[0]?.title || '',
-    description: metaData.metadataCollection.items[0]?.description || '',
-  };
+  return buildMetadata({
+    title:
+      entry?.title ||
+      'Honeymoon Resort in Wayanad | Luxury Villas with Private Pool',
+    description:
+      entry?.description ||
+      'Stay at a luxury honeymoon resort in Wayanad with private pool villas, forest cottages and mountain views.',
+  });
 }
 
 export default async function HomePage() {
-  const data: pagetypeoneCollection = await contentfulFetch(homeContentQuery);
+  // Independent queries, so they run together rather than in series.
+  const [data, latestPosts] = await Promise.all([
+    contentfulFetch<pagetypeoneCollection>(homeContentQuery),
+    getLatestPosts(HOME_POST_COUNT),
+  ]);
 
   const heroData = data.pagetypeoneCollection.items[0].hero;
   const AboutData = data.pagetypeoneCollection.items[0].aboutus;
@@ -58,6 +72,14 @@ export default async function HomePage() {
       />
       <section id="reviews" style={{ scrollMarginTop: '80px' }}>
         <ReviewSection />
+      </section>
+      <section id="journal" style={{ scrollMarginTop: '80px' }}>
+        <HomeBlogSection posts={latestPosts} />
+      </section>
+      {/* Last content section before the FAQs: by this point a visitor has seen
+          the rooms and the stories, and "where is it" is the next question. */}
+      <section id="location" style={{ scrollMarginTop: '80px' }}>
+        <LocationSection />
       </section>
       <section id="faqs" style={{ scrollMarginTop: '80px' }}>
         <FaqSection {...faqData} />

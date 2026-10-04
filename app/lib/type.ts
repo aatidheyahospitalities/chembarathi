@@ -88,7 +88,7 @@ export interface AboutPageType {
 }
 
 export interface PolicyPageType {
-   policy:policyType
+  policy: policyType;
 }
 
 // Collection Interfaces
@@ -108,7 +108,7 @@ export interface pagetypetwoCollection {
 export interface policyCollection {
   policypageCollection: {
     items: PolicyPageType[] | [];
-  }
+  };
 }
 
 export interface metadataCollection {
@@ -120,5 +120,74 @@ export interface metadataCollection {
 export interface contentSectionWithGalleryCollection {
   contentSectionWithGalleryCollection: {
     items: ContentSectionWithGalleryType[] | [];
+  };
+}
+
+// Blog
+
+export interface ContentfulAssetType {
+  url: string;
+  /** Contentful asset title; used as alt-text fallback. */
+  title: string | null;
+  /** Contentful asset description; preferred alt text when present. */
+  description: string | null;
+  width: number | null;
+  height: number | null;
+}
+
+/** The fields every listing row, related card, and detail hero needs. */
+export interface BlogPostCardType {
+  title: string;
+  slug: string;
+  date: string;
+  coverImage: ContentfulAssetType | null;
+}
+
+/**
+ * A Contentful Rich Text field. `links.assets.block` carries the full asset
+ * records for anything embedded in the document — the `json` only holds their
+ * ids, so both halves are needed to render an embedded image.
+ */
+export interface RichTextType {
+  json: Document;
+  links?: {
+    assets?: {
+      block?: (ContentfulAssetType & { sys: { id: string } })[];
+    };
+  };
+}
+
+export interface BlogPostType extends BlogPostCardType {
+  heading: string | null;
+  /** Rich Text, rendered with @contentful/rich-text-react-renderer. */
+  content: RichTextType | null;
+  /** Optional SEO override; falls back to the post's own title/content.
+      Named to match the Contentful field id (`metaData`). */
+  metaData: MetaDataType | null;
+}
+
+export interface blogPostCardCollection {
+  blogPostCollection: {
+    total: number;
+    items: BlogPostCardType[] | [];
+  };
+}
+
+export interface blogPostCollection {
+  blogPostCollection: {
+    items: BlogPostType[] | [];
+  };
+}
+
+export interface blogSlugCollection {
+  blogPostCollection: {
+    items: { slug: string }[] | [];
+  };
+}
+
+/** Related-posts query, which does not select `total`. */
+export interface blogRelatedCollection {
+  blogPostCollection: {
+    items: BlogPostCardType[] | [];
   };
 }

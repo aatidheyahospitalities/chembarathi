@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "seed:cms": "node scripts/seed-contentful.mjs"
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^16.1.6",
@@ -38,6 +39,7 @@
     "@types/node": "^24.10.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "baseline-browser-mapping": "^2.11.27",
     "eslint": "^9",
     "eslint-config-next": "^16.0.10",
     "prettier": "^3.7.4",

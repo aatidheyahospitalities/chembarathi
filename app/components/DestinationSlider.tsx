@@ -1,20 +1,24 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { motion } from 'motion/react';
+import { createPortal } from 'react-dom';
+import { motion, type Transition } from 'motion/react';
 import Image from 'next/image';
+
+import { ROOM_TYPES } from '../lib/rooms';
+import { onScrollPosition } from '../lib/scroll';
 
 type Destination = {
   name: string;
   images: string[];
 };
 
-const destinations: Destination[] = [
-  { name: 'Private Pool Villa', images: ['/PrivatePoolVilla.JPG'] },
-  { name: 'Honeymoon Suite', images: ['/HoneymoonSuite.JPG'] },
-  { name: 'Premium Cottage', images: ['/PremiumCottage.JPG'] },
-  { name: 'Deluxe Suite', images: ['/PremiumCottage.JPG'] },
-];
+/* Names and imagery come from `app/lib/rooms.ts`, which the footer reads too —
+   the two used to hold their own copies and had drifted apart. */
+const destinations: Destination[] = ROOM_TYPES.map(room => ({
+  name: room.name,
+  images: [room.image],
+}));
 
 const loopDestinations = [
   destinations[destinations.length - 1],
@@ -22,13 +26,33 @@ const loopDestinations = [
   destinations[0],
 ];
 
+/** Gap between cards, in px. Must match the `gap-4` on the track. */
+const CARD_GAP = 16;
+
+/**
+ * Card width in px for a given viewport.
+ *
+ * Measured rather than expressed in CSS because the track's translate has to
+ * use the same number, and Motion cannot interpolate between `calc()` strings
+ * containing viewport units — the old version animated a calc string, which
+ * snapped instead of easing.
+ *
+ * The `0.9 * width` ceiling is what makes tablets work: at 768x1024 the old
+ * `80vh * 16/9` came out at ~1456px, far wider than the screen, so a card
+ * could never be centred.
+ */
+function measureCardWidth(width: number, height: number) {
+  if (width <= 540) return width * 0.85;
+  return Math.min((height * 0.8 * 16) / 9, width * 0.9);
+}
+
 export default function DestinationSlider() {
   const [activeIndex, setActiveIndex] = useState(1);
-  const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const [cursorVisible, setCursorVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [viewport, setViewport] = useState({ width: 0, height: 0 });
 
-  const [transition, setTransition] = useState<any>({
+  const [transition, setTransition] = useState<Transition>({
     type: 'tween',
     ease: [0.32, 0.72, 0, 1],
     duration: 0.5,
@@ -36,15 +60,20 @@ export default function DestinationSlider() {
 
   const trackRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const cursorPositionRef = useRef({ x: 0, y: 0 });
+  /* Set on drag end and read by the click handler. Without it, finishing a
+     swipe counted as a tap and threw the visitor into the booking engine. */
+  const draggedRef = useRef(false);
 
   // Navigation handlers
   const goToIndex = (index: number, immediate = false) => {
     if (immediate) {
-      setTransition((prev: any) => ({ ...prev, duration: 0 }));
+      setTransition((prev: Transition) => ({ ...prev, duration: 0 }));
       setActiveIndex(index);
       // Reset transition after a frame
       requestAnimationFrame(() => {
-        setTransition((prev: any) => ({ ...prev, duration: 0.5 }));
+        setTransition((prev: Transition) => ({ ...prev, duration: 0.5 }));
       });
     } else {
       setActiveIndex(index);
@@ -60,12 +89,14 @@ export default function DestinationSlider() {
   };
 
   useEffect(() => {
-    const checkMobile = () => {
+    const measure = () => {
       setIsMobile(window.matchMedia('(max-width: 540px)').matches);
+      setViewport({ width: window.innerWidth, height: window.innerHeight });
     };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
   }, []);
 
   // Helper functions
@@ -76,10 +107,17 @@ export default function DestinationSlider() {
   };
 
   const openBookingEngine = () => {
-    window.open('https://bookingengine.stayflexi.com/?hotel_id=28009', '_blank');
+    window.open(
+      'https://bookingengine.stayflexi.com/?hotel_id=28009',
+      '_blank'
+    );
   };
 
   const currentDestinationName = destinations[getRealIndex(activeIndex)].name;
+
+  const cardWidth = measureCardWidth(viewport.width, viewport.height);
+  const trackOffset =
+    -activeIndex * (cardWidth + CARD_GAP) + (viewport.width - cardWidth) / 2;
 
   // Navigation handlers
   const goToNext = () => {
@@ -90,27 +128,62 @@ export default function DestinationSlider() {
     goToIndex(activeIndex - 1);
   };
 
-  // Mouse handlers
+  /* Writes straight to the cursor node instead of through state. Every mouse
+     move used to call `setCursor`, re-rendering the whole slider -- eight
+     Motion cards and the dots -- on each event, and it called
+     `getBoundingClientRect()` each time only to discard the result, forcing a
+     layout per move. */
   const handleMouseMove = (e: React.MouseEvent) => {
     if (isMobile) return;
-    const rect = trackRef.current?.getBoundingClientRect();
-    if (rect) {
-      setCursor({
-        x: e.clientX,
-        y: e.clientY,
-      });
-    }
+
+    cursorPositionRef.current = { x: e.clientX, y: e.clientY };
+    const node = cursorRef.current;
+    if (!node) return;
+
+    node.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
   };
 
-  const handleMouseEnter = () => {
-    if (!isMobile) setCursorVisible(true);
+  const handleMouseEnter = (e: React.MouseEvent) => {
+    if (isMobile) return;
+
+    cursorPositionRef.current = { x: e.clientX, y: e.clientY };
+    setCursorVisible(true);
   };
 
   const handleMouseLeave = () => {
     setCursorVisible(false);
   };
 
+  useEffect(() => {
+    if (!cursorVisible || !cursorRef.current) return;
+
+    const { x, y } = cursorPositionRef.current;
+    cursorRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+  }, [cursorVisible]);
+
+  useEffect(() => {
+    if (!cursorVisible) return;
+
+    return onScrollPosition(() => {
+      const track = trackRef.current;
+      if (!track) return;
+
+      const { x, y } = cursorPositionRef.current;
+      const rect = track.getBoundingClientRect();
+      const pointerIsInside =
+        x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+
+      if (!pointerIsInside) setCursorVisible(false);
+    });
+  }, [cursorVisible]);
+
   const handleClick = () => {
+    // A swipe ends with a click event; only a real tap should open booking.
+    if (draggedRef.current) {
+      draggedRef.current = false;
+      return;
+    }
+
     openBookingEngine();
   };
 
@@ -136,19 +209,17 @@ export default function DestinationSlider() {
       </div>
       <div
         ref={trackRef}
-        className="relative w-full overflow-x-hidden cursor-none"
+        className="relative w-full overflow-x-hidden cursor-none xs:!cursor-auto"
         onClick={handleClick}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         <motion.div
-          animate={{
-            x: `calc(-${activeIndex} * (${isMobile ? '85vw' : 'calc(80vh * 16 / 9)'} + 1rem) + (100vw - ${isMobile ? '85vw' : 'calc(80vh * 16 / 9)'}) / 2)`,
-          }}
+          animate={{ x: trackOffset }}
           transition={transition}
           onAnimationComplete={handleAnimationComplete}
           className="flex gap-4"
-          onMouseMove={handleMouseMove}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
         >
           {loopDestinations.map((destination, index) => (
             <motion.div
@@ -156,12 +227,14 @@ export default function DestinationSlider() {
               ref={el => {
                 cardsRef.current[index] = el;
               }}
-              className={`flex-shrink-0 w-[calc(80vh*16/9)] h-[80vh] xs:!w-[85vw] xs:!h-auto xs:!aspect-[3/4] rounded-xl overflow-hidden relative`}
+              style={{ width: cardWidth || undefined }}
+              className={`flex-shrink-0 h-[80vh] xs:!h-auto xs:!aspect-[3/4] rounded-xl overflow-hidden relative`}
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.1}
               onDragEnd={(_, info) => {
                 if (Math.abs(info.offset.x) > 50) {
+                  draggedRef.current = true;
                   if (info.offset.x < 0) {
                     goToNext();
                   } else {
@@ -173,7 +246,15 @@ export default function DestinationSlider() {
               <Image
                 src={destination.images[0]}
                 alt={destination.name}
-                layout="fill"
+                fill
+                /* Without `sizes`, `fill` assumes 100vw and every card pulled
+                   the 3840px source -- eight of them, on a section that shows
+                   one at a time. A card is never wider than ~90vw. */
+                sizes="(max-width: 540px) 85vw, 90vw"
+                /* Only the card in view at load matters for LCP; the rest wait
+                   until the visitor actually pages to them. */
+                priority={index === 1}
+                loading={index === 1 ? undefined : 'lazy'}
                 className="absolute inset-0 w-full h-full object-cover"
               />
             </motion.div>
@@ -181,45 +262,45 @@ export default function DestinationSlider() {
         </motion.div>
       </div>
 
-      {!isMobile && cursorVisible && (
-        <div
-          className="fixed pointer-events-none z-50"
-          style={{
-            left: cursor.x,
-            top: cursor.y + (typeof window !== 'undefined' ? window.scrollY : 0),
-            transform: 'translate(-50%, -50%)',
-          }}
-        >
-          <div className="bg-white/10! backdrop-blur-md! px-4! py-2! rounded-full border border-white/20 flex items-center gap-3">
-            <span className="text-white font-semibold">View Details</span>
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M7 17L17 7" />
-              <path d="M7 7h10v10" />
-            </svg>
-          </div>
-        </div>
-      )}
+      {!isMobile &&
+        cursorVisible &&
+        createPortal(
+          /* Render outside ScrollSmoother's transformed content so these
+             viewport coordinates stay accurate at every scroll position. */
+          <div
+            ref={cursorRef}
+            className="fixed left-0 top-0 pointer-events-none z-[10000]"
+          >
+            <div className="bg-white/10! backdrop-blur-md! px-4! py-2! rounded-full border border-white/20 flex items-center gap-3">
+              <span className="text-white font-semibold">View Details</span>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M7 17L17 7" />
+                <path d="M7 7h10v10" />
+              </svg>
+            </div>
+          </div>,
+          document.body
+        )}
 
-      <div className="flex justify-between items-end xs:!items-center xs:!justify-center pt-[20px]! w-full px-[10vw]!">
-        {/* Place name at bottom-left */}
+      <div className="section-wrapper grid w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-(--spacing-padding-6x) pt-[20px]! pb-0! xs:!flex xs:!flex-col xs:!gap-(--spacing-padding-4x)">
         <button
           onClick={() => openBookingEngine()}
-          className="z-20 text-xxl-regular sm:text-3xl font-semibold hover:opacity-80 transition-opacity text-white! min-w-[300px] text-left"
+          className="z-20 max-w-[32rem] justify-self-start text-left text-xl-regular text-white! transition-opacity hover:opacity-80 xs:!max-w-none xs:!text-center"
         >
           {currentDestinationName}
         </button>
 
         {/* Progress Indicator - Dots */}
-        <div className="flex gap-3 items-center justify-center flex-1 mb-2">
+        <div className="flex items-center justify-self-center gap-3">
           {destinations.map((_, i) => (
             <motion.div
               key={i}
@@ -235,12 +316,13 @@ export default function DestinationSlider() {
         </div>
 
         {/* Navigation arrows at bottom-right */}
-        <div className="z-20 xs:!hidden flex h-full! items-center justify-center gap-3">
+        <div className="z-20 flex items-center justify-self-end gap-3 xs:!hidden">
           <button
             onClick={e => {
               e.stopPropagation();
               goToPrevious();
             }}
+            aria-label="Previous room"
             className="bg-white/10 backdrop-blur-md rounded-full p-3 hover:bg-white/20 transition-all duration-300 border border-white/20"
           >
             <svg
@@ -250,7 +332,7 @@ export default function DestinationSlider() {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="w-10 h-10 xs:!w-6 xs:!h-6"
+              className="h-6 w-6"
             >
               <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
@@ -261,6 +343,7 @@ export default function DestinationSlider() {
               e.stopPropagation();
               goToNext();
             }}
+            aria-label="Next room"
             className="bg-white/10 backdrop-blur-md rounded-full p-3 hover:bg-white/20 transition-all duration-300 border border-white/20"
           >
             <svg
@@ -270,7 +353,7 @@ export default function DestinationSlider() {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="w-10 h-10 xs:!w-6 xs:!h-6"
+              className="h-6 w-6"
             >
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>

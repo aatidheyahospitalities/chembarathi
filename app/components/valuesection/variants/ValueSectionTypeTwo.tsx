@@ -5,8 +5,9 @@ import CommonLinkButton from '../../CommonLinkButton';
 export function VariantTypeTwo({ field }: { field: ValueSection }) {
   return (
     <div className="section-wrapper flex flex-row gap-(--spacing-padding-16x) xs:!flex-col xs:!gap-(--spacing-padding-8x)">
-      {/* Content */}
-      <div className="flex flex-col gap-(--spacing-padding-16x) w-[50%] xs:!w-full xs:!gap-(--spacing-padding-6x)">
+      {/* Content — centred against the 3:4 image, which is taller than this
+          column's text. Same treatment as VariantTypeFour. */}
+      <div className="flex flex-col justify-center gap-(--spacing-padding-16x) w-[50%] xs:!w-full xs:!gap-(--spacing-padding-6x)">
         <div className="flex flex-col gap-(--spacing-padding-3x)">
           <span className="text-md-regular text-(--typography-color-secondary-500)">
             {field.eyebrow}

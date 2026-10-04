@@ -23,7 +23,7 @@ export const galleryConfig = {
    * Only read by `devRepeat.ts`; deleting that file and its single call site
    * in `app/gallery/page.tsx` removes the feature entirely.
    */
-  devRepeatCount: 20,
+  devRepeatCount: 1,
 
   /**
    * How far outside the viewport an item starts loading. Roughly half a

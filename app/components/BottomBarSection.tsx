@@ -1,31 +1,31 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import { useTransitionRouter } from './PageTransition';
 import {
   navigateToPolicyLink,
   navigateWithScrollReset,
   getPolicyFooterHref,
 } from '../policy/utils';
+import { BOOKING_ENGINE_URL, ROOM_TYPES } from '../lib/rooms';
 
 export default function BottomBarSection() {
-  const router = useRouter();
+  const router = useTransitionRouter();
   const pathname = usePathname();
 
   const items = [
     {
       title: 'Cottages',
-      subItems: [
-        'Cottages & Suites',
-        'Premium Cottage',
-        'Private Pool Villa',
-        'Honeymoon Suite',
-      ],
+      // Names come from `app/lib/rooms.ts`, the same list the accommodation
+      // slider renders, so the two cannot name a room differently again.
+      subItems: ['Cottages & Suites', ...ROOM_TYPES.map(room => room.name)],
     },
     {
       title: 'Quick Links',
       subItems: [
         'Home',
         'About',
+        'Experience',
         'Amenities',
         'Gallery',
         'Blog',
@@ -42,6 +42,7 @@ export default function BottomBarSection() {
   const routeMap: Record<string, string> = {
     Home: '/',
     About: '/about',
+    Experience: '/experience',
     Amenities: '/amenities',
     Gallery: '/gallery',
     Blog: '/blog',
@@ -51,10 +52,8 @@ export default function BottomBarSection() {
     Testimonials: '/testimonials',
     Careers: '/careers',
     'Partner with Us': '/partner',
-    'Cottages & Suites': '/cottages',
-    'Premium Cottage': '/premium-cottage',
-    'Private Pool Villa': '/private-pool-villa',
-    'Honeymoon Suite': '/honeymoon-suite',
+    'Cottages & Suites': BOOKING_ENGINE_URL,
+    ...Object.fromEntries(ROOM_TYPES.map(room => [room.name, room.href])),
   };
 
   return (
@@ -157,7 +156,7 @@ function ListItem({
   routeMap: Record<string, string>;
   pathname: string;
 }) {
-  const router = useRouter();
+  const router = useTransitionRouter();
 
   return (
     <div className="flex flex-col gap-(--spacing-padding-3x) flex-1">
@@ -172,13 +171,16 @@ function ListItem({
         {subItems.map(subItem => (
           <li key={subItem}>
             <button
-              onClick={() =>
-                void navigateWithScrollReset(
-                  routeMap[subItem] || '/',
-                  router,
-                  pathname
-                )
-              }
+              onClick={() => {
+                const href = routeMap[subItem] || '/';
+
+                if (href.startsWith('http')) {
+                  window.open(href, '_blank', 'noopener,noreferrer');
+                  return;
+                }
+
+                void navigateWithScrollReset(href, router, pathname);
+              }}
               className="text-lg-regular text-left cursor-pointer hover:opacity-70 transition"
               style={{ color: 'var(--typography-color-secondary-700)' }}
             >

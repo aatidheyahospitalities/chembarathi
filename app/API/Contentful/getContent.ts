@@ -2,11 +2,12 @@ import { notFound } from 'next/navigation';
 
 type ContentFulParams = {
   query: string;
-  variables?: {
-    where?: {
-      slug?: string;
-    };
-  };
+  /**
+   * Passed straight through to the GraphQL endpoint. Left open because queries
+   * need different shapes: the page queries filter on `where`, while the blog
+   * listing also pages with `limit` / `skip` / `order`.
+   */
+  variables?: Record<string, unknown>;
 };
 
 export async function contentfulFetch<T>(params: ContentFulParams): Promise<T> {

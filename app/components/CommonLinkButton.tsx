@@ -1,5 +1,5 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { useTransitionRouter } from './PageTransition';
 export default function CommonLinkButton({
   text,
   url,
@@ -9,7 +9,7 @@ export default function CommonLinkButton({
   url?: string;
   onclick?: () => void;
 }>) {
-  const router = useRouter();
+  const router = useTransitionRouter();
 
   const isBookingCTA = [
     'book now',
@@ -25,8 +25,8 @@ export default function CommonLinkButton({
           '_blank'
         )
     : url
-        ? () => router.push(url)
-        : onclick;
+      ? () => router.push(url)
+      : onclick;
 
   return (
     <button

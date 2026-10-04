@@ -677,3 +677,73 @@ body {
     transform: translateY(0);
   }
 }
+
+/* ── Striped route transition ──────────────────────────────────────────────
+   30 horizontal blinds, scaled open and shut by GSAP from
+   app/components/PageTransition.tsx. Sits just below the header (z-9999) so
+   the nav stays legible through the wipe. */
+.page-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.page-transition__blind {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  /* The extra pixel overlaps the next blind, so no hairline seams show
+     through when they are all closed. */
+  height: calc(100% / 30 + 1px);
+  background-color: var(--surface-primary-800);
+
+  /* Closed state is applied by GSAP; start fully open so nothing covers the
+     page before the first navigation. */
+  transform: scaleY(0);
+  transform-origin: 50% 100%;
+
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition {
+    display: none;
+  }
+}
+
+/* Still frame of the outgoing page, held under the overlay while a back or
+   forward navigation swaps the real route underneath it. Sits below the
+   transition overlay (z-9998) and above everything else. */
+.page-transition-snapshot {
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  overflow: hidden;
+  pointer-events: none;
+  background-color: #151e19;
+}
+
+/* Header hide/reveal behavior, kept explicit so transform utility ordering
+   cannot interrupt the slide animation. */
+.site-header {
+  transform: translate3d(0, 0, 0);
+  transition:
+    transform 0.8s cubic-bezier(0.24, 0.43, 0.15, 0.97),
+    background-color 0.6s cubic-bezier(0.24, 0.43, 0.15, 0.97),
+    border-color 0.6s cubic-bezier(0.24, 0.43, 0.15, 0.97);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.site-header[data-visible='false'] {
+  transform: translate3d(0, -120%, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header {
+    transition: none;
+  }
+}
