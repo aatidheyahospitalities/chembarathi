@@ -53,6 +53,19 @@ export default function RootLayout({
   return (
     <html lang="en" className={figtree.variable}>
       <head>
+        <script
+          async
+          src="https://www.googletagmanager.com/gtm.js?id=GTM-ML5WC226"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+            `,
+          }}
+        />
         {/* Material Symbols is an icon font, and the spans using it render
             ligature text as their children, so display=block hides that text
             until the font arrives rather than flashing the raw ligature
