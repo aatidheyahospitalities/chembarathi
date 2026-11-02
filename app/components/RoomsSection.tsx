@@ -16,31 +16,31 @@ import Image from "next/image";
 
 const DEFAULT_SLIDES = [
   {
-    image: "/rooms/Premium Cottage with Pool View & Mountain View.jpg",
+    image: "/Rooms/Premium Cottage with Pool View & Mountain View.jpg",
     title: "Premium Cottage with Pool & Mountain View",
     size: "Luxury Stay",
     alt: "Premium Cottage with Pool & Mountain View at Chembarathi Wayanad",
   },
   {
-    image: "/rooms/Premium Cottage with Mountain View.png",
+    image: "/Rooms/Premium Cottage with Mountain View.png",
     title: "Premium Cottage with Mountain View",
     size: "Premium Stay",
     alt: "Premium Cottage with Mountain View at Chembarathi Wayanad",
   },
   {
-    image: "/rooms/Deluxe Cottage with Forest View.jpg",
+    image: "/Rooms/Deluxe Cottage with Forest View.jpg",
     title: "Deluxe Cottage with Forest View",
     size: "Nature Stay",
     alt: "Deluxe Cottage with Forest View at Chembarathi Wayanad",
   },
   {
-    image: "/rooms/Private Pool Villa.jpg",
+    image: "/Rooms/Private Pool Villa.jpg",
     title: "Private Pool Villa",
     size: "Luxury Suite",
     alt: "Private Pool Villa at Chembarathi Wayanad with stunning views",
   },
   {
-    image: "/rooms/Honeymoon Suite with Jacuzzi.jpg",
+    image: "/Rooms/Honeymoon Suite with Jacuzzi.jpg",
     title: "Honeymoon Suite with Jacuzzi",
     size: "Romantic Getaway",
     alt: "Honeymoon Suite with Jacuzzi at Chembarathi Wayanad perfect for couples",
